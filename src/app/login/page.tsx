@@ -1,53 +1,35 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const router = useRouter()
+  const [message, setMessage] = useState('')
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const handleLogin = async () => {
+    // ⛔ DO NOT import supabase at the top
+    const { supabase } = await import('@/lib/supabase') // ✅ dynamic import
+    const { error } = await supabase.auth.signInWithOtp({ email })
     if (error) {
-      setError(error.message)
+      setMessage(`Error: ${error.message}`)
     } else {
-      router.push('/dashboard') // or wherever users go after login
+      setMessage('Check your email for the login link.')
     }
   }
 
   return (
     <main className="p-6 max-w-md mx-auto">
       <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <form onSubmit={handleLogin} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-2 w-full"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-2 w-full"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        {error && <p className="text-red-500">{error}</p>}
-        <button
-          type="submit"
-          className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-        >
-          Login
-        </button>
-      </form>
+      <input
+        className="border p-2 w-full mb-4"
+        placeholder="Your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={handleLogin}>
+        Sign In
+      </button>
+      {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
     </main>
   )
 }
