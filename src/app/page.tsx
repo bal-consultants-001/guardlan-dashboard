@@ -18,7 +18,7 @@ export default function HomePage() {
       <section className="py-10 px-4 grid md:grid-cols-3 gap-6">
         <div className="p-6 shadow-lg rounded-lg border">
           <h2 className="text-xl font-bold mb-2">AdBlocker Device</h2>
-          <p>A plug-and-play device to filter out ads on your entire home network.</p>
+          <p>A robust device to filter out ads on your entire home network.</p>
         </div>
         <div className="p-6 shadow-lg rounded-lg border">
           <h2 className="text-xl font-bold mb-2">Monthly Subscription</h2>
@@ -26,7 +26,7 @@ export default function HomePage() {
         </div>
         <div className="p-6 shadow-lg rounded-lg border">
           <h2 className="text-xl font-bold mb-2">Hourly Support</h2>
-          <p>Need help with setup or troubleshooting? We’ve got your back by the hour.</p>
+          <p>Need help with issues or troubleshooting? We’ve got your back by the hour.</p>
         </div>
       </section>
     </main>
