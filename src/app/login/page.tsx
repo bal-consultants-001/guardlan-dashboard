@@ -4,16 +4,20 @@ import { useState } from 'react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
 
   const handleLogin = async () => {
     // ⛔ DO NOT import supabase at the top
     const { supabase } = await import('@/lib/supabase') // ✅ dynamic import
-    const { error } = await supabase.auth.signInWithOtp({ email })
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
     if (error) {
       setMessage(`Error: ${error.message}`)
     } else {
-      setMessage('Check your email for the login link.')
+      setMessage('Logged in successfully.')
     }
   }
 
@@ -26,6 +30,15 @@ export default function LoginPage() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+	  
+      <input
+        type="password"
+        className="border p-2 w-full mb-4"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+	  
       <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={handleLogin}>
         Sign In
       </button>
