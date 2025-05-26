@@ -8,8 +8,10 @@ export default function HomePage() {
         <p className="text-lg mb-6">
           Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
         </p>
-        <Link href="/shop" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+        <Link href="/shop">
+          <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
             Shop Now
+          </a>
         </Link>
       </section>
 

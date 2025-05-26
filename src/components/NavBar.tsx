@@ -7,9 +7,9 @@ export default function NavBar() {
         <a className="text-xl font-bold">AdBlocker Co.</a>
       </Link>
       <div className="space-x-4">
-		<Link href="/">Home</Link>
-        <Link href="/shop">Shop</Link>
-        <Link href="/login">Login</Link>
+		<Link href="/"><a>Home</a></Link>
+        <Link href="/shop"><a>Shop</a></Link>
+        <Link href="/login"><a>Login</a></Link>
       </div>
     </nav>
   );

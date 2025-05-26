@@ -26,7 +26,11 @@ export default function ShopPage() {
     <main className="p-6">
       <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
       <div className="grid md:grid-cols-3 gap-6">
-	  <Link href="/" className="text-blue-600 underline mb-4 inline-block">Back to Home(/Link>
+        <Link href="/">
+	  		<a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				Back to Home
+			</a>
+		</Link>
         {products.map((product) => (
           <div key={product.id} className="p-6 border rounded-lg shadow">
             <h2 className="text-xl font-bold">{product.name}</h2>
