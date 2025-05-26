@@ -32,6 +32,7 @@ export default function ShopPage() {
 					Back to Home
 				</a>
 			</Link>
+		  </div>
 		</section>
 	
 		<section className="py-10 grid md:grid-cols-3 gap-6">
@@ -45,9 +46,7 @@ export default function ShopPage() {
 				</button>
 			  </div>
 			))}
-		</section>
-      </div>
-	 
+		</section>	 
     </main>
   );
 }
