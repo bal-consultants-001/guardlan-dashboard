@@ -26,7 +26,7 @@ export default function ShopPage() {
     <main className="p-6">
 		<section className="py-20 px-4 text-center">
 		  <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
-		  <div className="flex justify-center grid md:grid-cols-3 gap-6">
+		  <div>
 			<Link href="/">
 				<a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
 					Back to Home
