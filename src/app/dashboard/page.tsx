@@ -1,14 +1,33 @@
 'use client'
 
+type Order = {
+  id: string
+  status: string
+  // Add more fields as needed
+}
+
+type Device = {
+  "Hostname": string
+  "OS": string
+  "Model": string
+  // Add more fields as needed
+}
+
+type Ticket = {
+  ticket_no: string
+  status: string
+  // Add more fields as needed
+}
+
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState(null)
-  const [orders, setOrders] = useState([])
-  const [devices, setDevices] = useState([])
-  const [tickets, setTickets] = useState([])
+  const [orders, setOrders] = useState<Order[]>([])
+  const [devices, setDevices] = useState<Device[]>([])
+  const [tickets, setTickets] = useState<Ticket[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,11 +83,11 @@ export default function DashboardPage() {
           <p>No orders found.</p>
         ) : (
           <ul className="list-disc ml-5">
-            {orders.map((order: any) => (
-              <li key={order.id}>
-                Order #{order.id} — {order.status}
-              </li>
-            ))}
+            {orders.map((order) => (
+			  <li key={order.id}>
+				Order #{order.id} — {order.status}
+			  </li>
+			))}
           </ul>
         )}
       </section>
@@ -80,11 +99,11 @@ export default function DashboardPage() {
           <p>No active devices.</p>
         ) : (
           <ul className="list-disc ml-5">
-            {devices.map((device: any) => (
-              <li key={device.id}>
-                {device.name} ({device.mac_address})
-              </li>
-            ))}
+            {devices.map((device) => (
+			  <li key={device."Hostname"}>
+				{device."OS"} ({device."Model"})
+			  </li>
+			))}
           </ul>
         )}
       </section>
