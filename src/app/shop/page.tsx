@@ -24,15 +24,12 @@ export default function ShopPage() {
 
   return (
     <main className="p-6">
-		<section className="py-20 px-4 text-center">
-		  <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
-		  <div className="grid md:grid-cols-3 gap-6">
-			<Link href="/">
-				<a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-					Back to Home
-				</a>
-			</Link>
-		</section>
+      <section className="py-10 text-center border-b">
+        <h1 className="text-3xl font-bold mb-2">Shop Products</h1>
+        <Link href="/" className="text-blue-600 underline">
+          ← Back to Home
+        </Link>
+      </section>
 	
         {products.map((product) => (
           <div key={product.id} className="p-6 border rounded-lg shadow">
