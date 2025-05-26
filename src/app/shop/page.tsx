@@ -28,7 +28,7 @@ export default function ShopPage() {
 		  <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
 		  <div className="grid md:grid-cols-3 gap-6">
 			<Link href="/">
-				<a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				<a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
 					Back to Home
 				</a>
 			</Link>
