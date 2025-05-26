@@ -116,8 +116,8 @@ export default function DashboardPage() {
         ) : (
           <ul className="list-disc ml-5">
             {tickets.map((ticket: any) => (
-              <li key={ticket.id}>
-                Ticket #{ticket.id} — {ticket.status}
+              <li key={ticket.ticket_no}>
+                Ticket #{ticket.ticket_no} — {ticket.status}
               </li>
             ))}
           </ul>
