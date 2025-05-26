@@ -100,8 +100,8 @@ export default function DashboardPage() {
         ) : (
           <ul className="list-disc ml-5">
             {devices.map((device) => (
-			  <li key={device.["Hostname"]}>
-				{device.["OS"]} ({device.["Model"]})
+			  <li key={device["Hostname"]}>
+				{device["OS"]} ({device["Model"]})
 			  </li>
 			))}
           </ul>
