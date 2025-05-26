@@ -5,19 +5,19 @@ export default function ShopPage() {
     {
       id: 1,
       name: "Home Network AdBlocker",
-      price: "$99",
+      price: "£75",
       description: "Block ads for every device on your network.",
     },
     {
       id: 2,
       name: "Monthly Subscription",
-      price: "$9/mo",
+      price: "£6/mo",
       description: "Continual filter updates and premium features.",
     },
     {
       id: 3,
       name: "Hourly Support",
-      price: "$30/hr",
+      price: "£25/hr",
       description: "Technical help when you need it most.",
     },
   ];

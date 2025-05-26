@@ -6,7 +6,7 @@ export default function HomePage() {
       <section className="py-20 px-4 text-center">
         <h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
         <p className="text-lg mb-6">
-          Our hardware AdBlocker secures your whole network from intrusive ads and trackers.
+          Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
         </p>
         <Link href="/shop">
           <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
