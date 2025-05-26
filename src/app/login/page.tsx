@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -18,6 +19,7 @@ export default function LoginPage() {
       setMessage(`Error: ${error.message}`)
     } else {
       setMessage('Logged in successfully.')
+	  router.push('/dashboard')
     }
   }
 
