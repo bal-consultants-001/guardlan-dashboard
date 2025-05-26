@@ -1,34 +1,40 @@
-import Link from "next/link";
+export default function ShopPage() {
+  const products = [
+    {
+      id: 1,
+      name: "Home Network AdBlocker",
+      price: "$99",
+      description: "Block ads for every device on your network.",
+    },
+    {
+      id: 2,
+      name: "Monthly Subscription",
+      price: "$9/mo",
+      description: "Continual filter updates and premium features.",
+    },
+    {
+      id: 3,
+      name: "Hourly Support",
+      price: "$30/hr",
+      description: "Technical help when you need it most.",
+    },
+  ];
 
-export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white text-gray-900">
-      <section className="py-20 px-4 text-center">
-        <h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
-        <p className="text-lg mb-6">
-          Our hardware AdBlocker secures your whole network from intrusive ads and trackers.
-        </p>
-        <Link href="/shop">
-          <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-            Shop Now
-          </a>
-        </Link>
-      </section>
-
-      <section className="py-10 px-4 grid md:grid-cols-3 gap-6">
-        <div className="p-6 shadow-lg rounded-lg border">
-          <h2 className="text-xl font-bold mb-2">AdBlocker Device</h2>
-          <p>A plug-and-play device to filter out ads on your entire home network.</p>
-        </div>
-        <div className="p-6 shadow-lg rounded-lg border">
-          <h2 className="text-xl font-bold mb-2">Monthly Subscription</h2>
-          <p>Stay updated with threat lists and enjoy continuous blocking improvements.</p>
-        </div>
-        <div className="p-6 shadow-lg rounded-lg border">
-          <h2 className="text-xl font-bold mb-2">Hourly Support</h2>
-          <p>Need help with setup or troubleshooting? We’ve got your back by the hour.</p>
-        </div>
-      </section>
+    <main className="p-6">
+      <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
+      <div className="grid md:grid-cols-3 gap-6">
+        {products.map((product) => (
+          <div key={product.id} className="p-6 border rounded-lg shadow">
+            <h2 className="text-xl font-bold">{product.name}</h2>
+            <p className="my-2">{product.description}</p>
+            <p className="font-semibold text-lg">{product.price}</p>
+            <button className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800">
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }
