@@ -30,21 +30,21 @@ export default function DashboardPage() {
       const { data: orderData } = await supabase
         .from('orders')
         .select('*')
-        .eq('id', userId)
+        .eq('user_id', id)
       setOrders(orderData || [])
 
       // Fetch devices
       const { data: deviceData } = await supabase
         .from('devices')
         .select('*')
-        .eq('Owner', userId)
+        .eq('user_id', "Owner")
       setDevices(deviceData || [])
 
       // Fetch tickets
       const { data: ticketData } = await supabase
         .from('tickets')
         .select('*')
-        .eq('id', userId)
+        .eq('user_id', id)
       setTickets(ticketData || [])
     }
 
