@@ -36,6 +36,7 @@ export default function CompleteProfilePage() {
     }
 	
 	const email = user.email
+	const support = FALSE
 
     const {
       Firstname,
@@ -59,6 +60,7 @@ export default function CompleteProfilePage() {
           Address2,
           County,
           Postcode,
+		  Support: support,
         },
         { onConflict: 'ID' } // assumes 'id' is the primary key or unique constraint
       )
