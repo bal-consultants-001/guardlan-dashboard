@@ -48,7 +48,7 @@ export default function CompleteProfilePage() {
       .from('Owners')
       .upsert(
         {
-          id: user.id,
+          ID: user.id,
           Firstname,
           Lastname,
           Fullname: `${Firstname} ${Lastname}`,
@@ -57,7 +57,7 @@ export default function CompleteProfilePage() {
           County,
           Postcode,
         },
-        { onConflict: 'id' } // assumes 'id' is the primary key or unique constraint
+        { onConflict: 'ID' } // assumes 'id' is the primary key or unique constraint
       )
 
     if (error) {
