@@ -45,7 +45,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [orders, setOrders] = useState<Order[]>([])
-  //const [devices, setDevices] = useState<Device[]>([])
+  const [devices, setDevices] = useState<Device[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [devicesWithLogs, setDevicesWithLogs] = useState<DeviceWithLog[]>([])
 
