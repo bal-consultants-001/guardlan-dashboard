@@ -29,6 +29,7 @@ export default function DashboardPage() {
   const [orders, setOrders] = useState<Order[]>([])
   const [devices, setDevices] = useState<Device[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
+  const [devicesWithLogs, setDevicesWithLogs] = useState<any[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +82,8 @@ export default function DashboardPage() {
 	    ...device,
 	    latestLog: latestLogsByUniID[device.taID] || null,
 	  }))
+	  
+	  setDevicesWithLogs(devicesWithLogs || [])
 
       // Fetch tickets
       const { data: ticketData } = await supabase
@@ -116,26 +119,35 @@ export default function DashboardPage() {
       </section>
 
       {/* Devices Section */}
-      <section>
-        <h2 className="text-xl font-semibold mb-2">Your Devices</h2>
-        {devices.length === 0 ? (
-          <p>No active devices.</p>
-        ) : (
-          <ul className="list-disc ml-5">
-            <tbody>
-			  {devicesWithLogs.map((device) => (
-				<tr key={device.id}>
-				  <td>{device["Hostname"]}</td>
-				  <td>{device["OS"]}</td>
-				  <td>{device["Model"]}</td>
-				  <td>{device.latestLog?["Q_Total"] ?? 'N/A'}</td>
-				  <td>{device.latestLog?["Q_Perv"] ?? 'N/A'}</td>
+		<section>
+		  <h2 className="text-xl font-semibold mb-2">Your Devices</h2>
+		  {devicesWithLogs.length === 0 ? (
+			<p>No active devices.</p>
+		  ) : (
+			<table className="table-auto w-full border border-collapse mt-4">
+			  <thead>
+				<tr>
+				  <th className="border px-4 py-2">Hostname</th>
+				  <th className="border px-4 py-2">OS</th>
+				  <th className="border px-4 py-2">Model</th>
+				  <th className="border px-4 py-2">Queries</th>
+				  <th className="border px-4 py-2">Blocked</th>
 				</tr>
-			  ))}
-			</tbody>
-          </ul>
-        )}
-      </section>
+			  </thead>
+			  <tbody>
+				{devicesWithLogs.map((device) => (
+				  <tr key={device.taID}>
+					<td className="border px-4 py-2">{device["Hostname"]}</td>
+					<td className="border px-4 py-2">{device["OS"]}</td>
+					<td className="border px-4 py-2">{device["Model"]}</td>
+					<td className="border px-4 py-2">{device.latestLog?.["Q_Total"] ?? 'N/A'}</td>
+					<td className="border px-4 py-2">{device.latestLog?.["Q_Perv"] ?? 'N/A'}</td>
+				  </tr>
+				))}
+			  </tbody>
+			</table>
+		  )}
+		</section>
 
       {/* Tickets Section */}
       <section>
