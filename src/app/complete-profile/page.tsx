@@ -36,7 +36,7 @@ export default function CompleteProfilePage() {
     }
 	
 	const email = user.email
-	const support = FALSE
+	const support = 'false'
 
     const {
       Firstname,
