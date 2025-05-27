@@ -45,7 +45,7 @@ export default function CompleteProfilePage() {
     } = formData
 
     const { error } = await supabase
-      .from('Owners')
+      .from('owner')
       .upsert(
         {
           ID: user.id,
