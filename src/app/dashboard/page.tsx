@@ -10,6 +10,8 @@ type Device = {
   "Hostname": string
   "OS": string
   "Model": string
+  "Q_Total": string
+  "Q_Perv" : string
   // Add more fields as needed
 }
 
@@ -29,7 +31,7 @@ export default function DashboardPage() {
   const [orders, setOrders] = useState<Order[]>([])
   //const [devices, setDevices] = useState<Device[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
-  const [devicesWithLogs, setDevicesWithLogs] = useState<any[]>([])
+  const [devicesWithLogs, setDevicesWithLogs] = useState<Device[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
