@@ -43,7 +43,7 @@ export default function LoginPage() {
     const { data: ownerData, error: ownerError } = await supabase
       .from('owner')
       .select('Firstname, Lastname')
-      .eq('id', user.id)
+      .eq('ID', user.id)
       .single()
 
     if (ownerError) {
