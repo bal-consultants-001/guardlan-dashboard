@@ -11,7 +11,7 @@ type Device = {
   "OS": string
   "Model": string
   Q_Total: string
-  Q_Perv : string
+  Q_Perc: string
   taID : string
   // Add more fields as needed
 }
@@ -26,7 +26,7 @@ type LogEntry = {
   UniID: string
   Date: string
   Q_Total?: string
-  Q_Perv?: string
+  Q_Perc?: string
   // Add more fields from the logs table as needed
 }
 
@@ -97,8 +97,6 @@ export default function DashboardPage() {
 		const logsResponse = await supabase
 		  .from('logs')
 		  .select('*')
-		  //.eq('UniID', taIDs[0])
-		  //console.log('Logs single UniID query:', logsResponse.data)
 		  .in('"UniID"', taIDs)
 
 		logsData = logsResponse.data ?? []
@@ -179,7 +177,7 @@ export default function DashboardPage() {
 					<td className="border px-4 py-2">{device["OS"]}</td>
 					<td className="border px-4 py-2">{device["Model"]}</td>
 					<td className="border px-4 py-2">{device.latestLog?.["Q_Total"] ?? 'N/A'}</td>
-					<td className="border px-4 py-2">{device.latestLog?.["Q_Perv"] ?? 'N/A'}</td>
+					<td className="border px-4 py-2">{device.latestLog?.["Q_Perc"] ?? 'N/A'}</td>
 				  </tr>
 				))}
 			  </tbody>
