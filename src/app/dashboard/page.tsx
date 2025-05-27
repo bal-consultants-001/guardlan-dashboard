@@ -93,7 +93,7 @@ export default function DashboardPage() {
 		  .from('logs')
 		  .select('*')
 		  .in('UniID', taIDs)
-		console.log('Returned data:", logsResponse.data)
+
 		logsData = logsResponse.data ?? []
 		logsError = logsResponse.error
 		console.log('Logs data:', logsData, 'Logs error:', logsError)
