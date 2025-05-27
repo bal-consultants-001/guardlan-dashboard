@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -11,6 +10,8 @@ export default function LoginPage() {
   const [message, setMessage] = useState('')
 
   const handleLogin = async () => {
+    // ⛔ DO NOT import supabase at the top
+    const { supabase } = from ('@/lib/supabase') // ✅ dynamic import
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
