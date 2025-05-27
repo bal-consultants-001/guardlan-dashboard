@@ -46,7 +46,7 @@ export default function RegisterPage() {
         type="phone"
         className="border p-2 w-full mb-4"
         placeholder="Phone"
-        value={password}
+        value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />
       <button className="bg-green-600 text-white px-4 py-2 rounded" onClick={handleRegister}>
