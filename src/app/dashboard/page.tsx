@@ -86,15 +86,20 @@ export default function DashboardPage() {
 	  const taIDs = deviceData?.map((d) => d.taID) || []
       console.log('Extracted taIDs:', taIDs)
 
+	  const allLogs = await supabase
+		  .from('logs')
+		  .select('*')
+		console.log('All logs:', allLogs.data)
+
 	  let logsData = []
 	  let logsError = null
 	  if (taIDs.length > 0) {
 		const logsResponse = await supabase
 		  .from('logs')
 		  .select('*')
-		  .eq('UniID', taIDs[0])
-		console.log('Logs single UniID query:', logsResponse.data)
-		  //.in('"UniID"', taIDs)
+		  //.eq('UniID', taIDs[0])
+		  //console.log('Logs single UniID query:', logsResponse.data)
+		  .in('"UniID"', taIDs)
 
 		logsData = logsResponse.data ?? []
 		logsError = logsResponse.error
