@@ -50,7 +50,7 @@ export default function RegisterPage() {
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />
-      <button className="bg-green-600 text-white px-4 py-2 rounded" onClick={handleRegister}>
+      <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-gray-800" onClick={handleRegister}>
         Register
       </button>
       {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
