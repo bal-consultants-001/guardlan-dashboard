@@ -1,10 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
 
   const handleRegister = async () => {
@@ -12,12 +15,14 @@ export default function RegisterPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+	  phone,
     })
 
     if (error) {
       setMessage(`Error: ${error.message}`)
     } else {
       setMessage('Check your email to confirm registration.')
+	  router.push('/complete-profile')
     }
   }
 
@@ -36,6 +41,13 @@ export default function RegisterPage() {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+      />
+	  <input
+        type="phone"
+        className="border p-2 w-full mb-4"
+        placeholder="Phone"
+        value={password}
+        onChange={(e) => setPhone(e.target.value)}
       />
       <button className="bg-green-600 text-white px-4 py-2 rounded" onClick={handleRegister}>
         Register
