@@ -58,7 +58,29 @@ export default function DashboardPage() {
         .from('devices')
         .select('*')
         .eq('"Owner"', userId)
+		.eq('"OS"', 'linux')
       setDevices(deviceData || [])
+	  
+	  // Fetch logs
+	  const taIDs = deviceData?.map((d) => d.taID)
+
+	  const { data: logsData } = await supabase
+	    .from('logs')
+	    .select('*')
+	    .in('UniID', taIDs || [])
+		
+	  const latestLogsByUniID = logsData?.reduce((acc, log) => {
+	  const existing = acc[log.UniID]
+	  if (!existing || new Date(log.Date) > new Date(existing.Date)) {
+		acc[log.UniID] = log
+	  }
+	  return acc
+	}, {} as Record<string, any>)
+	
+   	  const devicesWithLogs = deviceData?.map((device) => ({
+	    ...device,
+	    latestLog: latestLogsByUniID[device.taID] || null,
+	  }))
 
       // Fetch tickets
       const { data: ticketData } = await supabase
@@ -100,11 +122,17 @@ export default function DashboardPage() {
           <p>No active devices.</p>
         ) : (
           <ul className="list-disc ml-5">
-            {devices.map((device) => (
-			  <li key={device["Hostname"]}>
-				{device["OS"]} ({device["Model"]})
-			  </li>
-			))}
+            <tbody>
+			  {devicesWithLogs.map((device) => (
+				<tr key={device.id}>
+				  <td>{device["Hostname"]}</td>
+				  <td>{device["OS"]}</td>
+				  <td>{device["Model"]}</td>
+				  <td>{device.latestLog?["Q_Total"] ?? 'N/A'}</td>
+				  <td>{device.latestLog?["Q_Perv"] ?? 'N/A'}</td>
+				</tr>
+			  ))}
+			</tbody>
           </ul>
         )}
       </section>
