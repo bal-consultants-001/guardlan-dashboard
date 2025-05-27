@@ -1,3 +1,5 @@
+//dashboard page
+
 'use client'
 
 type Order = {
