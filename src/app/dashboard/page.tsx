@@ -86,7 +86,7 @@ export default function DashboardPage() {
 	  const taIDs = deviceData?.map((d) => d.taID) || []
       console.log('Extracted taIDs:', taIDs)
 
-	  const {data: allLogs} = await supabase
+	  const allLogs = await supabase
 		  .from('logs')
 		  .select('*')
 		console.log('All logs:', allLogs.data)
