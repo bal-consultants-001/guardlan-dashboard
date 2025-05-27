@@ -66,7 +66,7 @@ export default function DashboardPage() {
       setUser(session.user)
 
       // Fetch orders
-      const { data: orderData } = await supabase
+      const { data: orderData, error: orderError} = await supabase
         .from('orders')
         .select('*')
         .eq('id', userId)
@@ -74,7 +74,7 @@ export default function DashboardPage() {
       setOrders(orderData || [])
 
       // Fetch devices
-      const { data: deviceData } = await supabase
+      const { data: deviceData, error: deviceError } = await supabase
         .from('devices')
         .select('*')
         .eq('"Owner"', userId)
