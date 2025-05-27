@@ -78,7 +78,7 @@ export default function DashboardPage() {
         .select('*')
         .eq('"Owner"', userId)
 		.eq('"OS"', 'linux')
-      setDevices(deviceData || [])
+      //setDevices(deviceData || [])
 	  
 	  // Fetch logs
 	  const taIDs = deviceData?.map((d) => d.taID)
