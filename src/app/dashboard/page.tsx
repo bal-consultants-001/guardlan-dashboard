@@ -89,7 +89,7 @@ export default function DashboardPage() {
 	  const allLogs = await supabase
 		  .from('logs')
 		  .select('*')
-		console.log('All logs:', allLogs.data)
+		console.log('All logs:', allLogs)
 
 	  let logsData = []
 	  let logsError = null
