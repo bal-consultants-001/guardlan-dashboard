@@ -70,6 +70,7 @@ export default function DashboardPage() {
         .from('orders')
         .select('*')
         .eq('id', userId)
+	  console.log('Orders data:', orderData, 'Orders error:', orderError)
       setOrders(orderData || [])
 
       // Fetch devices
@@ -78,15 +79,26 @@ export default function DashboardPage() {
         .select('*')
         .eq('"Owner"', userId)
 		.eq('"OS"', 'linux')
+	  console.log('Devices data:', deviceData, 'Devices error:', deviceError)
       //setDevices(deviceData || [])
 	  
 	  // Fetch logs
-	  const taIDs = deviceData?.map((d) => d.taID)
+	  const taIDs = deviceData?.map((d) => d.taID) || []
+      console.log('Extracted taIDs:', taIDs)
 
-	  const { data: logsData } = await supabase
-	    .from('logs')
-	    .select('*')
-	    .in('UniID', taIDs || [])
+	  let logsData = []
+	  let logsError = null
+	  if (taIDs.length > 0) {
+		const logsResponse = await supabase
+		  .from('logs')
+		  .select('*')
+		  .in('UniID', taIDs)
+		logsData = logsResponse.data
+		logsError = logsResponse.error
+		console.log('Logs data:', logsData, 'Logs error:', logsError)
+	  } else {
+		console.log('No taIDs found, skipping logs fetch.')
+	  }
 		
 	  const latestLogsByUniID = logsData?.reduce((acc, log) => {
 	  const existing = acc[log.UniID]
