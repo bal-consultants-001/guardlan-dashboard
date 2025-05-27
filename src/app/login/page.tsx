@@ -11,7 +11,7 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     // ⛔ DO NOT import supabase at the top
-    const { supabase } = from ('@/lib/supabase') // ✅ dynamic import
+    const { supabase } = await import ('@/lib/supabase') // ✅ dynamic import
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
