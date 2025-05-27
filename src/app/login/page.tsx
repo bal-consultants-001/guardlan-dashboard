@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase' // ✅ static import
+import { supabase } from '@/lib/supabase'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -11,16 +11,53 @@ export default function LoginPage() {
   const router = useRouter()
 
   const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
-    if (error) {
-      setMessage(`Error: ${error.message}`)
-      console.error(error)
+    if (signInError) {
+      setMessage(`Error: ${signInError.message}`)
+      console.error(signInError)
+      return
+    }
+
+    // Get authenticated user
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError || !user) {
+      setMessage('Failed to get user information.')
+      return
+    }
+
+    // Check if email is confirmed
+    if (!user.email_confirmed_at) {
+      setMessage('Please verify your email before continuing.')
+      return
+    }
+
+    // Check if Firstname and Lastname are populated in the Owners table
+    const { data: ownerData, error: ownerError } = await supabase
+      .from('owner')
+      .select('Firstname, Lastname')
+      .eq('id', user.id)
+      .single()
+
+    if (ownerError) {
+      setMessage(`Error fetching profile: ${ownerError.message}`)
+      return
+    }
+
+    const { Firstname, Lastname } = ownerData
+
+    if (!Firstname || !Lastname) {
+      // Redirect to profile completion page
+      router.push('/complete-profile')
     } else {
-      setMessage('Logged in successfully.')
+      // Profile complete, go to dashboard
       router.push('/dashboard')
     }
   }
@@ -41,7 +78,10 @@ export default function LoginPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={handleLogin}>
+      <button
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+        onClick={handleLogin}
+      >
         Sign In
       </button>
       {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}

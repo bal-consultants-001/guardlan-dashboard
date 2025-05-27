@@ -22,7 +22,8 @@ export default function RegisterPage() {
       setMessage(`Error: ${error.message}`)
     } else {
       setMessage('Check your email to confirm registration.')
-	  router.push('/complete-profile')
+	  //router.push('/complete-profile')
+	  router.push('/login')
     }
   }
 
