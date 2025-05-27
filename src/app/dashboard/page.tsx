@@ -92,7 +92,7 @@ export default function DashboardPage() {
 		const logsResponse = await supabase
 		  .from('logs')
 		  .select('*')
-		  .in('UniID', taIDs)
+		  .in('"UniID"', taIDs)
 
 		logsData = logsResponse.data ?? []
 		logsError = logsResponse.error
