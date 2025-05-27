@@ -10,8 +10,9 @@ type Device = {
   "Hostname": string
   "OS": string
   "Model": string
-  "Q_Total": string
-  "Q_Perv" : string
+  Q_Total: string
+  Q_Perv : string
+  taID : string
   // Add more fields as needed
 }
 
@@ -20,6 +21,21 @@ type Ticket = {
   status: string
   // Add more fields as needed
 }
+
+type LogEntry = {
+  UniID: string
+  Date: string
+  Q_Total?: string
+  Q_Perv?: string
+  // Add more fields from the logs table as needed
+}
+
+type DeviceWithLog = Device & {
+  taID: string
+  latestLog?: LogEntry | null
+}
+
+
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -31,7 +47,7 @@ export default function DashboardPage() {
   const [orders, setOrders] = useState<Order[]>([])
   //const [devices, setDevices] = useState<Device[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
-  const [devicesWithLogs, setDevicesWithLogs] = useState<Device[]>([])
+  const [devicesWithLogs, setDevicesWithLogs] = useState<DeviceWithLog[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +94,7 @@ export default function DashboardPage() {
 		acc[log.UniID] = log
 	  }
 	  return acc
-	}, {} as Record<string, any>)
+	}, {} as Record<string, LogEntry>)
 	
    	  const devicesWithLogs = deviceData?.map((device) => ({
 	    ...device,
