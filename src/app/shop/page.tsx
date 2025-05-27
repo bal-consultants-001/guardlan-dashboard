@@ -44,15 +44,9 @@ export default function ShopPage() {
 
   return (
     <main className="p-6">
-      <section className="py-20 px-4 text-center">
-        <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
-        <div className="space-x-4">
-          <Link href="/">
-            <a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 hover:text-white">
-              Back to Home
-            </a>
-          </Link>
-          {user ? (
+      <section className="py-10 px-4 text-center">
+        <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
+		  {user ? (
             <Link href="/dashboard">
               <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
                 Dashboard
@@ -72,6 +66,16 @@ export default function ShopPage() {
               </Link>
             </>
           )}
+		</div>
+	  </section>
+	  <section className="py-20 px-4 text-center">
+        <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
+        <div className="space-x-4">
+          <Link href="/">
+            <a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 hover:text-white">
+              Back to Home
+            </a>
+          </Link>
         </div>
       </section>
 
