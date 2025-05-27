@@ -42,8 +42,8 @@ export default function LoginPage() {
     // Check if Firstname and Lastname are populated in the Owners table
     const { data: ownerData, error: ownerError } = await supabase
       .from('owner')
-      .select('Firstname, Lastname')
-      .eq('ID', user.id)
+      .select('"Firstname", "Lastname"')
+      .eq('"ID"', user.id)
       .single()
 
     if (ownerError) {
