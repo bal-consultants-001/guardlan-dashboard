@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-white text-gray-900">
 	  <section className="py-10 px-4 text-center">
-	  <div className="py-10 grid md:grid-cols-2 gap-6 flex align-right">
+	  <div className="py-10 grid md:grid-cols-2 gap-6 position:absolute right:0">
 	  <Link href="/register">
 		<a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
 		Register

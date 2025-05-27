@@ -12,7 +12,7 @@ type Device = {
   "Model": string
   Q_Total: string
   Q_Perc: string
-  taID : string
+  taID: string
   // Add more fields as needed
 }
 
