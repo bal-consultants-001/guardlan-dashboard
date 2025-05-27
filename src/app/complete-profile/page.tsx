@@ -34,6 +34,8 @@ export default function CompleteProfilePage() {
       setLoading(false)
       return
     }
+	
+	const email = user.email
 
     const {
       Firstname,
@@ -49,6 +51,7 @@ export default function CompleteProfilePage() {
       .upsert(
         {
           ID: user.id,
+		  Email: email,
           Firstname,
           Lastname,
           Fullname: `${Firstname} ${Lastname}`,
