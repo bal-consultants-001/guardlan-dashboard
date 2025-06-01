@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import { DeviceWithLog, DeviceList, DeviceGroup, DeviceClient } from "@/types";
 
@@ -39,7 +41,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
           <h3 className="font-semibold">Clients</h3>
           <ul className="list-disc ml-5">
             {data.clients.map((client, i) => (
-              <li key={i}>{client.name}</li> {/* ← match with correct key */}
+              <li key={i}>{client.name}</li>
             ))}
           </ul>
         </div>
@@ -48,7 +50,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
           <h3 className="font-semibold">Lists</h3>
           <ul className="list-disc ml-5">
             {data.lists.map((list, i) => (
-              <li key={i}>{list.type}</li> {/* ← or use comment/type/groups as you prefer */}
+              <li key={i}>{list.type}</li>
             ))}
           </ul>
         </div>
