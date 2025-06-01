@@ -26,7 +26,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
           ✕
         </button>
 
-        <h2 className="text-xl font-bold mb-4">Device Details: {device.name}</h2>
+        <h2 className="text-xl font-bold mb-4">Device Details: {device["Hostname"]}</h2>
 
         <div className="mb-4">
           <h3 className="font-semibold">Groups</h3>
