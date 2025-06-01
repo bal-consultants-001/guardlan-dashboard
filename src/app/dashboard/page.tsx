@@ -162,12 +162,11 @@ export default function DashboardPage() {
 	});
 	
 	setSelectedDevice(device);
+
+	};
 	
 	const closeModal = () => {
 	  setSelectedDevice(null);
-	};
-
-	
 	};
 
   if (!user) return <p>Loading dashboard...</p>
