@@ -1,15 +1,16 @@
 // components/DeviceDetailsModal.tsx
 import React from "react";
+import { DeviceWithLog, DeviceList, DeviceGroup, DeviceClient } from "@/types";
 
-export default function DeviceDetailsModal({ device, onClose, data }: {
-  device: any;
-  onClose: () => void;
+interface DeviceDetailsModalProps {
+  device: DeviceWithLog;
   data: {
-    lists: any[];
-    groups: any[];
-    clients: any[];
+    lists: DeviceList[];
+    groups: DeviceGroup[];
+    clients: DeviceClient[];
   };
-}) {
+  onClose: () => void;
+} {
   if (!device) return null;
 
   return (

@@ -39,6 +39,7 @@ type DeviceWithLog = Device & {
 
 
 import DeviceDetailsModal from "@/components/DeviceDetailsModal"; // adjust path as needed
+import { DeviceWithLog, DeviceList, DeviceGroup, DeviceClient } from "@/types";
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
@@ -51,11 +52,15 @@ export default function DashboardPage() {
   //const [devices, setDevices] = useState<Device[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [devicesWithLogs, setDevicesWithLogs] = useState<DeviceWithLog[]>([])
-  const [selectedDevice, setSelectedDevice] = useState<any>(null);
-  const [modalData, setModalData] = useState({
-    lists: [],
-    groups: [],
-    clients: []
+  const [selectedDevice, setSelectedDevice] = useState<DeviceWithLog | null>(null);
+  const [modalData, setModalData] = useState<{
+	lists: DeviceList[];
+	groups: DeviceGroup[];
+	clients: DeviceClient[];
+  }>({
+	lists: [],
+	groups: [],
+	clients: [],
   });
 
   useEffect(() => {
@@ -141,20 +146,22 @@ export default function DashboardPage() {
     fetchData()
   }, [router])
   
-  	const openModal = async (device: any) => {
-	  setSelectedDevice(device);
+  	const openModal = async (device: DeviceWithLog) => {
+	 const { supabase } = await import('@/lib/supabase');
+	 ...
+	};
 
-	const [lists, groups, clients] = await Promise.all([
-	  supabase.from("device_lists").select("*").eq("device", device.taID),
-	  supabase.from("device_groups").select("*").eq("device", device.taID),
-	  supabase.from("device_clients").select("*").eq("device", device.taID),
+	const [listsRes, groupsRes, clientsRes] = await Promise.all([
+	  supabase.from("device_lists").select("comment, groups, type").eq("device", device.taID),
+	  supabase.from("device_groups").select("name, comment, pi_id").eq("device", device.taID),
+	  supabase.from("device_clients").select("name, client, groups, cli_id").eq("device", device.taID),
 	]);
 
 	setModalData({
-	  lists: lists.data || [],
-	  groups: groups.data || [],
-	  clients: clients.data || [],
-	  });
+	  lists: (listsRes.data ?? []) as DeviceList[],
+	  groups: (groupsRes.data ?? []) as DeviceGroup[],
+	  clients: (clientsRes.data ?? []) as DeviceClient[],
+	});
 	};
 
 	const closeModal = () => {
@@ -225,7 +232,7 @@ export default function DashboardPage() {
 						{device["Hostname"]}
 					  </button>
 					</td>
-					//<td className="border px-4 py-2">{device["Hostname"]}</td>
+					{/*<td className="border px-4 py-2">{device["Hostname"]}</td>*/}
 					<td className="border px-4 py-2">{device["OS"]}</td>
 					<td className="border px-4 py-2">{device["Model"]}</td>
 					<td className="border px-4 py-2">{device.latestLog?.["Q_Total"] ?? 'N/A'}</td>
