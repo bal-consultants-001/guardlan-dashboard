@@ -39,7 +39,7 @@ type DeviceWithLog = Device & {
 
 
 import DeviceDetailsModal from "@/components/DeviceDetailsModal"; // adjust path as needed
-import { DeviceWithLog, DeviceList, DeviceGroup, DeviceClient } from "@/types";
+import { DeviceList, DeviceGroup, DeviceClient } from "@/types";
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
