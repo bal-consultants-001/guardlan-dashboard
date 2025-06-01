@@ -31,15 +31,13 @@ export type Device = {
   taID: string
   // Add more fields as needed
   
+};
 export type LogEntry = {
   UniID: string
   Date: string
   Q_Total?: string
   Q_Perc?: string
-}
-
-}
-
+};
 export type DeviceWithLog = Device & {
   taID: string
   latestLog?: LogEntry | null
