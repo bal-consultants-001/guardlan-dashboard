@@ -141,16 +141,14 @@ export default function DashboardPage() {
         .select('*')
         .eq('id', userId)
       setTickets(ticketData || [])
-    }
+    };
 
     fetchData()
   }, [router])
   
   	const openModal = async (device: DeviceWithLog) => {
 	 const { supabase } = await import('@/lib/supabase');
-	 ...
-	};
-
+	
 	const [listsRes, groupsRes, clientsRes] = await Promise.all([
 	  supabase.from("device_lists").select("comment, groups, type").eq("device", device.taID),
 	  supabase.from("device_groups").select("name, comment, pi_id").eq("device", device.taID),
@@ -162,11 +160,11 @@ export default function DashboardPage() {
 	  groups: (groupsRes.data ?? []) as DeviceGroup[],
 	  clients: (clientsRes.data ?? []) as DeviceClient[],
 	});
-	};
 
 	const closeModal = () => {
 	  setSelectedDevice(null);
 	  setModalData({ lists: [], groups: [], clients: [] });
+	};
 	};
 
   if (!user) return <p>Loading dashboard...</p>
