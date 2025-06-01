@@ -8,7 +8,7 @@ type Order = {
   // Add more fields as needed
 }
 
-type Device = {
+/*type Device = {
   "Hostname": string
   "OS": string
   "Model": string
@@ -16,7 +16,7 @@ type Device = {
   Q_Perc: string
   taID: string
   // Add more fields as needed
-}
+}*/
 
 type Ticket = {
   ticket_no: string
