@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
     "@supabase/supabase-js": "^2.49.8",
     "next": "15.3.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "reactjs-popup": "^2.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -24,5 +26,19 @@
     "eslint-config-next": "15.3.2",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bal-consultants-001/guardlan-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bal-consultants-001/guardlan-dashboard/issues"
+  },
+  "homepage": "https://github.com/bal-consultants-001/guardlan-dashboard#readme"
 }

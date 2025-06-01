@@ -38,7 +38,7 @@ type DeviceWithLog = Device & {
 }
 
 
-
+import DeviceDetailsModal from "@/components/DeviceDetailsModal"; // adjust path as needed
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
@@ -51,6 +51,12 @@ export default function DashboardPage() {
   //const [devices, setDevices] = useState<Device[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [devicesWithLogs, setDevicesWithLogs] = useState<DeviceWithLog[]>([])
+  const [selectedDevice, setSelectedDevice] = useState<any>(null);
+  const [modalData, setModalData] = useState({
+    lists: [],
+    groups: [],
+    clients: []
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -134,6 +140,27 @@ export default function DashboardPage() {
 
     fetchData()
   }, [router])
+  
+  	const openModal = async (device: any) => {
+	  setSelectedDevice(device);
+
+	const [lists, groups, clients] = await Promise.all([
+	  supabase.from("device_lists").select("*").eq("device", device.taID),
+	  supabase.from("device_groups").select("*").eq("device", device.taID),
+	  supabase.from("device_clients").select("*").eq("device", device.taID),
+	]);
+
+	setModalData({
+	  lists: lists.data || [],
+	  groups: groups.data || [],
+	  clients: clients.data || [],
+	  });
+	};
+
+	const closeModal = () => {
+	  setSelectedDevice(null);
+	  setModalData({ lists: [], groups: [], clients: [] });
+	};
 
   if (!user) return <p>Loading dashboard...</p>
 
@@ -190,7 +217,15 @@ export default function DashboardPage() {
 			  <tbody>
 				{devicesWithLogs.map((device) => (
 				  <tr key={device.taID}>
-					<td className="border px-4 py-2">{device["Hostname"]}</td>
+					<td>
+					  <button
+						className="text-blue-600 hover:underline"
+						onClick={() => openModal(device)}
+					  >
+						{device["Hostname"]}
+					  </button>
+					</td>
+					//<td className="border px-4 py-2">{device["Hostname"]}</td>
 					<td className="border px-4 py-2">{device["OS"]}</td>
 					<td className="border px-4 py-2">{device["Model"]}</td>
 					<td className="border px-4 py-2">{device.latestLog?.["Q_Total"] ?? 'N/A'}</td>
@@ -223,6 +258,13 @@ export default function DashboardPage() {
           Raise a New Ticket
         </button>
       </section>
+	  {selectedDevice && (
+	  <DeviceDetailsModal
+		device={selectedDevice}
+		data={modalData}
+		onClose={closeModal}
+	  />
+	)}
     </main>
   )
 }
