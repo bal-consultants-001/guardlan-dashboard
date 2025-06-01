@@ -21,3 +21,8 @@ export type DeviceClient = {
   groups: string[]; // assuming array
   cli_id: number; // adjust if it's a UUID
 };
+
+export type DeviceWithLog = Device & {
+  taID: string
+  latestLog?: LogEntry | null
+};
