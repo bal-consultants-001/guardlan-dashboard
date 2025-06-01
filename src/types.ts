@@ -22,6 +22,24 @@ export type DeviceClient = {
   cli_id: number; // adjust if it's a UUID
 };
 
+export type Device = {
+  "Hostname": string
+  "OS": string
+  "Model": string
+  Q_Total: string
+  Q_Perc: string
+  taID: string
+  // Add more fields as needed
+  
+export type LogEntry = {
+  UniID: string
+  Date: string
+  Q_Total?: string
+  Q_Perc?: string
+}
+
+}
+
 export type DeviceWithLog = Device & {
   taID: string
   latestLog?: LogEntry | null
