@@ -160,11 +160,9 @@ export default function DashboardPage() {
 	  groups: (groupsRes.data ?? []) as DeviceGroup[],
 	  clients: (clientsRes.data ?? []) as DeviceClient[],
 	});
-
-	const closeModal = () => {
-	  setSelectedDevice(null);
-	  setModalData({ lists: [], groups: [], clients: [] });
-	};
+	
+	setSelectedDevice(device);
+	
 	};
 
   if (!user) return <p>Loading dashboard...</p>
