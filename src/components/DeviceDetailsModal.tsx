@@ -1,4 +1,3 @@
-// components/DeviceDetailsModal.tsx
 import React from "react";
 import { DeviceWithLog, DeviceList, DeviceGroup, DeviceClient } from "@/types";
 
@@ -10,7 +9,9 @@ interface DeviceDetailsModalProps {
     clients: DeviceClient[];
   };
   onClose: () => void;
-} {
+}
+
+const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, onClose }) => {
   if (!device) return null;
 
   return (
@@ -38,7 +39,7 @@ interface DeviceDetailsModalProps {
           <h3 className="font-semibold">Clients</h3>
           <ul className="list-disc ml-5">
             {data.clients.map((client, i) => (
-              <li key={i}>{client.client}</li>
+              <li key={i}>{client.name}</li> {/* ← match with correct key */}
             ))}
           </ul>
         </div>
@@ -47,11 +48,13 @@ interface DeviceDetailsModalProps {
           <h3 className="font-semibold">Lists</h3>
           <ul className="list-disc ml-5">
             {data.lists.map((list, i) => (
-              <li key={i}>{list.name}</li>
+              <li key={i}>{list.type}</li> {/* ← or use comment/type/groups as you prefer */}
             ))}
           </ul>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default DeviceDetailsModal;
