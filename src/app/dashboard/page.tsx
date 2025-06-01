@@ -59,6 +59,15 @@ export default function DashboardPage() {
 	groups: [],
 	clients: [],
   });
+  
+  const handleLogout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error('Error signing out:', error.message);
+  } else {
+    router.push('/');
+  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -182,6 +191,9 @@ export default function DashboardPage() {
 					Shop Now
 				</a>
 			</Link>
+			<button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800" onClick={handleLogout}>
+			  Log Out
+			</button>
 		</div>
       </section>
       <h1 className="text-3xl font-bold mb-6">Welcome, {user.email}</h1>
