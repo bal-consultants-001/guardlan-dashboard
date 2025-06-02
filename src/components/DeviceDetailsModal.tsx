@@ -64,7 +64,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
                 <tr key={index}>
                   <td className="border px-4 py-2">{group.name || "—"}</td>
                   <td className="border px-4 py-2">{group.comment || "—"}</td>
-                  <td className="border px-4 py-2">{group.pi_id || "—"}</td>
+                  <td className="border px-4 py-2">{group.pi_id ?? "—"}</td>
                 </tr>
               ))}
             </tbody>
