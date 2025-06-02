@@ -22,7 +22,7 @@ const NewSupportTicketPage = () => {
       if (error) {
         console.error('Error fetching devices:', error);
       } else {
-		  
+		console.log('Device info:',data);
 		setDevices(data);
       }
     };
