@@ -38,7 +38,13 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
 				  {data.lists.map((list, index) => (
 					<tr key={index}>
 					  <td className="border px-4 py-2">{list.comment}</td>
-					  <td className="border px-4 py-2">{list.groups}</td>
+					  {/*<td className="border px-4 py-2">{list.groups}</td>*/}
+					  <td className="border px-4 py-2">
+					  {(Array.isArray(list.groups) ? list.groups : [list.groups])
+						.map((groupId: number) => data.groups.find(g => g.pi_id === groupId)?.name)
+						.filter(Boolean)
+						.join(", ") || "—"}
+					  </td>
 					  <td className="border px-4 py-2">{list.type}</td>
 					</tr>
 				  ))}
@@ -94,7 +100,13 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
 					<tr key={index}>
 					  <td className="border px-4 py-2">{client.name}</td>
 					  <td className="border px-4 py-2">{client.client}</td>
-					  <td className="border px-4 py-2">{client.groups}</td>
+					  {/*<td className="border px-4 py-2">{client.groups}</td>*/}
+					  <td className="border px-4 py-2">
+					  {(Array.isArray(client.groups) ? client.groups : [client.groups])
+						.map((groupId: number) => data.groups.find(g => g.pi_id === groupId)?.name)
+						.filter(Boolean)
+						.join(", ") || "—"}
+					  </td>
 					  <td className="border px-4 py-2">{client.cli_id}</td>
 					</tr>
 				  ))}
