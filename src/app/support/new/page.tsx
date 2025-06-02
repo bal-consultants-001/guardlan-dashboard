@@ -4,11 +4,11 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { supabase } from '@/lib/supabase'; // just like dashboard
 import { Database } from '@/types/supabase'; // adjust path if needed
 
 const NewSupportTicketPage = () => {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = supabase<Database>();
   const router = useRouter();
 
   const [shortDesc, setShortDesc] = useState('');
