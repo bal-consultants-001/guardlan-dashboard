@@ -288,13 +288,29 @@ export default function DashboardPage() {
         {tickets.length === 0 ? (
           <p>No support tickets yet.</p>
         ) : (
-          <ul className="list-disc ml-5">
+          <tabel className="border px-4 py-2">Ticket No</th>
+				  <th className="border px-4 py-2">Subject</th>
+				  <th className="border px-4 py-2">Status</th>
+				  <th className="border px-4 py-2">Engineer</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				{/*<td className="border px-4 py-2">{device["Hostname"]}</td>*/}
+				<td className="border px-4 py-2">{ticket.ticket_no}</td>
+				<td className="border px-4 py-2">{ticket.short_desc}</td>
+				<td className="border px-4 py-2">{ticket.status}</td>
+				<td className="border px-4 py-2">{ticket.supp_user ?? 'Unassigned'}</td>
+			    </tr>
+				))}
+			  </tbody>
+			</table>
+			{/*<ul className="list-disc ml-5">
             {tickets.map((ticket: Ticket) => (
               <li key={ticket.ticket_no}>
                 Ticket #{ticket.ticket_no} — {ticket.status}
               </li>
             ))}
-          </ul>
+			</ul>*/}s
         )}
         <button
           className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
