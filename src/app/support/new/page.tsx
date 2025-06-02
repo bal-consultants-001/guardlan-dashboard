@@ -5,7 +5,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase'; // just like dashboard
-import { Database } from '@/types/supabase'; // adjust path if needed
 
 const NewSupportTicketPage = () => {
   const router = useRouter();
