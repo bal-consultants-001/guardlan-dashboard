@@ -153,16 +153,15 @@ export default function DashboardPage() {
     fetchData()
   }, [router])
   
-  	const openModal = async (device: DeviceWithLog) => {
-	 const { supabase } = await import('@/lib/supabase');
-	
-	const [listsRes, groupsRes, clientsRes] = await Promise.all([
-	  supabase.from("device_lists").select("comment, groups, type").eq("device", device.taID),
-	  supabase.from("device_groups").select("name, comment, pi_id").eq("device", device.taID),
-	  supabase.from("device_clients").select("name, client, groups, cli_id").eq("device", device.taID),
-	]);
-	
-	// Helper function to normalize group values
+	const openModal = async (device: DeviceWithLog) => {
+	  const { supabase } = await import('@/lib/supabase');
+
+	  const [listsRes, groupsRes, clientsRes] = await Promise.all([
+		supabase.from("device_lists").select("comment, groups, type").eq("device", device.taID),
+		supabase.from("device_groups").select("name, comment, pi_id").eq("device", device.taID),
+		supabase.from("device_clients").select("name, client, groups, cli_id").eq("device", device.taID),
+	  ]);
+
 	  const normalizeGroups = (groups: any): number[] => {
 		if (Array.isArray(groups)) {
 		  return groups.map((g) => typeof g === 'string' ? parseInt(g) : g);
@@ -181,7 +180,6 @@ export default function DashboardPage() {
 		return [];
 	  };
 
-	  // Normalize the `groups` field in each list and client
 	  const normalizedLists = (listsRes.data ?? []).map((list) => ({
 		...list,
 		groups: normalizeGroups(list.groups),
@@ -200,6 +198,7 @@ export default function DashboardPage() {
 
 	  setSelectedDevice(device);
 	};
+
 
   if (!user) return <p>Loading dashboard...</p>
 
