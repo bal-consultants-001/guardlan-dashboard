@@ -21,49 +21,90 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
       <div className="bg-white p-6 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Device Details: {device.Hostname}</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Groups */}
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Groups:</h3>
-            <ul className="list-disc list-inside">
-              {data.groups.length > 0 ? (
-                data.groups.map((group, index) => (
-                  <li key={index}>{group.name || "Unnamed group"}</li>
-                ))
-              ) : (
-                <li>No groups found</li>
-              )}
-            </ul>
-          </div>
+        <div className="space-y-8">
+		  {/* Lists Section */}
+		  <div>
+			<h3 className="text-lg font-semibold mb-2">Lists</h3>
+			{data.lists.length > 0 ? (
+			  <table className="table-auto w-full border border-gray-300">
+				<thead>
+				  <tr className="bg-gray-100">
+					<th className="border px-4 py-2 text-left">Comment</th>
+					<th className="border px-4 py-2 text-left">Groups</th>
+					<th className="border px-4 py-2 text-left">Type</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  {data.lists.map((list, index) => (
+					<tr key={index}>
+					  <td className="border px-4 py-2">{list.comment}</td>
+					  <td className="border px-4 py-2">{list.groups}</td>
+					  <td className="border px-4 py-2">{list.type}</td>
+					</tr>
+				  ))}
+				</tbody>
+			  </table>
+			) : (
+			  <p>No lists found.</p>
+			)}
+		  </div>
 
-          {/* Clients */}
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Clients:</h3>
-            <ul className="list-disc list-inside">
-              {data.clients.length > 0 ? (
-                data.clients.map((client, index) => (
-                  <li key={index}>{client.name || client.client}</li>
-                ))
-              ) : (
-                <li>No clients found</li>
-              )}
-            </ul>
-          </div>
+		  {/* Groups Section */}
+		  <div>
+			<h3 className="text-lg font-semibold mb-2">Groups</h3>
+			{data.groups.length > 0 ? (
+			  <table className="table-auto w-full border border-gray-300">
+				<thead>
+				  <tr className="bg-gray-100">
+					<th className="border px-4 py-2 text-left">Name</th>
+					<th className="border px-4 py-2 text-left">Comment</th>
+					<th className="border px-4 py-2 text-left">Pi ID</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  {data.groups.map((group, index) => (
+					<tr key={index}>
+					  <td className="border px-4 py-2">{group.name}</td>
+					  <td className="border px-4 py-2">{group.comment}</td>
+					  <td className="border px-4 py-2">{group.pi_id}</td>
+					</tr>
+				  ))}
+				</tbody>
+			  </table>
+			) : (
+			  <p>No groups found.</p>
+			)}
+		  </div>
 
-          {/* Lists */}
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Lists:</h3>
-            <ul className="list-disc list-inside">
-              {data.lists.length > 0 ? (
-                data.lists.map((list, index) => (
-                  <li key={index}>{list.type || list.comment}</li>
-                ))
-              ) : (
-                <li>No lists found</li>
-              )}
-            </ul>
-          </div>
-        </div>
+		  {/* Clients Section */}
+		  <div>
+			<h3 className="text-lg font-semibold mb-2">Clients</h3>
+			{data.clients.length > 0 ? (
+			  <table className="table-auto w-full border border-gray-300">
+				<thead>
+				  <tr className="bg-gray-100">
+					<th className="border px-4 py-2 text-left">Name</th>
+					<th className="border px-4 py-2 text-left">Client</th>
+					<th className="border px-4 py-2 text-left">Groups</th>
+					<th className="border px-4 py-2 text-left">CLI ID</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  {data.clients.map((client, index) => (
+					<tr key={index}>
+					  <td className="border px-4 py-2">{client.name}</td>
+					  <td className="border px-4 py-2">{client.client}</td>
+					  <td className="border px-4 py-2">{client.groups}</td>
+					  <td className="border px-4 py-2">{client.cli_id}</td>
+					</tr>
+				  ))}
+				</tbody>
+			  </table>
+			) : (
+			  <p>No clients found.</p>
+			)}
+		  </div>
+		</div>
 
         <div className="mt-6 text-right">
           <button
