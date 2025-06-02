@@ -262,7 +262,7 @@ export default function DashboardPage() {
 				  <tr key={device.taID}>
 					<td>
 					  <button
-						className="text-center text-white hover:underline"
+						className="px-4 py-2 text-center text-white hover:underline"
 						onClick={() => openModal(device)}
 					  >
 						{device["Hostname"]}
