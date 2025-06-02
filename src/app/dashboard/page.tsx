@@ -292,7 +292,7 @@ export default function DashboardPage() {
 			  <thead>
 				<tr>
 				  <th className="border px-4 py-2">Ticket No</th>
-				  <th className="border px-4 py-2">Subject</th>
+				  {/*<th className="border px-4 py-2">Subject</th>*/}
 				  <th className="border px-4 py-2">Status</th>
 				  <th className="border px-4 py-2">Engineer</th>
 				</tr>
@@ -302,7 +302,7 @@ export default function DashboardPage() {
 				  <tr key={ticket.ticket_no}>
 					console.log('Ticket:',ticket);
 					<td className="border px-4 py-2">{ticket.ticket_no}</td>
-					//<td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
+						{/*<td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>*/}
 					<td className="border px-4 py-2">{ticket.status}</td>
 					<td className="border px-4 py-2">{ticket.supp_user || 'Unassigned'}</td>
 				  </tr>
