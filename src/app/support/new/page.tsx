@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { supabase } from '@/lib/supabase'; // adjust path if needed
+//import { supabase } from '@/lib/supabase'; // adjust path if needed
 
 const NewSupportTicketPage = () => {
   const supabase = createClientComponentClient<Database>();
@@ -29,7 +29,7 @@ const NewSupportTicketPage = () => {
     };
 
     fetchDevices();
-  }, []);
+  }, [supabase]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ const NewSupportTicketPage = () => {
         short_desc: shortDesc,
         description,
         device,
-        owner: owner.ID,
+        owner: user.id,
         status: 'New',
         user: null, // remains empty
       },
