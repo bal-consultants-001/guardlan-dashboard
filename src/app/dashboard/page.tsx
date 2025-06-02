@@ -162,7 +162,7 @@ export default function DashboardPage() {
 		supabase.from("device_clients").select("name, client, groups, cli_id").eq("device", device.taID),
 	  ]);
 
-	  const normalizeGroups = (groups: any): number[] => {
+	  const normalizeGroups = (groups: unknown): number[] => {
 		if (Array.isArray(groups)) {
 		  return groups.map((g) => typeof g === 'string' ? parseInt(g) : g);
 		}
