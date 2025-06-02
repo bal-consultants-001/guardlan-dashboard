@@ -21,6 +21,8 @@ type Order = {
 type Ticket = {
   ticket_no: string
   status: string
+  short_desc?: string
+  supp_user?: string
   // Add more fields as needed
 }
 
