@@ -48,7 +48,7 @@ export default function DashboardPage() {
       const { data: ticketData } = await supabase
         .from('tickets')
         .select('*')
-        .eq('id', userId)
+        .eq('owner', userId)
       setTickets(ticketData || [])
     };
 
