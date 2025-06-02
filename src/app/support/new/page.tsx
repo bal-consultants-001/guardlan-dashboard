@@ -18,11 +18,12 @@ const NewSupportTicketPage = () => {
 
   useEffect(() => {
     const fetchDevices = async () => {
-      const { data, error } = await supabase.from('Devices').select('taID, Hostname');
+      const { data, error } = await supabase.from('Devices').select('"taID", "Hostname"');
       if (error) {
         console.error('Error fetching devices:', error);
       } else {
-        setDevices(data);
+		  
+		setDevices(data);
       }
     };
 
