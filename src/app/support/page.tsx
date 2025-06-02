@@ -63,17 +63,13 @@ export default function DashboardPage() {
     <main className="p-6 max-w-5xl mx-auto space-y-12">
 	  <section className="py-10 px-4 text-center">
 		<div className="py-8 grid md:grid-cols-3 gap-6 float-right">
-			<Link href="/">
-				<a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+			<Link href="/" className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
 					Back to Home
-				</a>
 			</Link>
-			<Link href="/shop">
-				<a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-					Shop Now
-				</a>
+			<Link href="/dashboard" className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+					Dashboard
 			</Link>
-			<button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800" onClick={handleLogout}>
+			<button className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800" onClick={handleLogout}>
 			  Log Out
 			</button>
 		</div>
