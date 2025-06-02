@@ -5,6 +5,8 @@
 type Ticket = {
   ticket_no: string
   status: string
+  short_desc?: string
+  supp_user?: string
   // Add more fields as needed
 }
 
@@ -84,13 +86,26 @@ export default function DashboardPage() {
         {tickets.length === 0 ? (
           <p>No support tickets yet.</p>
         ) : (
-          <ul className="list-disc ml-5">
-            {tickets.map((ticket: Ticket) => (
-              <li key={ticket.ticket_no}>
-                Ticket #{ticket.ticket_no} — {ticket.status}
-              </li>
-            ))}
-          </ul>
+			<table className="table-auto w-full border border-collapse mt-4">
+			  <thead>
+				<tr>
+				  <th className="border px-4 py-2">Ticket No</th>
+				  <th className="border px-4 py-2">Subject</th>
+				  <th className="border px-4 py-2">Status</th>
+				  <th className="border px-4 py-2">Engineer</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				{tickets.map((ticket) => (
+				  <tr key={ticket.ticket_no}>
+					<td className="border px-4 py-2">{ticket.ticket_no}</td>
+					<td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
+					<td className="border px-4 py-2">{ticket.status}</td>
+					<td className="border px-4 py-2">{ticket.supp_user || 'Unassigned'}</td>
+				  </tr>
+				))}
+			  </tbody>
+			</table>
         )}
         <button
           className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
