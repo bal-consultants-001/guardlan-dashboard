@@ -99,13 +99,6 @@ export default function DashboardPage() {
           Raise a New Ticket
         </button>
       </section>
-	  {selectedDevice && (
-	  <DeviceDetailsModal
-		device={selectedDevice}
-		data={modalData}
-		onClose={closeModal}
-	  />
-	)}
     </main>
   )
 }
