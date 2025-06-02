@@ -61,7 +61,7 @@ const NewSupportTicketPage = () => {
         device,
         owner: user.id,
         status: 'New',
-        user: null, // remains empty
+        supp_user: null, // remains empty
       },
     ]);
 
@@ -80,7 +80,7 @@ const NewSupportTicketPage = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded shadow mt-6">
+    <div className="max-w-2xl mx-auto p-6 bg-white text-black rounded shadow mt-6">
       <h1 className="text-2xl font-bold mb-4">Log a New Support Ticket</h1>
 
       {error && <p className="text-red-600 mb-4">{error}</p>}
