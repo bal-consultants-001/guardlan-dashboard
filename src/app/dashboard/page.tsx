@@ -283,42 +283,39 @@ export default function DashboardPage() {
 		</section>
 
       {/* Tickets Section */}
-      <section>
-        <h2 className="text-xl font-semibold mb-2">Support Tickets</h2>
-        {tickets.length === 0 ? (
-          <p>No support tickets yet.</p>
-        ) : (
-          <tabel className="border px-4 py-2">Ticket No</th>
+		<section>
+		  <h2 className="text-xl font-semibold mb-2">Support Tickets</h2>
+		  {tickets.length === 0 ? (
+			<p>No support tickets yet.</p>
+		  ) : (
+			<table className="table-auto w-full border border-collapse mt-4">
+			  <thead>
+				<tr>
+				  <th className="border px-4 py-2">Ticket No</th>
 				  <th className="border px-4 py-2">Subject</th>
 				  <th className="border px-4 py-2">Status</th>
 				  <th className="border px-4 py-2">Engineer</th>
 				</tr>
 			  </thead>
 			  <tbody>
-				{/*<td className="border px-4 py-2">{device["Hostname"]}</td>*/}
-				<td className="border px-4 py-2">{ticket.ticket_no}</td>
-				<td className="border px-4 py-2">{ticket.short_desc}</td>
-				<td className="border px-4 py-2">{ticket.status}</td>
-				<td className="border px-4 py-2">{ticket.supp_user ?? 'Unassigned'}</td>
-			    </tr>
+				{tickets.map((ticket) => (
+				  <tr key={ticket.ticket_no}>
+					<td className="border px-4 py-2">{ticket.ticket_no}</td>
+					<td className="border px-4 py-2">{(ticket as any).short_desc ?? 'N/A'}</td>
+					<td className="border px-4 py-2">{ticket.status}</td>
+					<td className="border px-4 py-2">{(ticket as any).supp_user ?? 'Unassigned'}</td>
+				  </tr>
 				))}
 			  </tbody>
 			</table>
-			{/*<ul className="list-disc ml-5">
-            {tickets.map((ticket: Ticket) => (
-              <li key={ticket.ticket_no}>
-                Ticket #{ticket.ticket_no} — {ticket.status}
-              </li>
-            ))}
-			</ul>
-)}*/}
-        <button
-          className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
-          onClick={() => router.push('/support/new')}
-        >
-          Raise a New Ticket
-        </button>
-      </section>
+		  )}
+		  <button
+			className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
+			onClick={() => router.push('/support/new')}
+		  >
+			Raise a New Ticket
+		  </button>
+		</section>
 	  {selectedDevice && (
 	  <DeviceDetailsModal
 		device={selectedDevice}
