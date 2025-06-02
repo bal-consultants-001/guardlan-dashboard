@@ -300,8 +300,9 @@ export default function DashboardPage() {
 			  <tbody>
 				{tickets.map((ticket) => (
 				  <tr key={ticket.ticket_no}>
+					console.log('Ticket:',ticket);
 					<td className="border px-4 py-2">{ticket.ticket_no}</td>
-					<td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
+					//<td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
 					<td className="border px-4 py-2">{ticket.status}</td>
 					<td className="border px-4 py-2">{ticket.supp_user || 'Unassigned'}</td>
 				  </tr>
