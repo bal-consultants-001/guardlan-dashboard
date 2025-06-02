@@ -8,7 +8,6 @@ import { supabase } from '@/lib/supabase'; // just like dashboard
 import { Database } from '@/types/supabase'; // adjust path if needed
 
 const NewSupportTicketPage = () => {
-  const supabase = supabase<Database>();
   const router = useRouter();
 
   const [shortDesc, setShortDesc] = useState('');
@@ -45,13 +44,15 @@ const NewSupportTicketPage = () => {
     }
 
     const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
+	  data: { session },
+	  error: sessionError,
+	} = await supabase.auth.getSession();
 
-    if (userError || !user) {
-      return setError('Unable to fetch user.');
-    }
+	if (sessionError || !session?.user) {
+	  return setError('Unable to fetch user.');
+	}
+
+	const user = session.user;
 
     const { error: insertError } = await supabase.from('tickets').insert([
       {
