@@ -247,7 +247,7 @@ export default function DashboardPage() {
 		  {devicesWithLogs.length === 0 ? (
 			<p>No active devices.</p>
 		  ) : (
-			<table className="table-auto w-full border border-collapse mt-4">
+			<table className="table-auto w-full border border-collapse mt-4 rounded-lg">
 			  <thead>
 				<tr>
 				  <th className="border px-4 py-2">Hostname</th>
