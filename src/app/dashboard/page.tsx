@@ -286,7 +286,7 @@ export default function DashboardPage() {
 		  {tickets.length === 0 ? (
 			<p>No support tickets yet.</p>
 		  ) : (
-			<table className="table-auto w-full border border-collapse mt-4">
+			<table className="table-auto w-full border-collapse border outline outline-1 outline-gray-400 overflow-hidden text-center rounded-lg">
 			  <thead>
 				<tr>
 				  <th className="border px-4 py-2">Ticket No</th>
