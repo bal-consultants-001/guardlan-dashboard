@@ -8,7 +8,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { supabase } from '@/lib/supabase'; // adjust path if needed
 
 const NewSupportTicketPage = () => {
-  const supabase = createClientComponentClient<supabase>();
+  const supabase = createClientComponentClient<Database>();
   const router = useRouter();
 
   const [shortDesc, setShortDesc] = useState('');
