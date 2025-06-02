@@ -223,7 +223,7 @@ export default function DashboardPage() {
 			</button>
 		</div>
       </section>
-      <h1 className="text-3xl font-bold mb-6">Welcome, {user.email}</h1>
+      <h1 className="text-3xl font-bold mb-6">Welcome, {user.fullname}</h1>
 
       {/* Orders Section */}
       <section>
