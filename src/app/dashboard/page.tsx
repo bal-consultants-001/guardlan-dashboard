@@ -210,7 +210,7 @@ export default function DashboardPage() {
 
   return (
     <main className="p-6 max-w-5xl mx-auto space-y-12">
-	  <section className="py-10 px-4 text-center">
+	  <section className="py-9 px-4 text-center">
 		<div className="py-8 grid md:grid-cols-3 gap-6 float-right">
 			<Link href="/">
 				<a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
@@ -266,7 +266,7 @@ export default function DashboardPage() {
 				  <tr key={device.taID}>
 					<td>
 					  <button
-						className="text-blue-600 hover:underline"
+						className="border px-4 py-2 text-black hover:underline"
 						onClick={() => openModal(device)}
 					  >
 						{device["Hostname"]}
