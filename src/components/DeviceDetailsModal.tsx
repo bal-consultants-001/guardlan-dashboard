@@ -56,7 +56,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
               <tr>
                 <th className="border px-4 py-2 text-left">Name</th>
                 <th className="border px-4 py-2 text-left">Comment</th>
-                <th className="border px-4 py-2 text-left">pi_id</th>
+                <th className="border px-4 py-2 text-left">Group ID</th>
               </tr>
             </thead>
             <tbody>
@@ -80,7 +80,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
                 <th className="border px-4 py-2 text-left">Name</th>
                 <th className="border px-4 py-2 text-left">Client</th>
                 <th className="border px-4 py-2 text-left">Groups</th>
-                <th className="border px-4 py-2 text-left">cli_id</th>
+                <th className="border px-4 py-2 text-left">Client ID</th>
               </tr>
             </thead>
             <tbody>
