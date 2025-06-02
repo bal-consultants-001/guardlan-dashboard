@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase'; // adjust path if needed
+import { Database } from '@/libs/supabase'; // adjust path if needed
 
 const NewSupportTicketPage = () => {
   const supabase = createClientComponentClient<Database>();
