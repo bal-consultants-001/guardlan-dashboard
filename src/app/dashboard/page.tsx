@@ -161,19 +161,44 @@ export default function DashboardPage() {
 	  supabase.from("device_groups").select("name, comment, pi_id").eq("device", device.taID),
 	  supabase.from("device_clients").select("name, client, groups, cli_id").eq("device", device.taID),
 	]);
-
-	setModalData({
-	  lists: (listsRes.data ?? []) as DeviceList[],
-	  groups: (groupsRes.data ?? []) as DeviceGroup[],
-	  clients: (clientsRes.data ?? []) as DeviceClient[],
-	});
 	
-	setSelectedDevice(device);
+	// Helper function to normalize group values
+	  const normalizeGroups = (groups: any): number[] => {
+		if (Array.isArray(groups)) {
+		  return groups.map((g) => typeof g === 'string' ? parseInt(g) : g);
+		}
+		if (typeof groups === 'string') {
+		  try {
+			const parsed = JSON.parse(groups);
+			return Array.isArray(parsed) ? parsed.map((g) => parseInt(g)) : [];
+		  } catch {
+			return [];
+		  }
+		}
+		if (typeof groups === 'number') {
+		  return [groups];
+		}
+		return [];
+	  };
 
-	};
-	
-	const closeModal = () => {
-	  setSelectedDevice(null);
+	  // Normalize the `groups` field in each list and client
+	  const normalizedLists = (listsRes.data ?? []).map((list) => ({
+		...list,
+		groups: normalizeGroups(list.groups),
+	  }));
+
+	  const normalizedClients = (clientsRes.data ?? []).map((client) => ({
+		...client,
+		groups: normalizeGroups(client.groups),
+	  }));
+
+	  setModalData({
+		lists: normalizedLists,
+		groups: (groupsRes.data ?? []) as DeviceGroup[],
+		clients: normalizedClients,
+	  });
+
+	  setSelectedDevice(device);
 	};
 
   if (!user) return <p>Loading dashboard...</p>
