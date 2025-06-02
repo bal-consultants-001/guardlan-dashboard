@@ -5,10 +5,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/lib/supabase'; // adjust path if needed
+import { supabase } from '@/lib/supabase'; // adjust path if needed
 
 const NewSupportTicketPage = () => {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClientComponentClient<supabase>();
   const router = useRouter();
 
   const [shortDesc, setShortDesc] = useState('');
