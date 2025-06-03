@@ -2,6 +2,8 @@
 
 'use client'
 
+
+
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -17,6 +19,8 @@ type Product = {
   priceAmount: number
   description: string
 }
+
+type CartItem = Product & { quantity: number }
 
 export default function ShopPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -57,32 +61,58 @@ export default function ShopPage() {
     },
   ]
 
+	const [cart, setCart] = useState<CartItem[]>([])
+
+
   const addToCart = (product: Product) => {
-    setCart((prev) => [...prev, product])
+  setCart((prevCart) => {
+    const existing = prevCart.find((item) => item.id === product.id)
+    if (existing) {
+      return prevCart.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    } else {
+      return [...prevCart, { ...product, quantity: 1 }]
+    }
+  })
+}
+
+  const removeFromCart = (productId: number) => {
+	setCart((prevCart) => prevCart.filter((item) => item.id !== productId))
   }
 
-  const handleCheckout = async () => {
-    const stripe = await stripePromise
+  const decreaseQuantity = (productId: number) => {
+  setCart((prevCart) =>
+    prevCart
+      .map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+      )
+      .filter((item) => item.quantity > 0)
+  )
+}
 
-    // Convert cart items to Stripe format
-    const lineItems = cart.map((product) => ({
-      price_data: {
-        currency: 'gbp',
-        product_data: { name: product.name },
-        unit_amount: product.priceAmount,
-      },
-      quantity: 1,
-    }))
 
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: lineItems }),
-    })
+	const handleCheckout = async () => {
+	  const stripe = await stripePromise
 
-    const { sessionId } = await res.json()
-    await stripe?.redirectToCheckout({ sessionId })
-  }
+	  const lineItems = cart.map((item) => ({
+		price_data: {
+		  currency: 'gbp',
+		  product_data: { name: item.name },
+		  unit_amount: item.priceAmount,
+		},
+		quantity: item.quantity,
+	  }))
+
+	  const res = await fetch('/api/checkout', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ items: lineItems }),
+	  })
+
+	  const { sessionId } = await res.json()
+	  await stripe?.redirectToCheckout({ sessionId })
+	}
 
   return (
     <main className="p-6">
@@ -144,21 +174,47 @@ export default function ShopPage() {
       {/* Cart Section */}
       {cart.length > 0 && (
         <section className="py-10 px-4 mt-10 border-t">
-          <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
-          <ul className="mb-4">
-            {cart.map((item, index) => (
-              <li key={index} className="mb-2">
-                {item.name} – {item.price}
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={handleCheckout}
-            className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700"
-          >
-            Checkout
-          </button>
-        </section>
+		  <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+		  <ul className="mb-4 space-y-3">
+			{cart.map((item) => (
+			  <li key={item.id} className="flex justify-between items-center">
+				<div>
+				  <span className="font-semibold">{item.name}</span> — {item.price}
+				  <div className="text-sm text-gray-600">
+					Quantity: {item.quantity}
+				  </div>
+				</div>
+				<div className="flex items-center space-x-2">
+				  <button
+					onClick={() => decreaseQuantity(item.id)}
+					className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+				  >
+					−
+				  </button>
+				  <button
+					onClick={() => addToCart(item)}
+					className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+				  >
+					+
+				  </button>
+				  <button
+					onClick={() => removeFromCart(item.id)}
+					className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+				  >
+					Remove
+				  </button>
+				</div>
+			  </li>
+			))}
+		  </ul>
+
+		  <button
+			onClick={handleCheckout}
+			className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700"
+		  >
+			Checkout
+		  </button>
+		</section>
       )}
     </main>
   )
