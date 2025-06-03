@@ -152,7 +152,7 @@ export default function DashboardPage() {
         .eq('owner', userId)
       setTickets(ticketData || [])
 	  
-	  const {data: userData, error: userError } = await supabase
+	  const {data: userData} = await supabase
 	  .from('owner')
 	  .select('"Fullname"')
 	  .eq('"ID"', userId)
