@@ -155,7 +155,6 @@ export default function DashboardPage() {
 	  .from('owner')
 	  .select('"Fullname"')
 	  .eq('"ID"', userId)
-	  set(u || [])
 	  
     };
 
