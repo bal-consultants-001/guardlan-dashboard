@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
+    "@stripe/stripe-js": "^7.3.1",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.49.8",
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "stripe": "^18.2.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
