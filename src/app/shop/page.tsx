@@ -24,7 +24,7 @@ type CartItem = Product & { quantity: number }
 
 export default function ShopPage() {
   const [user, setUser] = useState<User | null>(null)
-  const [cart, setCart] = useState<Product[]>([])
+  const [cart, setCart] = useState<CartItem[]>([])
 
   useEffect(() => {
     const getUser = async () => {
@@ -60,9 +60,6 @@ export default function ShopPage() {
       description: 'Technical help when you need it most.',
     },
   ]
-
-	const [cart, setCart] = useState<CartItem[]>([])
-
 
   const addToCart = (product: Product) => {
   setCart((prevCart) => {
