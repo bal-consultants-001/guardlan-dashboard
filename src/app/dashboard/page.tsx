@@ -150,6 +150,13 @@ export default function DashboardPage() {
         .select('*')
         .eq('owner', userId)
       setTickets(ticketData || [])
+	  
+	  const {data: u } = await supabase
+	  .from('owner')
+	  .select('"Fullname"')
+	  .eq('"ID"', userId)
+	  setU(u || [])
+	  
     };
 
     fetchData()
@@ -157,6 +164,8 @@ export default function DashboardPage() {
   
 	const openModal = async (device: DeviceWithLog) => {
 	  const { supabase } = await import('@/lib/supabase');
+
+	  
 
 	  const [listsRes, groupsRes, clientsRes] = await Promise.all([
 		supabase.from("device_lists").select("comment, groups, type").eq("device", device.taID),
@@ -223,7 +232,7 @@ export default function DashboardPage() {
 			</button>
 		</div>
       </section>
-      <h1 className="text-3xl font-bold mb-6">Welcome, {user.fullname}</h1>
+      <h1 className="text-3xl font-bold mb-6">Welcome, {u[Fullname]}</h1>
 
       {/* Orders Section */}
       <section>
