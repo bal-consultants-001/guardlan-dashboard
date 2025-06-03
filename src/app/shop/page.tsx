@@ -2,6 +2,14 @@
 
 'use client'
 
+type Product = {
+  id: number
+  name: string
+  price: string
+  priceAmount: number
+  description: string
+}
+
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -48,7 +56,7 @@ export default function ShopPage() {
     },
   ]
 
-	const handleCheckout = async (product: any) => {
+	const handleCheckout = async (product: Product) => {
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: {
