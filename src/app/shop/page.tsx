@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
+import { loadStripe } from '@stripe/stripe-js'
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function ShopPage() {
   const [user, setUser] = useState<User | null>(null)
@@ -26,21 +29,49 @@ export default function ShopPage() {
       id: 1,
       name: 'Home Network AdBlocker',
       price: '£75',
+	  priceAmount: 7500,
       description: 'Block ads for every device on your network.',
     },
     {
       id: 2,
       name: 'Monthly Subscription',
       price: '£6/mo',
+	  priceAmount: 600,
       description: 'Continual filter updates and premium features.',
     },
     {
       id: 3,
       name: 'Hourly Support',
       price: '£25/hr',
+	  priceAmount: 2500,
       description: 'Technical help when you need it most.',
     },
   ]
+
+	const handleCheckout = async (product: any) => {
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            price_data: {
+              currency: 'gbp',
+              product_data: { name: product.name },
+              unit_amount: product.priceAmount,
+            },
+            quantity: 1,
+          },
+        ],
+      }),
+    })
+
+    const { sessionId } = await res.json()
+    const stripe = await stripePromise
+    await stripe?.redirectToCheckout({ sessionId })
+  }
 
   return (
     <main className="p-6">
@@ -85,8 +116,11 @@ export default function ShopPage() {
             <h2 className="text-xl font-bold">{product.name}</h2>
             <p className="my-2">{product.description}</p>
             <p className="font-semibold text-lg">{product.price}</p>
-            <button className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800">
-              Add to Cart
+            <button
+              onClick={() => handleCheckout(product)}
+              className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+            >
+              Buy Now
             </button>
           </div>
         ))}
