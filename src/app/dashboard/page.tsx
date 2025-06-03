@@ -51,6 +51,7 @@ export default function DashboardPage() {
   const [orders, setOrders] = useState<Order[]>([])
   //const [devices, setDevices] = useState<Device[]>([])
   const [tickets, setTickets] = useState<Ticket[]>([])
+  const [fullName, setFullName] = useState<string | null>(null)
   const [devicesWithLogs, setDevicesWithLogs] = useState<DeviceWithLog[]>([])
   const [selectedDevice, setSelectedDevice] = useState<DeviceWithLog | null>(null);
   const [modalData, setModalData] = useState<{
@@ -151,10 +152,15 @@ export default function DashboardPage() {
         .eq('owner', userId)
       setTickets(ticketData || [])
 	  
-	  const {data: u } = await supabase
+	  const {data: userData, error: userError } = await supabase
 	  .from('owner')
 	  .select('"Fullname"')
 	  .eq('"ID"', userId)
+	  .single()
+	  
+	  if(userData){
+		  setFullName(userData["Fullname"])
+	  }
 	  
     };
 
@@ -231,7 +237,7 @@ export default function DashboardPage() {
 			</button>
 		</div>
       </section>
-      <h1 className="text-3xl font-bold mb-6">Welcome, {u[Fullname]}</h1>
+      <h1 className="text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
 
       {/* Orders Section */}
       <section>
