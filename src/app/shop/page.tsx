@@ -184,13 +184,13 @@ export default function ShopPage() {
 				<div className="flex items-center space-x-2">
 				  <button
 					onClick={() => decreaseQuantity(item.id)}
-					className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+					className="px-2 py-1 bg-gray-200 text-black rounded hover:bg-gray-300"
 				  >
 					−
 				  </button>
 				  <button
 					onClick={() => addToCart(item)}
-					className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+					className="px-2 py-1 bg-gray-200 text-black rounded hover:bg-gray-300"
 				  >
 					+
 				  </button>
