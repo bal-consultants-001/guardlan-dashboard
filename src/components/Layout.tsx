@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import type { User } from '@supabase/supabase-js'
-import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
+import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 
 type LayoutProps = {
@@ -11,7 +11,6 @@ type LayoutProps = {
 }
 
 export default function Layout({ children }: LayoutProps) {
-	
   const [user, setUser] = useState<User | null>(null)
   const [collapsed, setCollapsed] = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -23,11 +22,8 @@ export default function Layout({ children }: LayoutProps) {
       } = await supabase.auth.getUser()
       setUser(user)
     }
-
     getUser()
-  }, [])
-  
-      // Auto-collapse after 3 seconds
+
     const timer = setTimeout(() => {
       setCollapsed(true)
     }, 3000)
@@ -40,7 +36,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen flex bg-white text-gray-900">
       {/* Sidebar */}
-	  <aside
+      <aside
         className={`
           bg-gray-100 shadow-lg transition-all duration-300 ease-in-out
           ${isExpanded ? 'w-64' : 'w-10'}
@@ -72,9 +68,7 @@ export default function Layout({ children }: LayoutProps) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-10">
-        {children}
-      </main>
+      <main className="flex-1 p-10">{children}</main>
     </div>
   )
 }
