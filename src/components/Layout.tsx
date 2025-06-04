@@ -74,7 +74,7 @@ export default function Layout({ children }: LayoutProps) {
               )}
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center h-full mt-4">
               <span className="text-xs transform rotate-90 whitespace-nowrap">Navigation</span>
             </div>
           )}
