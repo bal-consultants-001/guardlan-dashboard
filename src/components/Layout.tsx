@@ -1,9 +1,26 @@
+'use client'
+
 import Link from 'next/link'
+import type { User } from '@supabase/supabase-js'
 import { ReactNode } from 'react'
 
 type LayoutProps = {
   children: ReactNode
 }
+
+export default function HomePage() {
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      setUser(user)
+    }
+
+    getUser()
+  }, [])
 
 export default function Layout({ children }: LayoutProps) {
   return (
