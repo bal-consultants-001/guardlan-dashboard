@@ -8,7 +8,8 @@ type LayoutProps = {
   children: ReactNode
 }
 
-export default function HomePage() {
+export default function Layout({ children }: LayoutProps) {
+	
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
@@ -22,7 +23,6 @@ export default function HomePage() {
     getUser()
   }, [])
 
-export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen flex bg-white text-gray-900">
       {/* Sidebar */}
