@@ -15,6 +15,15 @@ export default function Layout({ children }: LayoutProps) {
   const [collapsed, setCollapsed] = useState(false)
   const [hovering, setHovering] = useState(false)
 
+  const handleLogout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error('Error signing out:', error.message);
+  } else {
+    router.push('/');
+  }
+  };
+
   useEffect(() => {
     const getUser = async () => {
       const {
@@ -52,6 +61,7 @@ export default function Layout({ children }: LayoutProps) {
               <Link href="/shop"><a className="block hover:text-black">Shop</a></Link>
               {user ? (
                 <Link href="/dashboard"><a className="block hover:text-black">Dashboard</a></Link>
+				<button className="block hover:text-black" onClick={handleLogout}>Log Out</button>
               ) : (
                 <>
                   <Link href="/login"><a className="block hover:text-black">Login</a></Link>
@@ -61,7 +71,7 @@ export default function Layout({ children }: LayoutProps) {
             </>
           ) : (
             <div className="flex flex-col items-center justify-center h-full">
-              <span className="text-xs transform -rotate-90 whitespace-nowrap">Navigation</span>
+              <span className="text-xs transform rotate-90 whitespace-nowrap">Navigation</span>
             </div>
           )}
         </nav>
