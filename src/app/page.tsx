@@ -45,6 +45,7 @@ export default function HomePage() {
           <Link href="/register">
             <a className="block text-gray-800 hover:text-black">Register</a>
           </Link>
+		  </>
 		  )}
         </nav>
       </aside>
