@@ -52,7 +52,7 @@ export default function HomePage() {
 
       {/* Main Content */}
       <section className="flex-1 p-10">
-        <div className="py-10 grid md:grid-cols-2 gap-6 text-right">
+        <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
           {user ? (
             <Link href="/dashboard">
               <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
