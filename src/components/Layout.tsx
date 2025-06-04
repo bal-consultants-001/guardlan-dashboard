@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
+import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 
@@ -11,6 +12,7 @@ type LayoutProps = {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [collapsed, setCollapsed] = useState(false)
   const [hovering, setHovering] = useState(false)
