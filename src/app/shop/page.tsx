@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import { loadStripe } from '@stripe/stripe-js'
+import Layout from '@/components/Layout'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -112,7 +113,7 @@ export default function ShopPage() {
 	}
 
   return (
-    <main className="p-6">
+    <Layout>
       {/* Header / Nav */}
       <section className="py-10 px-4 text-center">
         <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
@@ -213,6 +214,6 @@ export default function ShopPage() {
 		  </button>
 		</section>
       )}
-    </main>
+    </Layout>
   )
 }
