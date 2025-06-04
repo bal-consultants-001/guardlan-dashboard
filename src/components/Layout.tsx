@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import type { User } from '@supabase/supabase-js'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 type LayoutProps = {
   children: ReactNode
