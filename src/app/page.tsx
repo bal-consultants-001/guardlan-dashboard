@@ -71,7 +71,8 @@ export default function HomePage() {
 			</div>
 		  </div>
 	  </section>
-      <div className="py-10 grid md:grid-cols-3 gap-6">
+	  <section className="bg-white w-full">
+      <div className="py-10 px-10 grid md:grid-cols-3 gap-6">
         <div className="p-6 shadow-lg rounded-lg border">
           <h2 className="text-xl font-bold mb-2">AdBlocker Device</h2>
           <p>A robust device to filter out ads on your entire home network.</p>
@@ -85,6 +86,7 @@ export default function HomePage() {
           <p>Need help with issues or troubleshooting? We’ve got your back by the hour.</p>
         </div>
       </div>
+	  </section>
     </Layout>
   );
 }
