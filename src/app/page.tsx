@@ -23,47 +23,54 @@ export default function HomePage() {
   }, [])
 
   return (
-	<Layout>
+    <Layout>
       <section className="bg-indigo-500 w-full">
 		  <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
 			{user ? (
-			  <Link href="/dashboard">
-				<a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+			  <Link
+                href="/dashboard"
+                className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				
 				  Dashboard
-				</a>
+				
 			  </Link>
 			) : (
 			  <>
-				<Link href="/register">
-				  <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				<Link
+                  href="/register"
+                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				  
 					Register
-				  </a>
+				  
 				</Link>
-				<Link href="/login">
-				  <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				<Link
+                  href="/login"
+                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				  
 					Login
-				  </a>
+				  
 				</Link>
 			  </>
 			)}
 		  </div>
 	  </section>
-	  <section className="bg-white w-full">
+      <section className="bg-white w-full">
 		  <div className="py-20 flex justify-center">
 			<div className="flex flex-col items-center max-w-2x1 text-center">
 				<h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
 				<p className="text-lg mb-4">
 				  Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
 				</p>
-				<Link href="/shop">
-				  <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				<Link
+                  href="/shop"
+                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				  
 					Shop Now
-				  </a>
+				  
 				</Link>
 			</div>
 		  </div>
 	  </section>
-
       <div className="py-10 grid md:grid-cols-3 gap-6">
         <div className="p-6 shadow-lg rounded-lg border">
           <h2 className="text-xl font-bold mb-2">AdBlocker Device</h2>
@@ -79,5 +86,5 @@ export default function HomePage() {
         </div>
       </div>
     </Layout>
-  )
+  );
 }

@@ -59,17 +59,17 @@ export default function Layout({ children }: LayoutProps) {
           {isExpanded ? (
             <>
               <h2 className="text-xl font-bold mb-4">Navigation</h2>
-              <Link href="/"><a className="block hover:text-black">Home</a></Link>
-              <Link href="/shop"><a className="block hover:text-black">Shop</a></Link>
+              <Link href="/" className="block hover:text-black">Home</Link>
+              <Link href="/shop" className="block hover:text-black">Shop</Link>
               {user ? (
 				<>
-                <Link href="/dashboard"><a className="block hover:text-black">Dashboard</a></Link>
+                <Link href="/dashboard" className="block hover:text-black">Dashboard</Link>
 				<button className="block hover:text-black" onClick={handleLogout}>Log Out</button>
 				</>
               ) : (
                 <>
-                  <Link href="/login"><a className="block hover:text-black">Login</a></Link>
-                  <Link href="/register"><a className="block hover:text-black">Register</a></Link>
+                  <Link href="/login" className="block hover:text-black">Login</Link>
+                  <Link href="/register" className="block hover:text-black">Register</Link>
                 </>
               )}
             </>
@@ -80,9 +80,8 @@ export default function Layout({ children }: LayoutProps) {
           )}
         </nav>
       </aside>
-
       {/* Main Content */}
       <main className="flex-1 p-10">{children}</main>
     </div>
-  )
+  );
 }

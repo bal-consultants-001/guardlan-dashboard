@@ -118,40 +118,46 @@ export default function ShopPage() {
       <section className="py-10 px-4 text-center">
         <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
           {user ? (
-            <Link href="/dashboard">
-              <a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+            <Link
+              href="/dashboard"
+              className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+              
                 Dashboard
-              </a>
+              
             </Link>
           ) : (
             <>
-              <Link href="/register">
-                <a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+              <Link
+                href="/register"
+                className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+                
                   Register
-                </a>
+                
               </Link>
-              <Link href="/login">
-                <a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+              <Link
+                href="/login"
+                className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+                
                   Login
-                </a>
+                
               </Link>
             </>
           )}
         </div>
       </section>
-
       {/* Shop Header */}
       <section className="py-20 px-4 text-center">
         <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
         <div className="space-x-4">
-          <Link href="/">
-            <a className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 hover:text-white">
+          <Link
+            href="/"
+            className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 hover:text-white">
+            
               Back to Home
-            </a>
+            
           </Link>
         </div>
       </section>
-
       {/* Product List */}
       <section className="py-10 grid md:grid-cols-3 gap-6">
         {products.map((product) => (
@@ -168,7 +174,6 @@ export default function ShopPage() {
           </div>
         ))}
       </section>
-
       {/* Cart Section */}
       {cart.length > 0 && (
         <section className="py-10 px-4 mt-10 border-t">
@@ -215,5 +220,5 @@ export default function ShopPage() {
 		</section>
       )}
     </Layout>
-  )
+  );
 }
