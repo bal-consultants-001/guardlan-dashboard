@@ -47,9 +47,9 @@ export default function HomePage() {
         )}
       </div>
 
-      <div className="py-20 text-align: center">
+      <div className="py-20 text-center">
         <h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
-        <p className="text-lg mb-6">
+        <p className="text-lg mb-4">
           Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
         </p>
         <Link href="/shop">
