@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
 	<Layout>
-      <section className="bg-balblue1">
+      <section className="bg-indigo-500">
 	  <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
         {user ? (
           <Link href="/dashboard">
@@ -35,7 +35,7 @@ export default function HomePage() {
         ) : (
           <>
             <Link href="/register">
-              <a className="bg-balblue1 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+              <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
                 Register
               </a>
             </Link>
