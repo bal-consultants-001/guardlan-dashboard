@@ -35,7 +35,7 @@ export default function HomePage() {
         ) : (
           <>
             <Link href="/register">
-              <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+              <a className="bg-balblue1 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
                 Register
               </a>
             </Link>
