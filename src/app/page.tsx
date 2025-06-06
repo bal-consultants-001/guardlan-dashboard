@@ -48,7 +48,7 @@ export default function HomePage() {
 			)}
 		  </div>
 	  </section>
-
+	  <section className="bg-white">
       <div className="py-20 flex justify-center">
 		<div className="flex flex-col items-center max-w-2x1 text-center">
 			<h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
@@ -62,6 +62,7 @@ export default function HomePage() {
 			</Link>
 		</div>
       </div>
+	  </section>
 
       <div className="py-10 grid md:grid-cols-3 gap-6">
         <div className="p-6 shadow-lg rounded-lg border">
