@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
 	<Layout>
-      <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
+      <div className="py-10 grid md:grid-cols-2 gap-6 float-right" style={{backgroundColor: '#2860bf'}}>
         {user ? (
           <Link href="/dashboard">
             <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
