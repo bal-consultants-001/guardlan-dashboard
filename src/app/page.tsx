@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
 	<Layout>
-      <section className="bg-indigo-500">
+      <section className="bg-indigo-500 w-full">
 		  <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
 			{user ? (
 			  <Link href="/dashboard">
@@ -48,7 +48,7 @@ export default function HomePage() {
 			)}
 		  </div>
 	  </section>
-	  <section className="bg-white">
+	  <section className="bg-white w-full">
 		  <div className="py-20 flex justify-center">
 			<div className="flex flex-col items-center max-w-2x1 text-center">
 				<h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
