@@ -48,15 +48,17 @@ export default function HomePage() {
       </div>
 
       <div className="py-20 text-center">
-        <h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
-        <p className="text-lg mb-4">
-          Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
-        </p>
-        <Link href="/shop">
-          <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-            Shop Now
-          </a>
-        </Link>
+		<div ClassName="max-w-x1 mx-auto">
+			<h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
+			<p className="text-lg mb-4">
+			  Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
+			</p>
+			<Link href="/shop">
+			  <a className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				Shop Now
+			  </a>
+			</Link>
+		</div>
       </div>
 
       <div className="py-10 grid md:grid-cols-3 gap-6">
