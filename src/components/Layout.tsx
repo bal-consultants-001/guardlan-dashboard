@@ -45,7 +45,7 @@ export default function Layout({ children }: LayoutProps) {
   const isExpanded = !collapsed || hovering
 
   return (
-    <div className="min-h-screen flex bg-white text-gray-900">
+    <div className="min-h-screen flex text-gray-900">
       {/* Sidebar */}
       <aside
         className={`
