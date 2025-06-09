@@ -3,6 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-blue1: #231B3B;
+  --color-grey1: #DCD6D6;
+  --color-orange1: #FD772D;
+  --color-orange2: #F2A70C;
+  --color-red1: #A40000;
 }
 
 @theme inline {
@@ -16,6 +21,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+	--color-blue1: #2d1c4f;
   }
 }
 

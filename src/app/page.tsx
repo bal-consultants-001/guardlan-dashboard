@@ -20,12 +20,13 @@ export default function HomePage() {
     }
 
     getUser()
+	
   }, [])
 
   return (
     <Layout>
-      <section className="bg-indigo-500 w-full">
-		  <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
+      <section className="bg-[linear-gradient(to_left,var(--color-red1),var(--color-blue1))] w-full py-0 overflow-hidden">
+		  <div className="py-4 px-2 grid md:grid-cols-2 gap-6 text-center float-right">
 			{user ? (
 			  <Link
                 href="/dashboard"
