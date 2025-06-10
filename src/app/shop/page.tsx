@@ -116,8 +116,14 @@ export default function ShopPage() {
 
 
 	const handleCheckout = async () => {
+	  if(!user) {
+		  setShowPrompt(true);
+		  
+		  return;
+		  
+	  }
 	  const stripe = await stripePromise
-
+	  
 	  const lineItems = cart.map((item) => ({
 		price_data: {
 		  currency: 'gbp',
@@ -262,7 +268,6 @@ export default function ShopPage() {
 			<Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</Link>
 			<Link href="/register" className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Register</Link>
 		  </div>
-		  <button onClick={() => setShowPrompt(false)} className="mt-4 text-sm text-gray-500 underline">Maybe later</button>
 		</div>
 	  </div>
 	)}
