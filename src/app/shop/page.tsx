@@ -214,13 +214,21 @@ export default function ShopPage() {
 				const email = formData.get('email') as string
 				console.log({ name, email, postcode: postcodeInput })
                 setShowNotifyForm(false)
+				setPostcodeInput('')
+			    setServiceable(null)
+			    setMessage('')
               }}
               className="space-y-3"
             >
               <input name="name" required className="w-full border p-2" placeholder="Name" />
               <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
               <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
-              <button type="button" onClick={() => setShowNotifyForm(false)} className="text-sm text-gray-500 mt-2 hover:underline">
+              <button type="button" onClick={() => {
+			    setShowNotifyForm(false)
+			    setPostcodeInput('')
+			    setServiceable(null)
+			    setMessage('')
+			  }} className="text-sm text-gray-500 mt-2 hover:underline">
                 Cancel
               </button>
             </form>
