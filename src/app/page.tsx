@@ -111,7 +111,7 @@ export default function HomePage() {
         <div className="p-40 shadow-lg rounded-lg border max-h-[550] min-w-[700]">
           <h2 className="relative text-xl font-bold mb-2 -top-20 -left-8">On-Demand Support & Training</h2>
           <p className="relative -top-8">Need hands-on help? Our flexible hourly support service has you covered.
-		  Whether it's diagnosing issues, applying fixes on-site,
+		  Whether it&#39;s diagnosing issues, applying fixes on-site,
 		  or offering personalized training for your AdBlocker device,
 		  our experts are ready to assist. We’re here to ensure your system runs smoothly, so that you feel confident using it.</p>
         </div>
