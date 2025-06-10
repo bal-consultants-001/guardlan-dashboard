@@ -209,8 +209,10 @@ export default function ShopPage() {
             <form
               onSubmit={(e) => {
                 e.preventDefault()
-                const { name, email } = e.currentTarget
-                console.log({ name: name.value, email: email.value, postcode: postcodeInput })
+                const formData = new FormData(e.currentTarget)
+				const name = formData.get('name') as string
+				const email = formData.get('email') as string
+				console.log({ name, email, postcode: postcodeInput })
                 setShowNotifyForm(false)
               }}
               className="space-y-3"
