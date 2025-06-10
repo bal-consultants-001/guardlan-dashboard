@@ -157,6 +157,7 @@ export default function ShopPage() {
 		  return;
 		  
 	  }
+	}
 	  
 	  await startStripeCheckout()
 	
@@ -292,4 +293,3 @@ export default function ShopPage() {
 	)}
     </Layout>
   );
-}
