@@ -225,8 +225,8 @@ export default function DashboardPage() {
 
   return (
     <Layout>
-	  <section className="py-9 px-4 text-center">
-		<div className="py-8 grid md:grid-cols-3 gap-6 float-right">
+	  <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
+		<div className="py-8 grid md:grid-cols-3 gap-6 text-center float-right">
 			<Link href="/" className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
 					Back to Home
 			</Link>
@@ -241,7 +241,7 @@ export default function DashboardPage() {
       <h1 className="text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
 
       {/* Orders Section */}
-      <section>
+      <section className="px-10 w-full">
         <h2 className="text-xl font-semibold mb-2">Your Orders</h2>
         {orders.length === 0 ? (
           <p>No orders found.</p>
