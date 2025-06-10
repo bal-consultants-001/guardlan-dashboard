@@ -7,9 +7,10 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import Layout from '@/components/Layout'
+import Image from "next/image";
 
 export default function HomePage() {
-  const [user, setUser] = useState<User | null>(null) 
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     const getUser = async () => {
@@ -25,7 +26,7 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <section className="bg-[linear-gradient(to_left,var(--color-red1),var(--color-blue1))] w-full py-0 overflow-hidden">
+      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
 		  <div className="py-4 px-2 grid md:grid-cols-2 gap-6 text-center float-right">
 			{user ? (
 			  <Link
@@ -72,20 +73,56 @@ export default function HomePage() {
 			</div>
 		  </div>
 	  </section>
-	  <section className="bg-white w-full">
-      <div className="py-10 px-10 grid md:grid-cols-3 gap-6">
-        <div className="p-6 shadow-lg rounded-lg border">
-          <h2 className="text-xl font-bold mb-2">AdBlocker Device</h2>
-          <p>A robust device to filter out ads on your entire home network.</p>
+	  <section className="bg-[linear-gradient(130deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
+      <div className="py-10 px-10 grid grid-cols-1 md:grid-cols-2 gap-6 text-white max-w-12xl min-w-[1550] mx-auto">
+	  {/*Row 1 */}
+        <div className="p-40 shadow-lg rounded-lg border max-h-[550] min-w-[700]">
+          <h2 className="relative text-xl font-bold mb-2 -top-20 -left-8">AdBlocker Device</h2>
+          <p className="relative -top-8">Take control of your online safety with our professionally installed, whole-home content filtering solution.
+		  Designed to block intrusive ads and inappropriate content across all your devices, our AdBlocker creates a safer,
+		  cleaner internet experience for you and your family.
+		  With seamless integration into your home network, you can enjoy peace of mind knowing your household is protected 24/7.</p>
         </div>
-        <div className="p-6 shadow-lg rounded-lg border">
-          <h2 className="text-xl font-bold mb-2">Monthly Subscription</h2>
-          <p>Stay updated with threat lists and enjoy continuous blocking improvements.</p>
+		<div className="flex items-center justify-center relative w-[100%] h-[100%]">
+		  <Image
+		  src="/images/AdBlocker0.jpg"
+		  alt="AdBlocker Device"
+		  fill
+		  className="rounded-lg object-cover"
+		  />
+		</div>
+	  {/*Row 2 */}
+		<div className="flex items-center justify-center relative w-[100%] h-[100%]">
+		  <Image
+		  src="/images/subscription1.jpg"
+		  alt="AdBlocker Device"
+		  fill
+		  className="rounded-lg object-cover"
+		  />
+		</div>
+        <div className="p-40 shadow-lg rounded-lg border max-h-[550] min-w-[700]">
+          <h2 className="relative text-xl font-bold mb-2 -top-20 -right-8 text-right">Monthly Subscription & Insights</h2>
+          <p className="relative -top-8 mr-2 text-right">Stay ahead with our powerful monthly subscription.
+		  Gain real-time insights into how much unwanted traffic your network filter is blocking,
+		  enjoy regular performance and security updates, and receive proactive device support.
+		  Subscribers also benefit from one free remote support session every month. Plus, easily manage your filter settings anytime through our intuitive web portal.</p>
         </div>
-        <div className="p-6 shadow-lg rounded-lg border">
-          <h2 className="text-xl font-bold mb-2">Hourly Support</h2>
-          <p>Need help with issues or troubleshooting? We’ve got your back by the hour.</p>
+	  {/*Row 3*/}
+        <div className="p-40 shadow-lg rounded-lg border max-h-[550] min-w-[700]">
+          <h2 className="relative text-xl font-bold mb-2 -top-20 -left-8">On-Demand Support & Training</h2>
+          <p className="relative -top-8">Need hands-on help? Our flexible hourly support service has you covered.
+		  Whether it's diagnosing issues, applying fixes on-site,
+		  or offering personalized training for your AdBlocker device,
+		  our experts are ready to assist. We’re here to ensure your system runs smoothly, so that you feel confident using it.</p>
         </div>
+		<div className="flex items-center justify-center relative w-[100%] h-[100%]">
+		  <Image
+		  src="/images/background1.jpg"
+		  alt="AdBlocker Device"
+		  fill
+		  className="rounded-lg object-cover"
+		  />
+		</div>
       </div>
 	  </section>
     </Layout>

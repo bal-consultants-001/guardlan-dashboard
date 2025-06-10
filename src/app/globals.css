@@ -4,16 +4,20 @@
   --background: #ffffff;
   --foreground: #171717;
   --color-blue1: #231B3B;
+  --color-blue2: #026bd4;
   --color-grey1: #DCD6D6;
   --color-orange1: #FD772D;
   --color-orange2: #F2A70C;
   --color-red1: #A40000;
+  --color-purple1: #872B97;
+  --color-purple2: #bd0b3e;
+  --color-gold1: #b89a47;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-oswald);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -25,8 +29,21 @@
   }
 }
 
+h1 {
+  font-size: 3rem; /* e.g. 40px */
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-oswald), sans-serif;
 }
