@@ -29,6 +29,14 @@
   }
 }
 
+.btn {
+  @apply px-4 py-2 rounded font-semibold transition hover:opacity-90;
+}
+
+.btn-small {
+  @apply px-2 py-1 rounded bg-gray-200 text-black hover:bg-gray-300;
+}
+
 h1 {
   font-size: 3rem; /* e.g. 40px */
 }
