@@ -115,7 +115,7 @@ export default function ShopPage() {
   return (
     <Layout>
       {/* Header / Nav */}
-      <section className="py-10 px-4 text-center">
+      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
         <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
           {user ? (
             <Link
@@ -147,16 +147,25 @@ export default function ShopPage() {
       </section>
       {/* Shop Header */}
       <section className="py-20 px-4 text-center">
-        <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
-        <div className="space-x-4">
-          <Link
-            href="/"
-            className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 hover:text-white">
-            
-              Back to Home
-            
-          </Link>
-        </div>
+	  	  <div className="py-20 flex justify-center">
+			<div className="flex flex-col items-center max-w-2x1 text-center">
+				<h1 className="text-3xl font-bold mb-8">Shop Products</h1>
+				<div className="space-x-4">
+				<p className="text-lg mb-4">
+				  Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
+				</p>
+			  </div>
+			  <div>
+				<Link
+                  href="/shop"
+                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				  
+					Shop Now
+				  
+				</Link>
+			  </div>
+			</div>
+		  </div>
       </section>
       {/* Product List */}
       <section className="py-10 grid md:grid-cols-3 gap-6">
