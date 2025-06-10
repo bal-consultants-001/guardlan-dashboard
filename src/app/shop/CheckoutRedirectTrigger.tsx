@@ -2,10 +2,21 @@
 
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
+import type { User } from '@supabase/supabase-js'
+
+type Product = {
+  id: number
+  name: string
+  price: string
+  priceAmount: number
+  description: string
+}
+
+type CartItem = Product & { quantity: number }
 
 type Props = {
-  user: string
-  cart: string[]
+  user: User | null
+  cart: CartItem[]
   startStripeCheckout: () => void
 }
 
