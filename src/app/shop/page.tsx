@@ -116,7 +116,7 @@ export default function ShopPage() {
     <Layout>
       {/* Header / Nav */}
       <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
-        <div className="py-10 grid md:grid-cols-2 gap-6 float-right">
+        <div className="py-4 grid md:grid-cols-2 gap-6 float-right">
           {user ? (
             <Link
               href="/dashboard"
