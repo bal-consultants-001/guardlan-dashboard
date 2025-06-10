@@ -10,6 +10,8 @@ import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import { loadStripe } from '@stripe/stripe-js'
 import Layout from '@/components/Layout'
+import { useSearchParams } from 'next/navigation'
+
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -59,6 +61,19 @@ export default function ShopPage() {
 
 	  getUser();
 	}, []);
+	
+	const searchParams = useSearchParams()
+
+	useEffect(() => {
+	  const checkoutRequested = searchParams.get('checkout') === 'true'
+	  if (checkoutRequested && user && cart.length > 0) {
+		// Clear the flag so it doesn't repeat
+		const newUrl = window.location.pathname
+		window.history.replaceState({}, '', newUrl)
+
+		startStripeCheckout()
+	  }
+	}, [searchParams, user, cart])
 
   const products: Product[] = [
     {
@@ -111,16 +126,9 @@ export default function ShopPage() {
   )
 }
 
-
-	const handleCheckout = async () => {
-	  if(!user) {
-		  setShowPrompt(true);
-		  
-		  return;
-		  
-	  }
+	const startStripeCheckout = async () => {
 	  const stripe = await stripePromise
-	  
+
 	  const lineItems = cart.map((item) => ({
 		price_data: {
 		  currency: 'gbp',
@@ -140,6 +148,18 @@ export default function ShopPage() {
 	  await stripe?.redirectToCheckout({ sessionId })
 	}
 
+	const handleCheckout = async () => {
+	  if(!user) {
+		  localStorage.setItem('checkoutIntent', 'true')
+		  localStorage.setItem('cart', JSON.stringify(cart))
+		  setShowPrompt(true);
+		  
+		  return;
+		  
+	  }
+	  
+	  await startStripeCheckout()
+	
   return (
     <Layout>
       {/* Header / Nav */}

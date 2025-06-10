@@ -59,8 +59,15 @@ export default function LoginPage() {
       // Redirect to profile completion page
       router.push('/complete-profile')
     } else {
-      // Profile complete, go to dashboard
-      router.push('/dashboard')
+		
+	  const checkoutIntent = localStorage.getItem('checkoutIntent')
+
+	  if (checkoutIntent === 'true') {
+		localStorage.removeItem('checkoutIntent')
+		router.push('/shop?checkout=true') // Go back to Shop to auto-trigger checkout
+	  } else {
+		  // Profile complete, go to dashboard
+		  router.push('/dashboard')
     }
   }
 
