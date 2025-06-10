@@ -238,10 +238,10 @@ export default function DashboardPage() {
 			</button>
 		</div>
       </section>
-      <h1 className="text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
+      <h1 className="py-10 px-10 text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
 
       {/* Orders Section */}
-      <section className="px-10 w-full">
+      <section className="py-10 px-10 w-full">
         <h2 className="text-xl font-semibold mb-2">Your Orders</h2>
         {orders.length === 0 ? (
           <p>No orders found.</p>
@@ -257,7 +257,7 @@ export default function DashboardPage() {
       </section>
 
       {/* Devices Section */}
-		<section>
+		<section className="py-10 px-10 w-full">
 		  <h2 className="text-xl font-semibold mb-2">Your Devices</h2>
 		  {devicesWithLogs.length === 0 ? (
 			<p>No active devices.</p>
@@ -296,7 +296,7 @@ export default function DashboardPage() {
 		</section>
 
       {/* Tickets Section */}
-		<section>
+		<section className="py-10 px-10 w-full">
 		  <h2 className="text-xl font-semibold mb-2">Support Tickets</h2>
 		  {tickets.length === 0 ? (
 			<p>No support tickets yet.</p>
