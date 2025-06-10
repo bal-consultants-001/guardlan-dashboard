@@ -240,6 +240,19 @@ export default function ShopPage() {
 		  </button>
 		</section>
       )}
+	  {showPrompt && (
+	  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+		<div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+		  <h2 className="text-lg font-bold mb-2">Sign in or Register</h2>
+		  <p className="text-sm mb-4">To track your order and schedule installation, please create an account or log in.</p>
+		  <div className="flex justify-center gap-4">
+			<Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</Link>
+			<Link href="/register" className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Register</Link>
+		  </div>
+		  <button onClick={() => setShowPrompt(false)} className="mt-4 text-sm text-gray-500 underline">Maybe later</button>
+		</div>
+	  </div>
+	)}
     </Layout>
   );
 }

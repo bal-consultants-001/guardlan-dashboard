@@ -10,6 +10,18 @@ export default function SuccessPage() {
   const [seconds, setSeconds] = useState(5)
 
   useEffect(() => {
+    // Clear the cart in localStorage
+    localStorage.removeItem('cart')
+
+    // Optionally redirect after a delay
+    const timeout = setTimeout(() => {
+      router.push('/shop')
+    }, 4000)
+
+    return () => clearTimeout(timeout)
+  }, [])
+
+  useEffect(() => {
     if (seconds === 0) {
       router.push('/')
       return
