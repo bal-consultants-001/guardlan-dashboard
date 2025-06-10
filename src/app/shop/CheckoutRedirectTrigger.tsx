@@ -4,8 +4,8 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 type Props = {
-  user: any
-  cart: any[]
+  user: string
+  cart: string[]
   startStripeCheckout: () => void
 }
 
