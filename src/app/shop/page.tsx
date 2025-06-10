@@ -52,17 +52,31 @@ export default function ShopPage() {
 	}, [cart])
 
 	const [showPrompt, setShowPrompt] = useState(false);
-
-	useEffect(() => {
-	  const getUser = async () => {
-		const { data: { user } } = await supabase.auth.getUser();
-		setUser(user);
-	  };
-
-	  getUser();
-	}, []);
 	
 	const searchParams = useSearchParams()
+
+
+	const startStripeCheckout = async () => {
+	  const stripe = await stripePromise
+
+	  const lineItems = cart.map((item) => ({
+		price_data: {
+		  currency: 'gbp',
+		  product_data: { name: item.name },
+		  unit_amount: item.priceAmount,
+		},
+		quantity: item.quantity,
+	  }))
+
+	  const res = await fetch('/api/checkout', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ items: lineItems }),
+	  })
+
+	  const { sessionId } = await res.json()
+	  await stripe?.redirectToCheckout({ sessionId })
+	}
 
 	useEffect(() => {
 	  const checkoutRequested = searchParams.get('checkout') === 'true'
@@ -126,27 +140,6 @@ export default function ShopPage() {
   )
 }
 
-	const startStripeCheckout = async () => {
-	  const stripe = await stripePromise
-
-	  const lineItems = cart.map((item) => ({
-		price_data: {
-		  currency: 'gbp',
-		  product_data: { name: item.name },
-		  unit_amount: item.priceAmount,
-		},
-		quantity: item.quantity,
-	  }))
-
-	  const res = await fetch('/api/checkout', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ items: lineItems }),
-	  })
-
-	  const { sessionId } = await res.json()
-	  await stripe?.redirectToCheckout({ sessionId })
-	}
 
 	const handleCheckout = async () => {
 	  if(!user) {
@@ -293,3 +286,5 @@ export default function ShopPage() {
 	  </div>
 	)}
     </Layout>
+  );
+}
