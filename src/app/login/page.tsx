@@ -95,4 +95,5 @@ export default function LoginPage() {
       </button>
       {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
     </main>
-  )
+  );
+}
