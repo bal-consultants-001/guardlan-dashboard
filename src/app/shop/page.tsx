@@ -49,6 +49,19 @@ export default function ShopPage() {
 	  localStorage.setItem('cart', JSON.stringify(cart))
 	}, [cart])
 
+	const [showPrompt, setShowPrompt] = useState(false)
+
+	useEffect(() => {
+	  const getUser = async () => {
+		const { data: { user } } = await supabase.auth.getUser()
+		setUser(user)
+
+		// Show prompt if not signed in
+		if (!user) setShowPrompt(true)
+	  }
+
+	  getUser()
+	}, [])
 
   const products: Product[] = [
     {
