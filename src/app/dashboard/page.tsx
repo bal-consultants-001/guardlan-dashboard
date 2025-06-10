@@ -262,7 +262,7 @@ export default function DashboardPage() {
 		  {devicesWithLogs.length === 0 ? (
 			<p>No active devices.</p>
 		  ) : (
-			<table className="table-auto w-full border-collapse border outline outline-1 outline-gray-400 overflow-hidden text-center rounded-lg bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))]">
+			<table className="table-auto w-full border-collapse border outline outline-1 outline-gray-400 overflow-hidden text-center text-white rounded-lg bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))]">
 			  <thead>
 				<tr>
 				  <th className="border px-4 py-2">Hostname</th>
@@ -277,7 +277,7 @@ export default function DashboardPage() {
 				  <tr key={device.taID}>
 					<td>
 					  <button
-						className="px-4 py-2 text-center text-black hover:underline"
+						className="px-4 py-2 text-center hover:underline"
 						onClick={() => openModal(device)}
 					  >
 						{device["Hostname"]}
