@@ -38,6 +38,18 @@ export default function ShopPage() {
     getUser()
   }, [])
 
+	useEffect(() => {
+	  const storedCart = localStorage.getItem('cart')
+	  if (storedCart) {
+		setCart(JSON.parse(storedCart))
+	  }
+	}, [])
+
+	useEffect(() => {
+	  localStorage.setItem('cart', JSON.stringify(cart))
+	}, [cart])
+
+
   const products: Product[] = [
     {
       id: 1,
