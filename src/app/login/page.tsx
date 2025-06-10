@@ -70,6 +70,7 @@ export default function LoginPage() {
 		  router.push('/dashboard')
     }
   }
+}
 
   return (
     <main className="p-6 max-w-md mx-auto">
