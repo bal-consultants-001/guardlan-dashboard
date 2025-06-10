@@ -206,7 +206,7 @@ export default function ShopPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow max-w-sm w-full">
             <h2 className="text-lg font-bold mb-4">Notify Me</h2>
-			<p>Unfortunately we do not currently provide our service to your Postcode./n If you are interested please fill in the form below/n and we will contact you when we are in your area, thank you.</p>
+			<p>Unfortunately we do not currently provide our service to your Postcode. If you are interested please fill in the form below, thank you.</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault()
