@@ -168,7 +168,7 @@ export default function ShopPage() {
 		  </div>
       </section>
       {/* Product List */}
-      <section className="py-10 px-10 grid md:grid-cols-3 gap-6">
+      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-10 px-10 grid md:grid-cols-3 gap-6">
         {products.map((product) => (
           <div key={product.id} className="p-6 border rounded-lg shadow">
             <h2 className="text-xl font-bold">{product.name}</h2>
