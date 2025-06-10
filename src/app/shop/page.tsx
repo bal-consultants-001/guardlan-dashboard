@@ -44,21 +44,21 @@ export default function ShopPage() {
       name: 'Home Network AdBlocker',
       price: '£75',
       priceAmount: 7500,
-      description: 'Block ads for every device on your network.',
+      description: 'Block Ads and filter content for every device on your network.',
     },
     {
       id: 2,
       name: 'Monthly Subscription',
-      price: '£6/mo',
+      price: '£6/month',
       priceAmount: 600,
-      description: 'Continual filter updates and premium features.',
+      description: 'Regular updates, proactive support, blocking insights and assistance.',
     },
     {
       id: 3,
       name: 'Hourly Support',
       price: '£25/hr',
       priceAmount: 2500,
-      description: 'Technical help when you need it most.',
+      description: 'Technical help or training when you need it most.',
     },
   ]
 
