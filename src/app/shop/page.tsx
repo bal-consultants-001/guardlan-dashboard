@@ -5,6 +5,7 @@
 import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import type { User } from '@supabase/supabase-js'
 import Layout from '@/components/Layout'
 import CheckoutRedirectTrigger from './CheckoutRedirectTrigger'
 
@@ -58,7 +59,7 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
 }
 
 export default function ShopPage() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
   const [postcodeInput, setPostcodeInput] = useState('')
   const [serviceable, setServiceable] = useState<boolean | null>(null)
   const [showNotifyForm, setShowNotifyForm] = useState(false)
