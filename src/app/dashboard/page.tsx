@@ -297,7 +297,7 @@ export default function DashboardPage() {
 
       {/* Tickets Section */}
 		<section className="py-10 px-10 w-full">
-		  <h2 className="text-xl font-semibold mb-2">Support Tickets</h2>
+		  <h2 className="text-xl font-semibold mb-2"><Link href="/support" className="font-semibold hover:bg-gray-800">Support Tickets</Link></h2>
 		  {tickets.length === 0 ? (
 			<p>No support tickets yet.</p>
 		  ) : (
