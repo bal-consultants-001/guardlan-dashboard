@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
-import { useCart } from '@/context/CartContext';
+import { useCart } from '@/context/CartContext'
 import Layout from '@/components/Layout'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
@@ -17,10 +17,6 @@ type Product = {
   price: string
   priceAmount: number
   description: string
-}
-
-type CartItem = Product & {
-  quantity: number
 }
 
 const products: Product[] = [
@@ -65,7 +61,7 @@ export default function ShopPage() {
   const [serviceable, setServiceable] = useState<boolean | null>(null)
   const [showNotifyForm, setShowNotifyForm] = useState(false)
   const [message, setMessage] = useState('')
-  const { addToCart } = useCart();
+  const { addToCart } = useCart()
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
@@ -103,26 +99,11 @@ export default function ShopPage() {
       <section className="w-full py-4 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500">
         <div className="flex justify-end gap-4 px-6">
           {user ? (
-            <Link
-              href="/dashboard"
-              className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
-            >
-              Dashboard
-            </Link>
+            <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
           ) : (
             <>
-              <Link
-                href="/register"
-                className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
-              >
-                Register
-              </Link>
-              <Link
-                href="/login"
-                className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
-              >
-                Login
-              </Link>
+              <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
+              <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
             </>
           )}
         </div>
@@ -163,10 +144,7 @@ export default function ShopPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow max-w-sm w-full">
             <h2 className="text-lg font-bold mb-4">Notify Me</h2>
-            <p>
-              Unfortunately we do not currently provide our service to your Postcode. If you are
-              interested please fill in the form below, thank you.
-            </p>
+            <p>Unfortunately we do not currently provide our service to your Postcode. If you are interested please fill in the form below, thank you.</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault()
@@ -182,16 +160,8 @@ export default function ShopPage() {
               className="space-y-3"
             >
               <input name="name" required className="w-full border p-2" placeholder="Name" />
-              <input
-                name="email"
-                required
-                type="email"
-                className="w-full border p-2"
-                placeholder="Email"
-              />
-              <button type="submit" className="btn bg-blue-600 text-white w-full">
-                Notify Me
-              </button>
+              <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
+              <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
               <button
                 type="button"
                 onClick={() => {
@@ -210,10 +180,7 @@ export default function ShopPage() {
       )}
 
       {/* Product List */}
-      <section
-        id="products"
-        className="bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 py-10 px-4 text-white grid md:grid-cols-3 gap-6"
-      >
+      <section id="products" className="bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 py-10 px-4 text-white grid md:grid-cols-3 gap-6">
         {products.map((product) => (
           <div key={product.id} className="bg-white text-black p-6 rounded shadow">
             <h3 className="text-lg font-bold">{product.name}</h3>
