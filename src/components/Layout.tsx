@@ -56,6 +56,7 @@ export default function Layout({ children }: LayoutProps) {
               {user ? (
                 <>
                   <Link href="/dashboard" className="block hover:text-black">Dashboard</Link>
+				  <Link href="/support" className="block hover:text-black">Tickets</Link>
                   <button className="block hover:text-black" onClick={handleLogout}>Log Out</button>
                 </>
               ) : (
