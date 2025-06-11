@@ -17,7 +17,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
   if (!device) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-10 text-black flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm text-black flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-lg">
         <h2 className="text-2xl font-bold mb-6">Device Details: {device.Hostname}</h2>
 
