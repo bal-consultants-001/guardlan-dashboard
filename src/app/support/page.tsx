@@ -32,46 +32,44 @@ export default function DashboardPage() {
   }
   };
 
-	const userId = session.user.id
-	setUser(session.user)
+	useEffect(() => {
+	  const fetchData = async () => {
+		const { supabase } = await import('@/lib/supabase');
 
-	// Fetch full name
-	const { data: userData } = await supabase
-	  .from('owner')
-	  .select('"Fullname"')
-	  .eq('"ID"', userId)
-	  .single();
+		const {
+		  data: { session },
+		} = await supabase.auth.getSession();
 
-	if (userData) {
-	  setFullName(userData["Fullname"]);
-	}
+		if (!session?.user) {
+		  router.push('/login');
+		  return;
+		}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { supabase } = await import('@/lib/supabase')
+		const userId = session.user.id;
+		setUser(session.user);
 
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
+		// Fetch tickets
+		const { data: ticketData } = await supabase
+		  .from('tickets')
+		  .select('*')
+		  .eq('owner', userId);
+		setTickets(ticketData || []);
 
-      if (!session?.user) {
-        router.push('/login')
-        return
-      }
+		// ✅ Fetch full name
+		const { data: userData } = await supabase
+		  .from('owner')
+		  .select('"Fullname"')
+		  .eq('"ID"', userId)
+		  .single();
 
-      const userId = session.user.id
-      setUser(session.user)
+		if (userData) {
+		  setFullName(userData["Fullname"]);
+		}
+	  };
 
-      // Fetch tickets
-      const { data: ticketData } = await supabase
-        .from('tickets')
-        .select('*')
-        .eq('owner', userId)
-      setTickets(ticketData || [])
-    };
+	  fetchData();
+	}, [router]);
 
-    fetchData()
-  }, [router])
   	
   if (!user) return <p>Loading tickets...</p>
 
