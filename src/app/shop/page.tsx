@@ -96,7 +96,7 @@ export default function ShopPage() {
   return (
     <Layout>
       {/* Auth Actions */}
-      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
+      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
         <div className="flex justify-end gap-4 px-6">
           {user ? (
             <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
