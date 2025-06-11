@@ -55,7 +55,7 @@ export default function Layout({ children }: LayoutProps) {
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
-        <nav className="p-4 space-y-4">
+        <nav className="p-4 space-y-4 sticky top-4">
           {isExpanded ? (
             <>
               <h2 className="text-xl font-bold mb-4">Navigation</h2>
