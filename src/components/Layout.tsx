@@ -77,7 +77,8 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex-1 relative bg-white">
         {/* Floating Cart */}
         {cart.length > 0 && (
-          <div className="fixed top-4 right-4 z-50">
+          <section className="w-full py-1"
+		  <div className="fixed top-4 right-4 z-50">
             <button
               onClick={() => setShowCart((prev) => !prev)}
               className="relative p-2 rounded-full bg-black text-white hover:bg-gray-800"
@@ -112,6 +113,7 @@ export default function Layout({ children }: LayoutProps) {
               </div>
             )}
           </div>
+		  </section>
         )}
 
         {children}
