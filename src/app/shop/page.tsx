@@ -96,7 +96,7 @@ export default function ShopPage() {
   return (
     <Layout>
       {/* Auth Actions */}
-      <section className="w-full py-4 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500">
+      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
         <div className="flex justify-end gap-4 px-6">
           {user ? (
             <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
@@ -180,7 +180,7 @@ export default function ShopPage() {
       )}
 
       {/* Product List */}
-      <section id="products" className="bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 py-10 px-4 text-white grid md:grid-cols-3 gap-6">
+      <section id="products" className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden px-4 text-white grid md:grid-cols-3 gap-6">
         {products.map((product) => (
           <div key={product.id} className="bg-white text-black p-6 rounded shadow">
             <h3 className="text-lg font-bold">{product.name}</h3>
