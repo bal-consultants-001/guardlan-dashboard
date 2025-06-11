@@ -5,15 +5,24 @@
 import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { loadStripe } from '@stripe/stripe-js'
 import Layout from '@/components/Layout'
 import CheckoutRedirectTrigger from './CheckoutRedirectTrigger'
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
-const products = [
+type Product = {
+  id: number
+  name: string
+  price: string
+  priceAmount: number
+  description: string
+}
+
+type CartItem = Product & {
+  quantity: number
+}
+
+const products: Product[] = [
   {
     id: 1,
     name: 'Home Network AdBlocker',
@@ -148,16 +157,12 @@ export default function ShopPage() {
               <input name="name" required className="w-full border p-2" placeholder="Name" />
               <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
               <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowNotifyForm(false)
-                  setPostcodeInput('')
-                  setServiceable(null)
-                  setMessage('')
-                }}
-                className="text-sm text-gray-500 mt-2 hover:underline"
-              >
+              <button type="button" onClick={() => {
+                setShowNotifyForm(false)
+                setPostcodeInput('')
+                setServiceable(null)
+                setMessage('')
+              }} className="text-sm text-gray-500 mt-2 hover:underline">
                 Cancel
               </button>
             </form>
@@ -173,17 +178,17 @@ export default function ShopPage() {
             <p className="mt-2">{product.description}</p>
             <p className="mt-2 font-semibold">{product.price}</p>
             <button className="btn mt-4 bg-black text-white" onClick={() => {
-              const existingCart = JSON.parse(localStorage.getItem('cart') || '[]')
-              const existingItem = existingCart.find((item: any) => item.id === product.id)
+              const existingCart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
+              const existingItem = existingCart.find((item) => item.id === product.id)
 
               const updatedCart = existingItem
-                ? existingCart.map((item: any) =>
+                ? existingCart.map((item) =>
                     item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                   )
                 : [...existingCart, { ...product, quantity: 1 }]
 
               localStorage.setItem('cart', JSON.stringify(updatedCart))
-              window.dispatchEvent(new Event('cartUpdated')) // for cross-component sync
+              window.dispatchEvent(new Event('cartUpdated'))
             }}>
               Add to Cart
             </button>
@@ -191,7 +196,7 @@ export default function ShopPage() {
         ))}
       </section>
 
-      {/* CheckoutRedirect */}
+      {/* Checkout Redirect */}
       <Suspense fallback={null}>
         <CheckoutRedirectTrigger user={user} />
       </Suspense>
