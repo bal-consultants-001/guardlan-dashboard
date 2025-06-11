@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
+import { useCart } from '@/context/CartContext';
 import Layout from '@/components/Layout'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
@@ -64,6 +65,7 @@ export default function ShopPage() {
   const [serviceable, setServiceable] = useState<boolean | null>(null)
   const [showNotifyForm, setShowNotifyForm] = useState(false)
   const [message, setMessage] = useState('')
+  const { addToCart } = useCart();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
@@ -219,19 +221,7 @@ export default function ShopPage() {
             <p className="mt-2 font-semibold">{product.price}</p>
             <button
               className="btn mt-4 bg-black text-white"
-              onClick={() => {
-                const existingCart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
-                const existingItem = existingCart.find((item) => item.id === product.id)
-
-                const updatedCart = existingItem
-                  ? existingCart.map((item) =>
-                      item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-                    )
-                  : [...existingCart, { ...product, quantity: 1 }]
-
-                localStorage.setItem('cart', JSON.stringify(updatedCart))
-                window.dispatchEvent(new Event('cartUpdated'))
-              }}
+              onClick={() => addToCart(product)}
             >
               Add to Cart
             </button>
