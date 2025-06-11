@@ -21,6 +21,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [tickets, setTickets] = useState<Ticket[]>([])
+  const [fullName, setFullName] = useState<string | null>(null)
   
   const handleLogout = async () => {
   const { error } = await supabase.auth.signOut();
@@ -30,6 +31,20 @@ export default function DashboardPage() {
     router.push('/');
   }
   };
+
+	const userId = session.user.id
+	setUser(session.user)
+
+	// Fetch full name
+	const { data: userData } = await supabase
+	  .from('owner')
+	  .select('"Fullname"')
+	  .eq('"ID"', userId)
+	  .single();
+
+	if (userData) {
+	  setFullName(userData["Fullname"]);
+	}
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +90,10 @@ export default function DashboardPage() {
 			</button>
 		</div>
       </section>
-      <h1 className="text-3xl font-bold mb-6">Welcome, {user.email}</h1>
+	  
+	  <section className="py-10 px-10 w-full">
+        <h1 className="text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
+	  </section>
 
       {/* Tickets Section */}
       <section className="py-10 px-10 w-full">
