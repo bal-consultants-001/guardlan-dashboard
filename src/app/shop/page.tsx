@@ -167,11 +167,11 @@ export default function ShopPage() {
       <section className="w-full py-4 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500">
         <div className="flex justify-end gap-4 px-6">
           {user ? (
-            <Link href="/dashboard" className="btn">Dashboard</Link>
+            <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
           ) : (
             <>
-              <Link href="/register" className="btn">Register</Link>
-              <Link href="/login" className="btn">Login</Link>
+              <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
+              <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
             </>
           )}
         </div>
