@@ -77,7 +77,7 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex-1 relative bg-white">
         {/* Floating Cart */}
         {cart.length > 0 && (
-          <section className="w-full py-1"
+          <section className="w-full py-1">
 		  <div className="fixed top-4 right-4 z-50">
             <button
               onClick={() => setShowCart((prev) => !prev)}
