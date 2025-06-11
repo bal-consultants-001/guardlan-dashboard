@@ -26,7 +26,7 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
+      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
 		  <div className="flex justify-end gap-4 px-6">
 			{user ? (
 			  <Link

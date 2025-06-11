@@ -77,7 +77,7 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex-1 relative bg-white">
         {/* Floating Cart */}
         {cart.length > 0 && (
-          <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full h-16">
+          <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full h-16">
 		  <div className="fixed top-4 right-4 z-50">
             <button
               onClick={() => setShowCart((prev) => !prev)}
