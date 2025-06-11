@@ -78,7 +78,7 @@ export default function DashboardPage() {
       <h1 className="text-3xl font-bold mb-6">Welcome, {user.email}</h1>
 
       {/* Tickets Section */}
-      <section>
+      <section className="py-10 px-10 w-full">
         <h2 className="text-xl font-semibold mb-2">Support Tickets</h2>
         {tickets.length === 0 ? (
           <p>No support tickets yet.</p>
