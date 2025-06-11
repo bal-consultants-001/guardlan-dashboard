@@ -9,22 +9,13 @@ import type { User } from '@supabase/supabase-js'
 import { loadStripe } from '@stripe/stripe-js'
 import Layout from '@/components/Layout'
 import CheckoutRedirectTrigger from './CheckoutRedirectTrigger'
+import { useCart } from '@/context/CartContext'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
-type Product = {
-  id: number
-  name: string
-  price: string
-  priceAmount: number
-  description: string
-}
-
-type CartItem = Product & { quantity: number }
-
-const products: Product[] = [
+const products = [
   {
     id: 1,
     name: 'Home Network AdBlocker',
@@ -48,9 +39,9 @@ const products: Product[] = [
   },
 ]
 
-function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
+function getDistanceMiles(lat1, lon1, lat2, lon2) {
   const R = 3958.8
-  const toRad = (x: number) => (x * Math.PI) / 180
+  const toRad = (x) => (x * Math.PI) / 180
   const dLat = toRad(lat2 - lat1)
   const dLon = toRad(lon2 - lon1)
   const a = Math.sin(dLat / 2) ** 2 +
@@ -60,23 +51,17 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
 }
 
 export default function ShopPage() {
-  const [user, setUser] = useState<User | null>(null)
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [user, setUser] = useState(null)
   const [postcodeInput, setPostcodeInput] = useState('')
-  const [serviceable, setServiceable] = useState<boolean | null>(null)
+  const [serviceable, setServiceable] = useState(null)
   const [showNotifyForm, setShowNotifyForm] = useState(false)
   const [showPrompt, setShowPrompt] = useState(false)
   const [message, setMessage] = useState('')
+  const { cart, addToCart, removeFromCart, decreaseQuantity } = useCart()
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
-    const savedCart = localStorage.getItem('cart')
-    if (savedCart) setCart(JSON.parse(savedCart))
   }, [])
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart))
-  }, [cart])
 
   const handleCheckPostcode = async () => {
     try {
@@ -102,31 +87,6 @@ export default function ShopPage() {
       console.error(err)
       setMessage('❌ Error checking postcode.')
     }
-  }
-
-  const addToCart = (product: Product) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id)
-      return existing
-        ? prev.map((item) =>
-            item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-          )
-        : [...prev, { ...product, quantity: 1 }]
-    })
-  }
-
-  const removeFromCart = (id: number) => {
-    setCart((prev) => prev.filter((item) => item.id !== id))
-  }
-
-  const decreaseQuantity = (id: number) => {
-    setCart((prev) =>
-      prev
-        .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0)
-    )
   }
 
   const startStripeCheckout = useCallback(async () => {
@@ -206,18 +166,18 @@ export default function ShopPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow max-w-sm w-full">
             <h2 className="text-lg font-bold mb-4">Notify Me</h2>
-			<p>Unfortunately we do not currently provide our service to your Postcode. If you are interested please fill in the form below, thank you.</p>
+            <p>Unfortunately we do not currently provide our service to your Postcode. If you are interested please fill in the form below, thank you.</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault()
                 const formData = new FormData(e.currentTarget)
-				const name = formData.get('name') as string
-				const email = formData.get('email') as string
-				console.log({ name, email, postcode: postcodeInput })
+                const name = formData.get('name')
+                const email = formData.get('email')
+                console.log({ name, email, postcode: postcodeInput })
                 setShowNotifyForm(false)
-				setPostcodeInput('')
-			    setServiceable(null)
-			    setMessage('')
+                setPostcodeInput('')
+                setServiceable(null)
+                setMessage('')
               }}
               className="space-y-3"
             >
@@ -225,11 +185,11 @@ export default function ShopPage() {
               <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
               <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
               <button type="button" onClick={() => {
-			    setShowNotifyForm(false)
-			    setPostcodeInput('')
-			    setServiceable(null)
-			    setMessage('')
-			  }} className="text-sm text-gray-500 mt-2 hover:underline">
+                setShowNotifyForm(false)
+                setPostcodeInput('')
+                setServiceable(null)
+                setMessage('')
+              }} className="text-sm text-gray-500 mt-2 hover:underline">
                 Cancel
               </button>
             </form>
@@ -248,35 +208,6 @@ export default function ShopPage() {
           </div>
         ))}
       </section>
-
-      {/* Cart */}
-      {cart.length > 0 && (
-        <section className="py-10 px-4 border-t">
-          <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
-          <ul className="space-y-3 mb-4">
-            {cart.map((item) => (
-              <li key={item.id} className="flex justify-between items-center">
-                <div>
-                  <span className="font-semibold">{item.name}</span> — {item.price}
-                  <div className="text-sm text-gray-600">Qty: {item.quantity}</div>
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => decreaseQuantity(item.id)} className="btn-small">−</button>
-                  <button onClick={() => addToCart(item)} className="btn-small">+</button>
-                  <button onClick={() => removeFromCart(item.id)} className="btn-small bg-red-500 text-white">Remove</button>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={handleCheckout}
-            disabled={serviceable !== true}
-            className="btn bg-green-600 text-white disabled:opacity-50"
-          >
-            Checkout
-          </button>
-        </section>
-      )}
 
       {/* Auth Prompt */}
       {showPrompt && (
@@ -299,4 +230,3 @@ export default function ShopPage() {
     </Layout>
   )
 }
-
