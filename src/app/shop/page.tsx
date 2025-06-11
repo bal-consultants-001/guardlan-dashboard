@@ -199,7 +199,7 @@ export default function ShopPage() {
 
       {/* Checkout Redirect */}
       <Suspense fallback={null}>
-        <CheckoutRedirectTrigger user={user} />
+        <CheckoutRedirectTrigger user={user} cart={cart} startStripeCheckout={startStripeCheckout} />
       </Suspense>
     </Layout>
   )
