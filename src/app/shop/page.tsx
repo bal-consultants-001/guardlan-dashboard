@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import Layout from '@/components/Layout'
-import CheckoutRedirectTrigger from './CheckoutRedirectTrigger'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
@@ -52,7 +51,8 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
   const toRad = (x: number) => (x * Math.PI) / 180
   const dLat = toRad(lat2 - lat1)
   const dLon = toRad(lon2 - lon1)
-  const a = Math.sin(dLat / 2) ** 2 +
+  const a =
+    Math.sin(dLat / 2) ** 2 +
     Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   return R * c
@@ -101,11 +101,26 @@ export default function ShopPage() {
       <section className="w-full py-4 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500">
         <div className="flex justify-end gap-4 px-6">
           {user ? (
-            <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
+            <Link
+              href="/dashboard"
+              className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
+            >
+              Dashboard
+            </Link>
           ) : (
             <>
-              <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
-              <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
+              <Link
+                href="/register"
+                className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
+              >
+                Register
+              </Link>
+              <Link
+                href="/login"
+                className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
+              >
+                Login
+              </Link>
             </>
           )}
         </div>
@@ -117,7 +132,9 @@ export default function ShopPage() {
         <p className="mb-6 text-lg">
           Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
         </p>
-        <Link href="#products" className="btn bg-black text-white">Shop Now</Link>
+        <Link href="#products" className="btn bg-black text-white">
+          Shop Now
+        </Link>
       </section>
 
       {/* Postcode Check */}
@@ -130,9 +147,13 @@ export default function ShopPage() {
             value={postcodeInput}
             onChange={(e) => setPostcodeInput(e.target.value)}
           />
-          <button className="btn bg-blue-600 text-white" onClick={handleCheckPostcode}>Check</button>
+          <button className="btn bg-blue-600 text-white" onClick={handleCheckPostcode}>
+            Check
+          </button>
         </div>
-        {message && <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>}
+        {message && (
+          <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>
+        )}
       </section>
 
       {/* Notify Modal */}
@@ -140,7 +161,10 @@ export default function ShopPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow max-w-sm w-full">
             <h2 className="text-lg font-bold mb-4">Notify Me</h2>
-            <p>Unfortunately we do not currently provide our service to your Postcode. If you are interested please fill in the form below, thank you.</p>
+            <p>
+              Unfortunately we do not currently provide our service to your Postcode. If you are
+              interested please fill in the form below, thank you.
+            </p>
             <form
               onSubmit={(e) => {
                 e.preventDefault()
@@ -156,14 +180,26 @@ export default function ShopPage() {
               className="space-y-3"
             >
               <input name="name" required className="w-full border p-2" placeholder="Name" />
-              <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
-              <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
-              <button type="button" onClick={() => {
-                setShowNotifyForm(false)
-                setPostcodeInput('')
-                setServiceable(null)
-                setMessage('')
-              }} className="text-sm text-gray-500 mt-2 hover:underline">
+              <input
+                name="email"
+                required
+                type="email"
+                className="w-full border p-2"
+                placeholder="Email"
+              />
+              <button type="submit" className="btn bg-blue-600 text-white w-full">
+                Notify Me
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNotifyForm(false)
+                  setPostcodeInput('')
+                  setServiceable(null)
+                  setMessage('')
+                }}
+                className="text-sm text-gray-500 mt-2 hover:underline"
+              >
                 Cancel
               </button>
             </form>
@@ -172,35 +208,36 @@ export default function ShopPage() {
       )}
 
       {/* Product List */}
-      <section id="products" className="bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 py-10 px-4 text-white grid md:grid-cols-3 gap-6">
+      <section
+        id="products"
+        className="bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 py-10 px-4 text-white grid md:grid-cols-3 gap-6"
+      >
         {products.map((product) => (
           <div key={product.id} className="bg-white text-black p-6 rounded shadow">
             <h3 className="text-lg font-bold">{product.name}</h3>
             <p className="mt-2">{product.description}</p>
             <p className="mt-2 font-semibold">{product.price}</p>
-            <button className="btn mt-4 bg-black text-white" onClick={() => {
-              const existingCart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
-              const existingItem = existingCart.find((item) => item.id === product.id)
+            <button
+              className="btn mt-4 bg-black text-white"
+              onClick={() => {
+                const existingCart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
+                const existingItem = existingCart.find((item) => item.id === product.id)
 
-              const updatedCart = existingItem
-                ? existingCart.map((item) =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-                  )
-                : [...existingCart, { ...product, quantity: 1 }]
+                const updatedCart = existingItem
+                  ? existingCart.map((item) =>
+                      item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                    )
+                  : [...existingCart, { ...product, quantity: 1 }]
 
-              localStorage.setItem('cart', JSON.stringify(updatedCart))
-              window.dispatchEvent(new Event('cartUpdated'))
-            }}>
+                localStorage.setItem('cart', JSON.stringify(updatedCart))
+                window.dispatchEvent(new Event('cartUpdated'))
+              }}
+            >
               Add to Cart
             </button>
           </div>
         ))}
       </section>
-
-      {/* Checkout Redirect */}
-      <Suspense fallback={null}>
-        <CheckoutRedirectTrigger user={user} cart={cart} startStripeCheckout={startStripeCheckout} />
-      </Suspense>
     </Layout>
   )
 }
