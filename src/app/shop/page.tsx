@@ -5,7 +5,6 @@
 import { useCallback, useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import type { User } from '@supabase/supabase-js'
 import { loadStripe } from '@stripe/stripe-js'
 import Layout from '@/components/Layout'
 import CheckoutRedirectTrigger from './CheckoutRedirectTrigger'
@@ -57,7 +56,7 @@ export default function ShopPage() {
   const [showNotifyForm, setShowNotifyForm] = useState(false)
   const [showPrompt, setShowPrompt] = useState(false)
   const [message, setMessage] = useState('')
-  const { cart, addToCart, removeFromCart, decreaseQuantity } = useCart()
+  {/*const { cart, addToCart, removeFromCart, decreaseQuantity } = useCart()*/}
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
@@ -111,7 +110,7 @@ export default function ShopPage() {
     await stripe?.redirectToCheckout({ sessionId })
   }, [cart])
 
-  const handleCheckout = () => {
+  {/*const handleCheckout = () => {
     if (!user) {
       localStorage.setItem('checkoutIntent', 'true')
       localStorage.setItem('cart', JSON.stringify(cart))
@@ -119,7 +118,7 @@ export default function ShopPage() {
     } else {
       startStripeCheckout()
     }
-  }
+  }*/}
 
   return (
     <Layout>
