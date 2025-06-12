@@ -8,7 +8,7 @@ import type { User } from '@supabase/supabase-js';
 import type { ReactNode } from 'react';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart } from 'lucide-react';
-import { PostcodeProvider } from '@/content/PostcodeContext';
+//import { PostcodeProvider } from '@/content/PostcodeContext';
 
 type LayoutProps = {
   children: ReactNode;

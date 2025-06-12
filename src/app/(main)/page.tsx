@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
-import Layout from '@/components/Layout'
 import Image from "next/image";
 
 export default function HomePage() {

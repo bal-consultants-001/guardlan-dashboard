@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import { useCart } from '@/context/CartContext'
-import Layout from '@/components/Layout'
 import { usePostcode } from '@/context/PostcodeContext';
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }

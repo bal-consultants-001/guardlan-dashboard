@@ -44,7 +44,6 @@ import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase';
-import Layout from '@/components/Layout'
 
 export default function DashboardPage() {
   const router = useRouter()
