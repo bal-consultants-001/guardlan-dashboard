@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
-import "@/globals.css";
+import "../globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { PostcodeProvider } from "@/context/PostcodeContext";
 
@@ -31,16 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={`${oswald.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <CartProvider>
-          <PostcodeProvider>
-            {children}
-          </PostcodeProvider>
-        </CartProvider>
-      </body>
-    </html>
+    <div className={`${oswald.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {children}
+    </div>
   );
 }

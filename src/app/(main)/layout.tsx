@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
-import "@/globals.css";
+import "./globals.css";
 
 import { CartProvider } from "@/context/CartContext";
 import { PostcodeProvider } from '@/context/PostcodeContext'; // ✅ your new context
