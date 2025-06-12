@@ -25,12 +25,21 @@ export default function Layout({ children }: LayoutProps) {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
 
+	  // Subscribe to auth changes
+	  const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+		setUser(session?.user ?? null);
+	  });
+
     const timer = setTimeout(() => setCollapsed(true), 3000);
-    return () => clearTimeout(timer);
+    return () => {
+	  clearTimeout(timer);
+	  authListener?.subscription.unsubscribe();
+	};
   }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+	setUser(null);
     router.push('/');
   };
 
@@ -57,7 +66,7 @@ export default function Layout({ children }: LayoutProps) {
                 <>
                   <Link href="/dashboard" className="block hover:text-black">Dashboard</Link>
 				  <Link href="/support" className="block hover:text-black">Tickets</Link>
-                  <button className="block hover:text-grey" onClick={handleLogout}>Log Out</button>
+                  <button className="block hover:text-gray" onClick={handleLogout}>Log Out</button>
                 </>
               ) : (
                 <>
