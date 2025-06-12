@@ -224,7 +224,6 @@ export default function DashboardPage() {
   if (!user) return <p>Loading dashboard...</p>
 
   return (
-    <Layout>
 	  <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
 		<div className="py-4 grid md:grid-cols-3 gap-6 text-center float-right">
 			<Link href="/" className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
@@ -336,6 +335,5 @@ export default function DashboardPage() {
 		onClose={closeModal}
 	  />
 	)}
-    </Layout>
   )
 }

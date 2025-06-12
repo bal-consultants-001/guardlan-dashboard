@@ -8,6 +8,7 @@ import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import { useCart } from '@/context/CartContext'
 import Layout from '@/components/Layout'
+import { usePostcode } from '@/context/PostcodeContext';
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
@@ -58,7 +59,7 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
 export default function ShopPage() {
   const [user, setUser] = useState<User | null>(null)
   const [postcodeInput, setPostcodeInput] = useState('')
-  const [serviceable, setServiceable] = useState<boolean | null>(null)
+  const { serviceable, setServiceable } = usePostcode();
   const [showNotifyForm, setShowNotifyForm] = useState(false)
   const [message, setMessage] = useState('')
   const { addToCart } = useCart()
@@ -94,7 +95,6 @@ export default function ShopPage() {
   }
 
   return (
-    <Layout>
       {/* Auth Actions */}
       <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
         <div className="flex justify-end gap-4 px-6">
@@ -195,6 +195,5 @@ export default function ShopPage() {
           </div>
         ))}
       </section>
-    </Layout>
   )
 }

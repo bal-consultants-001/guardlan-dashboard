@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
+
 import { CartProvider } from "@/context/CartContext";
+import { PostcodeProvider } from '@/context/PostcodeContext'; // ✅ your new context
+import Layout from '@/components/Layout'; // ✅ layout with sidebar, cart, etc.
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,17 +27,15 @@ export const metadata: Metadata = {
   description: "Network security hardware and support.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${oswald.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <CartProvider>{children}</CartProvider>
+      <body className={`${oswald.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <CartProvider>
+          <PostcodeProvider>
+            <Layout>{children}</Layout>
+          </PostcodeProvider>
+        </CartProvider>
       </body>
     </html>
   );
