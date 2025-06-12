@@ -95,6 +95,7 @@ export default function ShopPage() {
   }
 
   return (
+	<>
       {/* Auth Actions */}
       <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
         <div className="flex justify-end gap-4 px-6">
@@ -195,5 +196,6 @@ export default function ShopPage() {
           </div>
         ))}
       </section>
+	</>
   )
 }
