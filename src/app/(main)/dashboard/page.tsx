@@ -19,6 +19,7 @@ type Order = {
 }*/
 
 type Ticket = {
+  id: string
   ticket_no: string
   status: string
   short_desc?: string
