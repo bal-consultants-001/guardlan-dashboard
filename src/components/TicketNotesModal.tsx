@@ -22,6 +22,10 @@ interface UserMetadata {
   role?: string;
 }
 
+console.log('Supabase user:', user);
+console.log('user.id being inserted:', user.id);
+
+
 const UPDATE_TYPES = [
   'Information',
   'Remote - Booking',
