@@ -55,6 +55,8 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
     if (!newNote.trim()) return;
     setLoading(true);
 
+	console('UserID:', user.id );
+
     const payload = {
       note: newNote.trim(),
       user_uuid: user.id,
