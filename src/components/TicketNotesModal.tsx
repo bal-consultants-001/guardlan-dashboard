@@ -18,6 +18,10 @@ interface Props {
   onClose: () => void;
 }
 
+interface UserMetadata {
+  role?: string;
+}
+
 const UPDATE_TYPES = [
   'Information',
   'Remote - Booking',
@@ -84,7 +88,7 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
 	  };
 
 	  const checkAdminRole = () => {
-	  const role = (user.user_metadata as any)?.role;
+	  const role = (user.user_metadata as UserMetadata)?.role;
 	  if (role === 'admin') {
 		setIsAdmin(true);
 	  }
@@ -93,7 +97,7 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
 
 	  fetchNotes();
 	  checkAdminRole();
-	}, [ticketId, user.id]);
+	}, [ticketId, user]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
