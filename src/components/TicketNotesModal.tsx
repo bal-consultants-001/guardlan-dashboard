@@ -48,7 +48,7 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
   };
 
   const checkAdminRole = async () => {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('users') // Use your public "users" table that mirrors auth.users with role data
       .select('raw_user_meta_data')
       .eq('id', user.id)
@@ -83,10 +83,32 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
     setLoading(false);
   };
 
-  useEffect(() => {
-    fetchNotes();
-    checkAdminRole();
-  }, [ticketId]);
+	useEffect(() => {
+	  const fetchNotes = async () => {
+		const { data } = await supabase
+		  .from('ticket_notes')
+		  .select('*')
+		  .eq('ticket_id', ticketId)
+		  .order('created_at', { ascending: true });
+
+		if (data) setNotes(data);
+	  };
+
+	  const checkAdminRole = async () => {
+		const { data } = await supabase
+		  .from('users')
+		  .select('raw_user_meta_data')
+		  .eq('id', user.id)
+		  .single();
+
+		if (data?.raw_user_meta_data?.role === 'admin') {
+		  setIsAdmin(true);
+		}
+	  };
+
+	  fetchNotes();
+	  checkAdminRole();
+	}, [ticketId, user.id]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
