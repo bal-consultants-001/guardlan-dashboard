@@ -358,8 +358,12 @@ export default function DashboardPage() {
 		onClose={closeModal}
 	  />
 	)}
-	{selectedTicketId && (
-	  <TicketNotesModal ticketId={ticket.ticket_no} user={user} onClose={() => setShowModal(false)} />
+	{selectedTicketId && user && (
+	  <TicketNotesModal
+		ticketId={selectedTicketId}
+		user={user}
+		onClose={() => setSelectedTicketId(null)}
+	  />
 	)}
    </>
   )
