@@ -22,10 +22,6 @@ interface UserMetadata {
   role?: string;
 }
 
-console.log('Supabase user:', user);
-console.log('user.id being inserted:', user.id);
-
-
 const UPDATE_TYPES = [
   'Information',
   'Remote - Booking',
@@ -40,6 +36,9 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
   const [selectedUpdate, setSelectedUpdate] = useState('Information');
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  console.log('Supabase user:', user);
+  console.log('user.id being inserted:', user.id);
 
   const fetchNotes = async () => {
     const { data, error } = await supabase
