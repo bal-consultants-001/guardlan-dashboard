@@ -45,6 +45,7 @@ import Link from "next/link";
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
+import TicketNotesModal from '@/components/TicketNotesModal';
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -55,6 +56,7 @@ export default function DashboardPage() {
   const [fullName, setFullName] = useState<string | null>(null)
   const [devicesWithLogs, setDevicesWithLogs] = useState<DeviceWithLog[]>([])
   const [selectedDevice, setSelectedDevice] = useState<DeviceWithLog | null>(null);
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [modalData, setModalData] = useState<{
 	lists: DeviceList[];
 	groups: DeviceGroup[];
@@ -329,6 +331,14 @@ export default function DashboardPage() {
 					<td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
 					<td className="border px-4 py-2">{ticket.status}</td>
 					<td className="border px-4 py-2">{ticket.supp_user || 'Unassigned'}</td>
+					<td className="border px-4 py-2">
+					  <button
+						className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+						onClick={() => setSelectedTicketId(ticket.ticket_no)}
+					  >
+						View Notes
+					  </button>
+					</td>
 				  </tr>
 				))}
 			  </tbody>
@@ -346,6 +356,13 @@ export default function DashboardPage() {
 		device={selectedDevice}
 		data={modalData}
 		onClose={closeModal}
+	  />
+	)}
+	{selectedTicketId && (
+	  <TicketNotesModal
+		ticketId={selectedTicketId}
+		user={user}
+		onClose={() => setSelectedTicketId(null)}
 	  />
 	)}
    </>
