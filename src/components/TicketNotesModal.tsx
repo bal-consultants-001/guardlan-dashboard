@@ -62,6 +62,7 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
 
     if (error) {
       console.error('Error submitting note:', error);
+	alert(`Error submitting note: ${error.message}`};
     } else {
       setNewNote('');
       if (!isAdmin) setSelectedUpdate('Information');
