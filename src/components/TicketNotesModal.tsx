@@ -47,18 +47,6 @@ export default function TicketNotesModal({ ticketId, user, onClose }: Props) {
     }
   };
 
-  const checkAdminRole = async () => {
-    const { data } = await supabase
-      .from('users') // Use your public "users" table that mirrors auth.users with role data
-      .select('raw_user_meta_data')
-      .eq('id', user.id)
-      .single();
-
-    if (data?.raw_user_meta_data?.role === 'admin') {
-      setIsAdmin(true);
-    }
-  };
-
   const submitNote = async () => {
     if (!newNote.trim()) return;
     setLoading(true);
