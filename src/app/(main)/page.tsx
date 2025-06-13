@@ -54,10 +54,6 @@ export default function HomePage() {
 			  height={400}
 			  className="flex-shrink-0 py-8 w-[90%]h-[90%]"
 			/>
-			{/*<h1 className="text-5xl md:text-6xl font-bold mb-4 py-2 inline-block transform scale-x-[3] scale-y-[2] bg-gradient-to-r from-[var(--color-gold1)] via-[var(--background)] to-[var(--color-gold1)] bg-clip-text text-transparent">BAL-IT</h1>
-          <p className="text-lg md:text-xl max-w-2xl mb-6">
-            Whole-home ad and content filtering designed to give you privacy, peace of mind, and control over your digital life.
-			</p>*/}
           <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
             Shop Now
           </Link>
