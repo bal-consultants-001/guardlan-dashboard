@@ -1,129 +1,150 @@
-//home page
+'use client';
 
-'use client'
-
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
-import type { User } from '@supabase/supabase-js'
-import Image from "next/image";
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
+import type { User } from '@supabase/supabase-js';
+import Image from 'next/image';
 
 export default function HomePage() {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      setUser(user)
-    }
-
-    getUser()
-	
-  }, [])
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
+  }, []);
 
   return (
-      <>
-		<section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden">
-		  <div className="flex justify-end gap-4 px-6">
-			{user ? (
-			  <Link
-                href="/dashboard"
-                className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-				
+    <>
+      {/* Top Auth Actions Bar */}
+		<section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4">
+		  <div className="flex items-center justify-between px-6">
+			{/* Left-aligned Logo */}
+			<Image
+			  src="/images/logo-no-background.png"
+			  alt="BAL-IT"
+			  width={100}
+			  height={100}
+			  className="flex-shrink-0"
+			/>
+
+			{/* Right-aligned Links */}
+			<div className="flex gap-4 items-center">
+			  {user ? (
+				<Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
 				  Dashboard
-				
-			  </Link>
-			) : (
-			  <>
-				<Link
-                  href="/register"
-                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-				  
-					Register
-				  
 				</Link>
-				<Link
-                  href="/login"
-                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-				  
-					Login
-				  
-				</Link>
-			  </>
-			)}
-		  </div>
-	  </section>
-      <section className="bg-white w-full">
-		  <div className="py-20 flex justify-center">
-			<div className="flex flex-col items-center max-w-2x1 text-center">
-				<h1 className="text-5xl font-bold mb-4">Protect Your Home from Ads</h1>
-				<p className="text-lg mb-4">
-				  Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
-				</p>
-				<Link
-                  href="/shop"
-                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-				  
-					Shop Now
-				  
-				</Link>
+			  ) : (
+				<>
+				  <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
+				  <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
+				</>
+			  )}
 			</div>
 		  </div>
-	  </section>
-	  <section className="bg-[linear-gradient(130deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
-      <div className="py-10 px-10 grid grid-cols-1 md:grid-cols-2 gap-6 text-white max-w-12xl min-w-[1550] mx-auto">
-	  {/*Row 1 */}
-        <div className="p-40 shadow-lg rounded-lg border max-h-[550] min-w-[700]">
-          <h2 className="relative text-xl font-bold mb-2 -top-20 -left-8">AdBlocker Device</h2>
-          <p className="relative -top-8">Take control of your online safety with our professionally installed, whole-home content filtering solution.
-		  Designed to block intrusive ads and inappropriate content across all your devices, our AdBlocker creates a safer,
-		  cleaner internet experience for you and your family.
-		  With seamless integration into your home network, you can enjoy peace of mind knowing your household is protected 24/7.</p>
+		</section>
+
+      {/* Hero Section */}
+      <section className="relative w-full h-[50vh] bg-black min-h-[500]">
+        <Image src="/images/AdBlocker0.png" alt="GuardLAN AdBlocker" fill className="object-cover opacity-80" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+          <Image
+			  src="/images/logo-no-background.png"
+			  alt="BAL-IT"
+			  width={400}
+			  height={400}
+			  className="flex-shrink-0 py-8 w-[90%]h-[90%]"
+			/>
+			{/*<h1 className="text-5xl md:text-6xl font-bold mb-4 py-2 inline-block transform scale-x-[3] scale-y-[2] bg-gradient-to-r from-[var(--color-gold1)] via-[var(--background)] to-[var(--color-gold1)] bg-clip-text text-transparent">BAL-IT</h1>
+          <p className="text-lg md:text-xl max-w-2xl mb-6">
+            Whole-home ad and content filtering designed to give you privacy, peace of mind, and control over your digital life.
+			</p>*/}
+          <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
+            Shop Now
+          </Link>
         </div>
-		<div className="flex items-center justify-center relative w-[100%] h-[100%]">
-		  <Image
-		  src="/images/AdBlocker0.jpg"
-		  alt="AdBlocker Device"
-		  fill
-		  className="rounded-lg object-cover"
-		  />
-		</div>
-	  {/*Row 2 */}
-		<div className="flex items-center justify-center relative w-[100%] h-[100%]">
-		  <Image
-		  src="/images/subscription1.jpg"
-		  alt="AdBlocker Device"
-		  fill
-		  className="rounded-lg object-cover"
-		  />
-		</div>
-        <div className="p-40 shadow-lg rounded-lg border max-h-[550] min-w-[700]">
-          <h2 className="relative text-xl font-bold mb-2 -top-20 -right-8 text-right">Monthly Subscription & Insights</h2>
-          <p className="relative -top-8 mr-2 text-right">Stay ahead with our powerful monthly subscription.
-		  Gain real-time insights into how much unwanted traffic your network filter is blocking,
-		  enjoy regular performance and security updates, and receive proactive device support.
-		  Subscribers also benefit from one free remote support session every month. Plus, easily manage your filter settings anytime through our intuitive web portal.</p>
+      </section>
+
+      {/* Product Showcase Flow */}
+      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white">
+        {/* Scene 1: Core Value */}
+		<div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
+        <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
+          <Image src="/images/AdBlocker1.png" alt="Network Filtering" width={500} height={300} className="rounded-lg object-cover" />
+          <div>
+            <h2 className="text-3xl font-bold mb-4">Ad-Free Browsing on All Devices</h2>
+            <p>
+              From phones to smart devices, block intrusive ads, pop-ups, and unwanted content at the router level — no extra software required.
+              Enhance your browsing speed, battery life, and peace of mind.
+            </p>
+          </div>
         </div>
-	  {/*Row 3*/}
-        <div className="p-40 shadow-lg rounded-lg border max-h-[550] min-w-[700]">
-          <h2 className="relative text-xl font-bold mb-2 -top-20 -left-8">On-Demand Support & Training</h2>
-          <p className="relative -top-8">Need hands-on help? Our flexible hourly support service has you covered.
-		  Whether it&#39;s diagnosing issues, applying fixes on-site,
-		  or offering personalized training for your AdBlocker device,
-		  our experts are ready to assist. We’re here to ensure your system runs smoothly, so that you feel confident using it.</p>
+
+        {/* Scene 2: Parental & Privacy */}
+        <div className="flex flex-col md:flex-row-reverse items-center gap-12 max-w-6xl mx-auto">
+          <Image src="/images/AdBlocker2.png" alt="Family Protection" width={500} height={300} className="rounded-lg object-cover" />
+          <div>
+            <h2 className="text-3xl font-bold mb-4">Protect What Matters</h2>
+            <p>
+              Block adult content, gambling sites, and social media distractions. Set boundaries for your kids — or yourself —
+			  with customizable filtering profiles tailored to your household's needs.
+			  With GuardLAN, technology becomes a safer space — not something to fear. Empower your family to explore, learn, and connect online with confidence, knowing harmful content is kept out.
+			  Create healthy digital habits while preserving privacy and peace of mind.
+            </p>
+          </div>
         </div>
-		<div className="flex items-center justify-center relative w-[100%] h-[100%]">
-		  <Image
-		  src="/images/background1.jpg"
-		  alt="AdBlocker Device"
-		  fill
-		  className="rounded-lg object-cover"
-		  />
+
+        {/* Scene 3: Easy Setup & Integration */}
+        <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
+          <Image src="/images/AdBlocker5.png" alt="Easy Installation" width={500} height={300} className="rounded-lg object-cover" />
+          <div>
+            <h2 className="text-3xl font-bold mb-4">Setup & Go Simplicity</h2>
+            <p>
+              Installation is fully handled by our team — no technical experience required. Once connected to your router, your GuardLAN AdBlocker begins protecting your entire network instantly.
+			  The device is compact and unobtrusive, designed to fit seamlessly into any home environment. It’s quiet, energy-efficient, and made using durable, environmentally responsible materials — because protecting your family shouldn't come at the planet’s expense.
+			  With every installation, you get peace of mind and a 30-day parts guarantee as standard. Safe, sustainable, and built with families in mind.
+            </p>
+          </div>
+        </div>
 		</div>
-      </div>
-	  </section>
-	</>
+      </section>
+
+      {/* Subscription Plan */}
+      <section className="bg-gray-100">
+	  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 shadow-lg">
+        <div className="max-w-4xl mx-auto text-center">
+          <Image src="/images/subscription1.jpg" alt="Monthly Subscription" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
+          <h2 className="text-3xl font-bold mb-4">Monthly Subscription & Insights</h2>
+          <p className="mb-4">
+            Keep your GuardLAN AdBlocker up-to-date with the latest filters, security patches, and performance tweaks. Monitor what’s being blocked and get personalized reports.
+          </p>
+          <p className="mb-6">
+            Enjoy a free remote support session each month, and manage everything through your online dashboard.
+          </p>
+          <Link href="/shop" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+            Subscribe
+          </Link>
+        </div>
+		</div>
+      </section>
+
+      {/* Hourly Support */}
+      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white">
+	  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-b-lg shadow-lg">
+        <div className="max-w-4xl mx-auto text-center">
+          <Image src="/images/support.jpg" alt="Support & Training" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
+          <h2 className="text-3xl font-bold mb-4">On-Demand Support & Training</h2>
+          <p className="mb-4">
+            Need help? Book hourly sessions for in-home troubleshooting, custom setup, or even training for your household.
+          </p>
+          <p className="mb-6">
+            We're here to ensure your AdBlocker is running smoothly — and you know exactly how to get the most from it.
+          </p>
+          <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">
+            Book Support
+          </Link>
+        </div>
+		</div>
+      </section>
+    </>
   );
 }

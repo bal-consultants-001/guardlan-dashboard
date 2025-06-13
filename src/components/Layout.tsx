@@ -63,7 +63,7 @@ export default function Layout({ children }: LayoutProps) {
         <nav className="p-4 space-y-4 sticky top-0">
           {isExpanded ? (
             <>
-              <h2 className="text-xl font-bold mb-4">Navigation</h2>
+              <h2 className="text-xl font-bold mb-4">Menu</h2>
               <Link href="/" className="block hover:text-black">Home</Link>
               <Link href="/shop" className="block hover:text-black">Shop</Link>
               {user ? (
@@ -81,7 +81,7 @@ export default function Layout({ children }: LayoutProps) {
             </>
           ) : (
             <div className="flex flex-col items-center justify-center h-full mt-4">
-              <span className="text-xs transform rotate-90 whitespace-nowrap">Navigation</span>
+              <span className="text-m transform rotate-90 whitespace-nowrap">Menu</span>
             </div>
           )}
         </nav>

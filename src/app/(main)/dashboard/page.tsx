@@ -224,19 +224,33 @@ export default function DashboardPage() {
 
   return (
 	<>
-	  <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
-		<div className="py-4 grid md:grid-cols-3 gap-6 text-center float-right">
-			<Link href="/" className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-					Back to Home
-			</Link>
-			<Link href="/shop" className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-					Shop Now
-			</Link>
-			<button className="inline-block bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800" onClick={handleLogout}>
-			  Log Out
-			</button>
-		</div>
-      </section>
+{/* Top Auth Actions Bar */}
+		<section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4">
+		  <div className="flex items-center justify-between px-6">
+			{/* Left-aligned Logo */}
+			<Image
+			  src="./images/logo-no-background.png"
+			  alt="BAL-IT"
+			  width={100}
+			  height={100}
+			  className="flex-shrink-0"
+			/>
+
+			{/* Right-aligned Links */}
+			<div className="flex gap-4 items-center">
+			  {user ? (
+				<Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
+				  Dashboard
+				</Link>
+			  ) : (
+				<>
+				  <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
+				  <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
+				</>
+			  )}
+			</div>
+		  </div>
+		</section>
       <h1 className="py-10 px-10 text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
 
       {/* Orders Section */}
