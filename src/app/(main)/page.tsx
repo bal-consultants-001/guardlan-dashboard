@@ -96,7 +96,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold mb-4">Setup & Go Simplicity</h2>
             <p>
               Installation is fully handled by our team — no technical experience required. Once connected to your router, your GuardLAN AdBlocker begins protecting your entire network instantly.
-			  The device is compact and unobtrusive, designed to fit seamlessly into any home environment. It’s quiet, energy-efficient, and made using durable, environmentally responsible materials — because protecting your family shouldn't come at the planet’s expense.
+			  The device is compact and unobtrusive, designed to fit seamlessly into any home environment. It&#39;s quiet, energy-efficient, and made using durable, environmentally responsible materials — because protecting your family shouldn't come at the planet’s expense.
 			  With every installation, you get peace of mind and a 30-day parts guarantee as standard. Safe, sustainable, and built with families in mind.
             </p>
           </div>
@@ -133,7 +133,7 @@ export default function HomePage() {
             Need help? Book hourly sessions for in-home troubleshooting, custom setup, or even training for your household.
           </p>
           <p className="mb-6">
-            We're here to ensure your AdBlocker is running smoothly — and you know exactly how to get the most from it.
+            We&#39;re here to ensure your AdBlocker is running smoothly — and you know exactly how to get the most from it.
           </p>
           <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">
             Book Support
