@@ -82,7 +82,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold mb-4">Protect What Matters</h2>
             <p>
               Block adult content, gambling sites, and social media distractions. Set boundaries for your kids — or yourself —
-			  with customizable filtering profiles tailored to your household's needs.
+			  with customizable filtering profiles tailored to your household&#39;s needs.
 			  With GuardLAN, technology becomes a safer space — not something to fear. Empower your family to explore, learn, and connect online with confidence, knowing harmful content is kept out.
 			  Create healthy digital habits while preserving privacy and peace of mind.
             </p>
