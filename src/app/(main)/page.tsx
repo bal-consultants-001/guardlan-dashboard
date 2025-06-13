@@ -96,7 +96,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold mb-4">Setup & Go Simplicity</h2>
             <p>
               Installation is fully handled by our team — no technical experience required. Once connected to your router, your GuardLAN AdBlocker begins protecting your entire network instantly.
-			  The device is compact and unobtrusive, designed to fit seamlessly into any home environment. It&#39;s quiet, energy-efficient, and made using durable, environmentally responsible materials — because protecting your family shouldn't come at the planet’s expense.
+			  The device is compact and unobtrusive, designed to fit seamlessly into any home environment. It&#39;s quiet, energy-efficient, and made using durable, environmentally responsible materials — because protecting your family shouldn&#39;t come at the planet&#39;s expense.
 			  With every installation, you get peace of mind and a 30-day parts guarantee as standard. Safe, sustainable, and built with families in mind.
             </p>
           </div>
