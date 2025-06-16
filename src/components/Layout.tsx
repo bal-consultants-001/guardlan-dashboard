@@ -73,14 +73,14 @@ export default function Layout({ children }: LayoutProps) {
       </aside>
 
       {/* Mobile top nav */}
-      <header className="md:hidden bg-gray-100 shadow p-4 flex justify-center relative">
+      <header className="md:hidden bg-gray-100/60 shadow p-4 flex justify-center relative">
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="absolute left-4 top-4 text-black"
         >
           {mobileMenuOpen ? <CloseIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
         </button>
-        <h1 className="text-lg font-semibold">Menu</h1>
+        <h1 className="text-m font-semibold">Menu</h1>
 
         {mobileMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-white shadow-md z-40 p-4 space-y-2">
