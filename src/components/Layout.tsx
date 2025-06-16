@@ -27,18 +27,21 @@ export default function Layout({ children }: LayoutProps) {
   const { cart, removeFromCart, addToCart, decreaseQuantity } = useCart();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-
-	  // Subscribe to auth changes
-	  const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+	  
+	  supabase.auth.getSession().then(({ data: { session } }) => {
 		setUser(session?.user ?? null);
 	  });
 
-    const timer = setTimeout(() => setCollapsed(true), 3000);
-    return () => {
-	  clearTimeout(timer);
-	  authListener?.subscription.unsubscribe();
-	};
+	  const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+		setUser(session?.user ?? null);
+	  });
+
+	  const timer = setTimeout(() => setCollapsed(true), 3000);
+
+	  return () => {
+		clearTimeout(timer);
+		authListener?.subscription.unsubscribe();
+	  };
   }, []);
 
   const handleLogout = async () => {
