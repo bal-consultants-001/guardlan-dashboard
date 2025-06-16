@@ -101,6 +101,39 @@ export default function HomePage() {
             </p>
           </div>
         </div>
+		
+		{/* Scene 4: Before & After Example */}
+		<div className="max-w-6xl mx-auto text-center space-y-6">
+		  <h2 className="text-3xl font-bold">See the Difference</h2>
+		  <p className="mb-8">Here’s a real example of the web experience with and without GuardLAN’s ad blocking in action.</p>
+		  
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+			{/* AdBlocker OFF */}
+			<div>
+			  <Image
+				src="/images/AdBlocker-off.png"
+				alt="With Ads (AdBlocker Off)"
+				width={600}
+				height={400}
+				className="rounded-lg shadow-lg object-cover"
+			  />
+			  <p className="mt-2 text-lg font-semibold text-red-300">Without GuardLAN (Ads Active)</p>
+			</div>
+
+			{/* AdBlocker ON */}
+			<div>
+			  <Image
+				src="/images/AdBlocker-on.png"
+				alt="Ad-Free (AdBlocker On)"
+				width={600}
+				height={400}
+				className="rounded-lg shadow-lg object-cover"
+			  />
+			  <p className="mt-2 text-lg font-semibold text-green-300">With GuardLAN (Ads Blocked)</p>
+			</div>
+		  </div>
+		</div>
+
 		</div>
       </section>
 
