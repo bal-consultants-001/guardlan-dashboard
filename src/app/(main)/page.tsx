@@ -109,28 +109,26 @@ export default function HomePage() {
 		  
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 			{/* AdBlocker OFF */}
-			<div className="w-[500px] h-[400px] relative">
+			<div>
 			  <Image
 				src="/images/AdBlocker-off.png"
 				alt="With Ads (AdBlocker Off)"
-				fill
+				width={600}
+				height={400}
 				className="rounded-lg shadow-lg object-cover"
 			  />
-			</div>
-			  <div>
 			  <p className="mt-2 text-lg font-semibold text-red-300">Without GuardLAN (Ads Active)</p>
 			</div>
 
 			{/* AdBlocker ON */}
-			<div className="w-[500px] h-[400px] relative">
+			<div>
 			  <Image
 				src="/images/AdBlocker-on.png"
 				alt="Ad-Free (AdBlocker On)"
-				fill
+				width={600}
+				height={400}
 				className="rounded-lg shadow-lg object-cover"
 			  />
-			  </div>
-			  <div>
 			  <p className="mt-2 text-lg font-semibold text-green-300">With GuardLAN (Ads Blocked)</p>
 			</div>
 		  </div>
