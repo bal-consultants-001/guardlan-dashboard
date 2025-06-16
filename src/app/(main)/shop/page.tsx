@@ -20,30 +20,6 @@ type Product = {
   description: string
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    name: 'Home Network AdBlocker',
-    price: '£75',
-    priceAmount: 7500,
-    description: 'Block Ads and filter content for every device on your network.',
-  },
-  {
-    id: 2,
-    name: 'Monthly Subscription',
-    price: '£6/month',
-    priceAmount: 600,
-    description: 'Regular updates, proactive support, blocking insights and assistance.',
-  },
-  {
-    id: 3,
-    name: 'Hourly Support',
-    price: '£25/hr',
-    priceAmount: 2500,
-    description: 'Technical help or training when you need it most.',
-  },
-]
-
 function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 3958.8
   const toRad = (x: number) => (x * Math.PI) / 180
@@ -239,11 +215,7 @@ export default function ShopPage() {
 				  className="w-full aspect-[16/9] overflow-hidden rounded shadow cursor-pointer"
 				  onClick={() => openGallery(index)}
 				>
-				  <img
-					src={src}
-					alt={`AdBlocker preview ${index + 1}`}
-					className="w-full h-full object-cover transition hover:opacity-80"
-				  />
+				  <Image src={src} alt={`AdBlocker preview ${index + 1}`} className="w-full h-full object-cover transition hover:opacity-80"/>
 				</div>
 			  ))}
 			</div>
@@ -306,11 +278,7 @@ export default function ShopPage() {
 			  &#10094;
 			</button>
 
-			<img
-			  src={adblockerImages[currentImageIndex]}
-			  alt="Expanded AdBlocker"
-			  className="max-w-[90vw] max-h-[80vh] rounded shadow-xl"
-			/>
+			<Image src={adblockerImages[currentImageIndex]} alt="Expanded AdBlocker" className="max-w-[90vw] max-h-[80vh] rounded shadow-xl"/>
 
 			<button
 			  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
