@@ -82,7 +82,7 @@ export default function Layout({ children }: LayoutProps) {
 		>
 		  <button
 			onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-			className="absolute left-4 top-4 text-white"
+			className="fixed left-1/2 transform -translate-x-1/2 z-50 p2 rounded top-4 text-white"
 		  >
 			{mobileMenuOpen ? (
 			  <CloseIcon className="w-6 h-6 text-black" />
