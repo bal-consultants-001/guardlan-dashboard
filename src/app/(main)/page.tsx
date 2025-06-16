@@ -109,7 +109,7 @@ export default function HomePage() {
 		  
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 			{/* AdBlocker OFF */}
-			<div className="w-[600px] h-[400px] relative">
+			<div className="w-[500px] h-[400px] relative">
 			  <Image
 				src="/images/AdBlocker-off.png"
 				alt="With Ads (AdBlocker Off)"
@@ -120,7 +120,7 @@ export default function HomePage() {
 			</div>
 
 			{/* AdBlocker ON */}
-			<div className="w-[600px] h-[400px] relative">
+			<div className="w-[500px] h-[400px] relative">
 			  <Image
 				src="/images/AdBlocker-on.png"
 				alt="Ad-Free (AdBlocker On)"
