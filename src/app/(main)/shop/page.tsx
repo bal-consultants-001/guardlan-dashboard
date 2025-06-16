@@ -61,6 +61,7 @@ export default function ShopPage() {
   const [postcodeInput, setPostcodeInput] = useState('')
   const { serviceable, setServiceable } = usePostcode();
   const [showNotifyForm, setShowNotifyForm] = useState(false)
+  const [subscriptionSelected, setSubscriptionSelected] = useState(false)
   const [message, setMessage] = useState('')
   const { addToCart } = useCart()
 
@@ -93,6 +94,34 @@ export default function ShopPage() {
       setMessage('❌ Error checking postcode.')
     }
   }
+  
+	  const adblockerImages = [
+	  '/images/AdBlocker9.jpg',
+	  '/images/AdBlocker1.png',
+	  '/images/AdBlocker2.png',
+	  '/images/AdBlocker5.png',
+	]
+
+	const [isGalleryOpen, setIsGalleryOpen] = useState(false)
+	const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+	const openGallery = (index: number) => {
+	  setCurrentImageIndex(index)
+	  setIsGalleryOpen(true)
+	}
+
+	const closeGallery = () => {
+	  setIsGalleryOpen(false)
+	}
+
+	const showNextImage = () => {
+	  setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
+	}
+
+	const showPrevImage = () => {
+	  setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
+	}
+
 
   return (
 	<>
@@ -131,9 +160,6 @@ export default function ShopPage() {
         <p className="mb-6 text-lg">
           Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
         </p>
-        <Link href="#products" className="btn bg-black text-white">
-          Shop Now
-        </Link>
       </section>
 
       {/* Postcode Check */}
@@ -196,21 +222,117 @@ export default function ShopPage() {
       )}
 
       {/* Product List */}
-      <section id="products" className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden px-4 text-white grid md:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <div key={product.id} className="bg-white text-black p-6 rounded shadow">
-            <h3 className="text-lg font-bold">{product.name}</h3>
-            <p className="mt-2">{product.description}</p>
-            <p className="mt-2 font-semibold">{product.price}</p>
-            <button
-              className="btn mt-4 bg-black text-white"
-              onClick={() => addToCart(product)}
-            >
-              Add to Cart
-            </button>
-          </div>
-        ))}
-      </section>
+      {/* Featured Product: Home Network AdBlocker */}
+		<section id="products" className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white w-full">
+		<div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
+		  <div className="max-w-3xl mx-auto text-center">
+			<h2 className="text-3xl font-bold mb-4">Home Network AdBlocker</h2>
+			<p className="text-lg mb-6">
+			  Block ads, trackers, and unwanted content across every device on your home network. Enjoy a cleaner, faster, and safer internet experience.
+			</p>
+			<p className="text-2xl font-semibold mb-4">£75 (one-time)</p>
+
+			<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+			  {adblockerImages.map((src, index) => (
+				<div
+				  key={index}
+				  className="w-full aspect-[16/9] overflow-hidden rounded shadow cursor-pointer"
+				  onClick={() => openGallery(index)}
+				>
+				  <img
+					src={src}
+					alt={`AdBlocker preview ${index + 1}`}
+					className="w-full h-full object-cover transition hover:opacity-80"
+				  />
+				</div>
+			  ))}
+			</div>
+			
+			<div className="text-left bg-gray-100 p-6 rounded mb-6 text-black">
+			  <h3 className="text-lg font-bold mb-2">Optional Add-on:</h3>
+			  <label className="flex items-center gap-2">
+				<input
+				  type="checkbox"
+				  checked={subscriptionSelected}
+				  onChange={() => setSubscriptionSelected(!subscriptionSelected)}
+				/>
+				<span>
+				  <strong>Monthly Subscription (£6/month)</strong> — Includes proactive support, automatic updates, and content filtering reports.
+				</span>
+			  </label>
+			</div>
+
+			<button
+			  className="btn bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
+			  onClick={() => {
+				addToCart({
+				  id: 1,
+				  name: 'Home Network AdBlocker',
+				  price: '£75',
+				  priceAmount: 7500,
+				  description: 'Block Ads and filter content for every device on your network.',
+				})
+
+				if (subscriptionSelected) {
+				  addToCart({
+					id: 2,
+					name: 'Monthly Subscription',
+					price: '£6/month',
+					priceAmount: 600,
+					description: 'Support + updates for the AdBlocker.',
+				  })
+				}
+			  }}
+			>
+			  Add to Cart
+			</button>
+		  </div>
+		  </div>
+		</section>
+		
+		{isGalleryOpen && (
+		  <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur bg-black/40">
+			<button
+			  className="absolute top-6 right-6 text-white text-3xl font-bold"
+			  onClick={closeGallery}
+			>
+			  &times;
+			</button>
+
+			<button
+			  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
+			  onClick={showPrevImage}
+			>
+			  &#10094;
+			</button>
+
+			<img
+			  src={adblockerImages[currentImageIndex]}
+			  alt="Expanded AdBlocker"
+			  className="max-w-[90vw] max-h-[80vh] rounded shadow-xl"
+			/>
+
+			<button
+			  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
+			  onClick={showNextImage}
+			>
+			  &#10095;
+			</button>
+		  </div>
+		)}
+		
+		{/* Hourly Support Section */}
+		<section className="bg-gray-100 py-12 px-4 text-black text-center">
+		  <div className="max-w-2xl mx-auto">
+			<h2 className="text-2xl font-bold mb-4">Hourly Support</h2>
+			<p className="text-lg mb-2">Need extra help or training?</p>
+			<p className="text-xl font-semibold mb-4">£25/hr (Invoiced)</p>
+			<p className="mb-6">Technical assistance, remote troubleshooting, or custom configurations — charged per hour, billed after service.</p>
+			<Link href="/contact" className="btn bg-black text-white px-6 py-3 rounded hover:bg-gray-800">
+			  Contact Us
+			</Link>
+		  </div>
+		</section>
 	</>
   )
 }

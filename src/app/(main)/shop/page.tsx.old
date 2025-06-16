@@ -2,18 +2,15 @@
 
 'use client'
 
-
-
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
-import { loadStripe } from '@stripe/stripe-js'
-import Layout from '@/components/Layout'
-import { useSearchParams } from 'next/navigation'
+import { useCart } from '@/context/CartContext'
+import { usePostcode } from '@/context/PostcodeContext';
+import Image from 'next/image';
 
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
 type Product = {
   id: number
@@ -23,268 +20,197 @@ type Product = {
   description: string
 }
 
-type CartItem = Product & { quantity: number }
+const products: Product[] = [
+  {
+    id: 1,
+    name: 'Home Network AdBlocker',
+    price: '£75',
+    priceAmount: 7500,
+    description: 'Block Ads and filter content for every device on your network.',
+  },
+  {
+    id: 2,
+    name: 'Monthly Subscription',
+    price: '£6/month',
+    priceAmount: 600,
+    description: 'Regular updates, proactive support, blocking insights and assistance.',
+  },
+  {
+    id: 3,
+    name: 'Hourly Support',
+    price: '£25/hr',
+    priceAmount: 2500,
+    description: 'Technical help or training when you need it most.',
+  },
+]
+
+function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 3958.8
+  const toRad = (x: number) => (x * Math.PI) / 180
+  const dLat = toRad(lat2 - lat1)
+  const dLon = toRad(lon2 - lon1)
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  return R * c
+}
 
 export default function ShopPage() {
   const [user, setUser] = useState<User | null>(null)
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [postcodeInput, setPostcodeInput] = useState('')
+  const { serviceable, setServiceable } = usePostcode();
+  const [showNotifyForm, setShowNotifyForm] = useState(false)
+  const [message, setMessage] = useState('')
+  const { addToCart } = useCart()
 
   useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      setUser(user)
-    }
-
-    getUser()
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
   }, [])
 
-	useEffect(() => {
-	  const storedCart = localStorage.getItem('cart')
-	  if (storedCart) {
-		setCart(JSON.parse(storedCart))
-	  }
-	}, [])
+  const handleCheckPostcode = async () => {
+    try {
+      const res = await fetch(`https://api.postcodes.io/postcodes/${postcodeInput}`)
+      const data = await res.json()
 
-	useEffect(() => {
-	  localStorage.setItem('cart', JSON.stringify(cart))
-	}, [cart])
+      if (data.status === 200) {
+        const { latitude, longitude } = data.result
+        const distance = getDistanceMiles(latitude, longitude, BUSINESS_COORDS.lat, BUSINESS_COORDS.lon)
 
-	const [showPrompt, setShowPrompt] = useState(false);
-	
-	const searchParams = useSearchParams()
-
-
-	const startStripeCheckout = async () => {
-	  const stripe = await stripePromise
-
-	  const lineItems = cart.map((item) => ({
-		price_data: {
-		  currency: 'gbp',
-		  product_data: { name: item.name },
-		  unit_amount: item.priceAmount,
-		},
-		quantity: item.quantity,
-	  }))
-
-	  const res = await fetch('/api/checkout', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ items: lineItems }),
-	  })
-
-	  const { sessionId } = await res.json()
-	  await stripe?.redirectToCheckout({ sessionId })
-	}
-
-	useEffect(() => {
-	  const checkoutRequested = searchParams.get('checkout') === 'true'
-	  if (checkoutRequested && user && cart.length > 0) {
-		// Clear the flag so it doesn't repeat
-		const newUrl = window.location.pathname
-		window.history.replaceState({}, '', newUrl)
-
-		startStripeCheckout()
-	  }
-	}, [searchParams, user, cart])
-
-  const products: Product[] = [
-    {
-      id: 1,
-      name: 'Home Network AdBlocker',
-      price: '£75',
-      priceAmount: 7500,
-      description: 'Block Ads and filter content for every device on your network.',
-    },
-    {
-      id: 2,
-      name: 'Monthly Subscription',
-      price: '£6/month',
-      priceAmount: 600,
-      description: 'Regular updates, proactive support, blocking insights and assistance.',
-    },
-    {
-      id: 3,
-      name: 'Hourly Support',
-      price: '£25/hr',
-      priceAmount: 2500,
-      description: 'Technical help or training when you need it most.',
-    },
-  ]
-
-  const addToCart = (product: Product) => {
-  setCart((prevCart) => {
-    const existing = prevCart.find((item) => item.id === product.id)
-    if (existing) {
-      return prevCart.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    } else {
-      return [...prevCart, { ...product, quantity: 1 }]
+        if (distance <= 20) {
+          setServiceable(true)
+          setMessage('✅ We service your area!')
+        } else {
+          setServiceable(false)
+          setMessage('❌ Sorry, we don’t service your area.')
+          setShowNotifyForm(true)
+        }
+      } else {
+        setMessage('❌ Invalid postcode. Please try again.')
+      }
+    } catch (err) {
+      console.error(err)
+      setMessage('❌ Error checking postcode.')
     }
-  })
-}
-
-  const removeFromCart = (productId: number) => {
-	setCart((prevCart) => prevCart.filter((item) => item.id !== productId))
   }
 
-  const decreaseQuantity = (productId: number) => {
-  setCart((prevCart) =>
-    prevCart
-      .map((item) =>
-        item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
-      )
-      .filter((item) => item.quantity > 0)
-  )
-}
-
-
-	const handleCheckout = async () => {
-	  if(!user) {
-		  localStorage.setItem('checkoutIntent', 'true')
-		  localStorage.setItem('cart', JSON.stringify(cart))
-		  setShowPrompt(true);
-		  
-		  return;
-		  
-	  }
-	  await startStripeCheckout()
-	}
-	  
-	  
-	
   return (
-    <Layout>
-      {/* Header / Nav */}
-      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-0 overflow-hidden">
-        <div className="py-4 grid md:grid-cols-2 gap-6 float-right">
+	<>
+      {/* Auth Actions */}
+      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4">
+		  <div className="flex items-center justify-between px-6">
+			{/* Left-aligned Logo */}
+			<Image
+			  src="/images/logo-no-background.png"
+			  alt="BAL-IT"
+			  width={100}
+			  height={100}
+			  className="flex-shrink-0"
+			/>
+
+			{/* Right-aligned Links */}
+			<div className="flex gap-4 items-center">
           {user ? (
-            <Link
-              href="/dashboard"
-              className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-              
-                Dashboard
-              
-            </Link>
+		  <>
+            <Link href="/" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Home</Link>
+			<Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
+			</>
           ) : (
             <>
-              <Link
-                href="/register"
-                className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-                
-                  Register
-                
-              </Link>
-              <Link
-                href="/login"
-                className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-                
-                  Login
-                
-              </Link>
+              <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
+              <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
             </>
           )}
-        </div>
+          </div>
+		</div>
       </section>
-      {/* Shop Header */}
+
+      {/* Intro */}
       <section className="py-20 px-4 text-center">
-	  	  <div className="py-20 flex justify-center">
-			<div className="flex flex-col items-center max-w-2x1 text-center">
-				<h1 className="text-3xl font-bold mb-8">Shop Products</h1>
-				<div className="space-x-4">
-				<p className="text-lg mb-4">
-				  Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
-				</p>
-			  </div>
-			  <div>
-				<Link
-                  href="/shop"
-                  className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-				  
-					Shop Now
-				  
-				</Link>
-			  </div>
-			</div>
-		  </div>
+        <h1 className="text-3xl font-bold mb-4">Shop Products</h1>
+        <p className="mb-6 text-lg">
+          Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
+        </p>
+        <Link href="#products" className="btn bg-black text-white">
+          Shop Now
+        </Link>
       </section>
+
+      {/* Postcode Check */}
+      <section className="p-4 bg-white text-center">
+        <h2 className="text-xl font-semibold mb-2">Check if we service your area</h2>
+        <div className="flex justify-center gap-2 mb-2">
+          <input
+            className="border p-2 w-64"
+            placeholder="Enter your postcode"
+            value={postcodeInput}
+            onChange={(e) => setPostcodeInput(e.target.value)}
+          />
+          <button className="btn bg-blue-600 text-white" onClick={handleCheckPostcode}>
+            Check
+          </button>
+        </div>
+        {message && (
+          <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>
+        )}
+      </section>
+
+      {/* Notify Modal */}
+      {showNotifyForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow max-w-sm w-full">
+            <h2 className="text-lg font-bold mb-4">Notify Me</h2>
+            <p>Unfortunately we do not currently provide our service to your Postcode. If you are interested please fill in the form below, thank you.</p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                const formData = new FormData(e.currentTarget)
+                const name = formData.get('name')
+                const email = formData.get('email')
+                console.log({ name, email, postcode: postcodeInput })
+                setShowNotifyForm(false)
+                setPostcodeInput('')
+                setServiceable(null)
+                setMessage('')
+              }}
+              className="space-y-3"
+            >
+              <input name="name" required className="w-full border p-2" placeholder="Name" />
+              <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
+              <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNotifyForm(false)
+                  setPostcodeInput('')
+                  setServiceable(null)
+                  setMessage('')
+                }}
+                className="text-sm text-gray-500 mt-2 hover:underline"
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Product List */}
-      <section className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-10 px-10 grid md:grid-cols-3 gap-6 text-white">
+      <section id="products" className="bg-[linear-gradient(30deg,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4 overflow-hidden px-4 text-white grid md:grid-cols-3 gap-6">
         {products.map((product) => (
-          <div key={product.id} className="p-6 border rounded-lg shadow">
-            <h2 className="text-xl font-bold">{product.name}</h2>
-            <p className="my-2">{product.description}</p>
-            <p className="font-semibold text-lg">{product.price}</p>
+          <div key={product.id} className="bg-white text-black p-6 rounded shadow">
+            <h3 className="text-lg font-bold">{product.name}</h3>
+            <p className="mt-2">{product.description}</p>
+            <p className="mt-2 font-semibold">{product.price}</p>
             <button
+              className="btn mt-4 bg-black text-white"
               onClick={() => addToCart(product)}
-              className="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
             >
               Add to Cart
             </button>
           </div>
         ))}
       </section>
-      {/* Cart Section */}
-      {cart.length > 0 && (
-        <section className="py-10 px-4 mt-10 border-t">
-		  <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
-		  <ul className="mb-4 space-y-3">
-			{cart.map((item) => (
-			  <li key={item.id} className="flex justify-between items-center">
-				<div>
-				  <span className="font-semibold">{item.name}</span> — {item.price}
-				  <div className="text-sm text-gray-600">
-					Quantity: {item.quantity}
-				  </div>
-				</div>
-				<div className="flex items-center space-x-2">
-				  <button
-					onClick={() => decreaseQuantity(item.id)}
-					className="px-2 py-1 bg-gray-200 text-black rounded hover:bg-gray-300"
-				  >
-					−
-				  </button>
-				  <button
-					onClick={() => addToCart(item)}
-					className="px-2 py-1 bg-gray-200 text-black rounded hover:bg-gray-300"
-				  >
-					+
-				  </button>
-				  <button
-					onClick={() => removeFromCart(item.id)}
-					className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-				  >
-					Remove
-				  </button>
-				</div>
-			  </li>
-			))}
-		  </ul>
-
-		  <button
-			onClick={handleCheckout}
-			className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700"
-		  >
-			Checkout
-		  </button>
-		</section>
-		  )}
-	{showPrompt && (
-	  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-		<div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
-		  <h2 className="text-lg font-bold mb-2">Sign in or Register</h2>
-		  <p className="text-sm mb-4">
-			To track your order and schedule installation, please create an account or log in.
-		  </p>
-		  <div className="flex justify-center gap-4">
-			<Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</Link>
-			<Link href="/register" className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Register</Link>
-		  </div>
-		</div>
-	  </div>
-	)}
-    </Layout>
-  );
+	</>
+  )
 }
