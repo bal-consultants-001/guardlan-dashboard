@@ -164,21 +164,43 @@ export default function ShopPage() {
         <div className="fixed inset-0 bg-gray-800/60 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow max-w-sm w-full">
             <h2 className="text-lg font-bold mb-4">Notify Me</h2>
-            <p>Unfortunately we do not currently provide our service to your Postcode...</p>
+            <p>Unfortunately we do not currently provide our service to your Postcode. If you are interested in our product please fill in your information and we will contact you when we are in your area, thank you.</p>
             <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                const formData = new FormData(e.currentTarget)
-                const name = formData.get('name')
-                const email = formData.get('email')
-                console.log({ name, email, postcode: postcodeInput })
-                setShowNotifyForm(false)
-                setPostcodeInput('')
-                setServiceable(null)
-                setMessage('')
-              }}
-              className="space-y-3"
-            >
+			  onSubmit={async (e) => {
+				e.preventDefault()
+				const formData = new FormData(e.currentTarget)
+				const name = formData.get('name')
+				const email = formData.get('email')
+
+				// Validate inputs
+				if (!name || !email || !postcodeInput) {
+				  console.error('Missing fields')
+				  return
+				}
+
+				// ✅ Insert into Supabase "interest" table
+				const { error } = await supabase.from('interest').insert([
+				  {
+					name,
+					email,
+					postcode: postcodeInput,
+				  },
+				])
+
+				if (error) {
+				  console.error('Error saving to Supabase:', error.message)
+				} else {
+				  console.log('Interest saved to Supabase')
+				}
+
+				// Reset form/UI state
+				setShowNotifyForm(false)
+				setPostcodeInput('')
+				setServiceable(null)
+				setMessage('')
+			  }}
+			  className="space-y-3"
+			>
               <input name="name" required className="w-full border p-2" placeholder="Name" />
               <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
               <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
