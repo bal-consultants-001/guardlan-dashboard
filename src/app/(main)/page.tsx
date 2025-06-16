@@ -116,6 +116,8 @@ export default function HomePage() {
 				fill
 				className="rounded-lg shadow-lg object-cover"
 			  />
+			</div>
+			  <div>
 			  <p className="mt-2 text-lg font-semibold text-red-300">Without GuardLAN (Ads Active)</p>
 			</div>
 
@@ -127,6 +129,8 @@ export default function HomePage() {
 				fill
 				className="rounded-lg shadow-lg object-cover"
 			  />
+			  </div>
+			  <div>
 			  <p className="mt-2 text-lg font-semibold text-green-300">With GuardLAN (Ads Blocked)</p>
 			</div>
 		  </div>
