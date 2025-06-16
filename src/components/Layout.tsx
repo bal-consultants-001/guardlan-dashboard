@@ -73,34 +73,58 @@ export default function Layout({ children }: LayoutProps) {
       </aside>
 
       {/* Mobile top nav */}
-      <header className="md:hidden bg-gray-100/60 shadow p-2 flex justify-center relative">
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="absolute justify-center top-4 text-black"
-        >
-          {mobileMenuOpen ? <CloseIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-        </button>
-		
-        {mobileMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-white shadow-md z-40 p-4 space-y-2">
-            <Link href="/" className="block" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-            <Link href="/shop" className="block" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
-            {user ? (
-              <>
-                <Link href="/dashboard" className="block" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-                <Link href="/support" className="block" onClick={() => setMobileMenuOpen(false)}>Tickets</Link>
-                <button onClick={() => { setMobileMenuOpen(false); handleLogout(); }} className="block text-left w-full">Log Out</button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="block" onClick={() => setMobileMenuOpen(false)}>Login</Link>
-                <Link href="/register" className="block" onClick={() => setMobileMenuOpen(false)}>Register</Link>
-              </>
-            )}
-          </div>
-        )}
-      </header>
+		<header
+		  className={`md:hidden transition-colors duration-300 shadow p-4 flex justify-center relative ${
+			mobileMenuOpen
+			  ? 'bg-white'
+			  : 'bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))]'
+		  }`}
+		>
+		  <button
+			onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+			className="absolute left-4 top-4 text-white"
+		  >
+			{mobileMenuOpen ? (
+			  <CloseIcon className="w-6 h-6 text-black" />
+			) : (
+			  <MenuIcon className="w-6 h-6" />
+			)}
+		  </button>
 
+		  {/* Centered logo or leave empty for now */}
+		  <div className="text-center text-white font-semibold">
+			{/* Optional logo or title */}
+		  </div>
+
+		  {/* Dropdown Menu */}
+		  {mobileMenuOpen && (
+			<div className="absolute top-full left-0 w-full bg-white shadow-md z-40 p-4 space-y-2">
+			  <Link href="/" className="block" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+			  <Link href="/shop" className="block" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
+			  {user ? (
+				<>
+				  <Link href="/dashboard" className="block" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+				  <Link href="/support" className="block" onClick={() => setMobileMenuOpen(false)}>Tickets</Link>
+				  <button
+					onClick={() => {
+					  setMobileMenuOpen(false);
+					  handleLogout();
+					}}
+					className="block text-left w-full"
+				  >
+					Log Out
+				  </button>
+				</>
+			  ) : (
+				<>
+				  <Link href="/login" className="block" onClick={() => setMobileMenuOpen(false)}>Login</Link>
+				  <Link href="/register" className="block" onClick={() => setMobileMenuOpen(false)}>Register</Link>
+				</>
+			  )}
+			</div>
+		  )}
+		</header>
+		
       {/* Main content */}
       <main className="flex-1 relative bg-white">
         {/* Floating Cart */}
