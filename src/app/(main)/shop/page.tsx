@@ -161,7 +161,7 @@ export default function ShopPage() {
 
       {/* Notify Modal */}
       {showNotifyForm && (
-        <div className="fixed inset-0 bg-black-800/60 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-800/60 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow max-w-sm w-full">
             <h2 className="text-lg font-bold mb-4">Notify Me</h2>
             <p>Unfortunately we do not currently provide our service to your Postcode...</p>

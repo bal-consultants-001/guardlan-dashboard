@@ -39,7 +39,7 @@ export default function Layout({ children }: LayoutProps) {
       <aside
         className={`
           bg-gray-100 shadow-lg transition-all duration-300 ease-in-out
-          ${isExpanded ? 'w-64' : 'w-10'}
+          ${isExpanded ? 'w-40' : 'w-10'}
         `}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
