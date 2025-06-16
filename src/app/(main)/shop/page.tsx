@@ -4,11 +4,12 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import { useCart } from '@/context/CartContext'
-import { usePostcode } from '@/context/PostcodeContext';
-import Image from 'next/image';
+import { usePostcode } from '@/context/PostcodeContext'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
@@ -27,11 +28,12 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
 export default function ShopPage() {
   const [user, setUser] = useState<User | null>(null)
   const [postcodeInput, setPostcodeInput] = useState('')
-  const { serviceable, setServiceable } = usePostcode();
+  const { serviceable, setServiceable } = usePostcode()
   const [showNotifyForm, setShowNotifyForm] = useState(false)
   const [subscriptionSelected, setSubscriptionSelected] = useState(false)
   const [message, setMessage] = useState('')
   const { addToCart } = useCart()
+  const router = useRouter()
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
@@ -62,64 +64,74 @@ export default function ShopPage() {
       setMessage('❌ Error checking postcode.')
     }
   }
-  
-	  const adblockerImages = [
-	  '/images/AdBlocker9.jpg',
-	  '/images/AdBlocker1.png',
-	  '/images/AdBlocker2.png',
-	  '/images/AdBlocker5.png',
-	]
 
-	const [isGalleryOpen, setIsGalleryOpen] = useState(false)
-	const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const adblockerImages = [
+    '/images/AdBlocker9.jpg',
+    '/images/AdBlocker1.png',
+    '/images/AdBlocker2.png',
+    '/images/AdBlocker5.png',
+  ]
 
-	const openGallery = (index: number) => {
-	  setCurrentImageIndex(index)
-	  setIsGalleryOpen(true)
-	}
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-	const closeGallery = () => {
-	  setIsGalleryOpen(false)
-	}
+  const openGallery = (index: number) => {
+    setCurrentImageIndex(index)
+    setIsGalleryOpen(true)
+  }
 
-	const showNextImage = () => {
-	  setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
-	}
+  const closeGallery = () => setIsGalleryOpen(false)
 
-	const showPrevImage = () => {
-	  setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
-	}
+  const showNextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
+  }
 
+  const showPrevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
+  }
+
+  const handleAddToCartAndCheckout = () => {
+    addToCart({
+      id: 1,
+      name: 'Home Network AdBlocker',
+      price: '£75',
+      priceAmount: 7500,
+      description: 'Block Ads and filter content for every device on your network.',
+    })
+
+    if (subscriptionSelected) {
+      addToCart({
+        id: 2,
+        name: 'Monthly Subscription',
+        price: '£6/month',
+        priceAmount: 600,
+        description: 'Support + updates for the AdBlocker.',
+      })
+    }
+
+    router.push('?checkout=true')
+  }
 
   return (
-	<>
-      {/* Auth Actions */}
+    <>
+      {/* Header */}
       <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4">
-		  <div className="flex items-center justify-between px-6">
-			{/* Left-aligned Logo */}
-			<Image
-			  src="/images/logo-no-background.png"
-			  alt="BAL-IT"
-			  width={100}
-			  height={100}
-			  className="flex-shrink-0"
-			/>
-
-			{/* Right-aligned Links */}
-			<div className="flex gap-4 items-center">
-          {user ? (
-		  <>
-            <Link href="/" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Home</Link>
-			<Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
-			</>
-          ) : (
-            <>
-              <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
-              <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
-            </>
-          )}
+        <div className="flex items-center justify-between px-6">
+          <Image src="/images/logo-no-background.png" alt="BAL-IT" width={100} height={100} className="flex-shrink-0" />
+          <div className="flex gap-4 items-center">
+            {user ? (
+              <>
+                <Link href="/" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Home</Link>
+                <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
+                <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
+              </>
+            )}
           </div>
-		</div>
+        </div>
       </section>
 
       {/* Intro */}
@@ -144,9 +156,7 @@ export default function ShopPage() {
             Check
           </button>
         </div>
-        {message && (
-          <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>
-        )}
+        {message && <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>}
       </section>
 
       {/* Notify Modal */}
@@ -154,7 +164,7 @@ export default function ShopPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow max-w-sm w-full">
             <h2 className="text-lg font-bold mb-4">Notify Me</h2>
-            <p>Unfortunately we do not currently provide our service to your Postcode. If you are interested please fill in the form below, thank you.</p>
+            <p>Unfortunately we do not currently provide our service to your Postcode...</p>
             <form
               onSubmit={(e) => {
                 e.preventDefault()
@@ -189,110 +199,95 @@ export default function ShopPage() {
         </div>
       )}
 
-      {/* Product List */}
-      {/* Featured Product: Home Network AdBlocker */}
-		<section id="products" className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white w-full">
-		<div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
-		  <div className="max-w-3xl mx-auto text-center">
-			<h2 className="text-3xl font-bold mb-4">Home Network AdBlocker</h2>
-			<p className="text-lg mb-6">
-			  Block ads, trackers, and unwanted content across every device on your home network. Enjoy a cleaner, faster, and safer internet experience.
-			</p>
-			<p className="text-2xl font-semibold mb-4">£75 (one-time)</p>
+      {/* Product Section */}
+      <section id="products" className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white w-full">
+        <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">Home Network AdBlocker</h2>
+            <p className="text-lg mb-6">
+              Block ads, trackers, and unwanted content across every device on your home network.
+            </p>
+            <p className="text-2xl font-semibold mb-4">£75 (one-time)</p>
 
-			<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-			  {adblockerImages.map((src, index) => (
-				<div
-				  key={index}
-				  className="w-full aspect-[16/9] overflow-hidden rounded shadow cursor-pointer"
-				  onClick={() => openGallery(index)}
-				>
-				  <Image src={src} alt={`AdBlocker preview ${index + 1}`} className="w-full h-full object-cover transition hover:opacity-80"/>
-				</div>
-			  ))}
-			</div>
-			
-			<div className="text-left bg-gray-100 p-6 rounded mb-6 text-black">
-			  <h3 className="text-lg font-bold mb-2">Optional Add-on:</h3>
-			  <label className="flex items-center gap-2">
-				<input
-				  type="checkbox"
-				  checked={subscriptionSelected}
-				  onChange={() => setSubscriptionSelected(!subscriptionSelected)}
-				/>
-				<span>
-				  <strong>Monthly Subscription (£6/month)</strong> — Includes proactive support, automatic updates, and content filtering reports.
-				</span>
-			  </label>
-			</div>
+            {/* Image Gallery Thumbnails */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              {adblockerImages.map((src, index) => (
+                <div
+                  key={index}
+                  className="w-full aspect-[16/9] overflow-hidden rounded-lg shadow cursor-pointer"
+                  onClick={() => openGallery(index)}
+                >
+                  <Image src={src} alt={`AdBlocker preview ${index + 1}`} className="w-full h-full object-cover transition hover:opacity-80" />
+                </div>
+              ))}
+            </div>
 
-			<button
-			  className="btn bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
-			  onClick={() => {
-				addToCart({
-				  id: 1,
-				  name: 'Home Network AdBlocker',
-				  price: '£75',
-				  priceAmount: 7500,
-				  description: 'Block Ads and filter content for every device on your network.',
-				})
+            {/* Subscription Option */}
+            <div className="text-left bg-gray-100 p-6 rounded mb-6 text-black">
+              <h3 className="text-lg font-bold mb-2">Optional Add-on:</h3>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={subscriptionSelected}
+                  onChange={() => setSubscriptionSelected(!subscriptionSelected)}
+                />
+                <span>
+                  <strong>Monthly Subscription (£6/month)</strong> — Includes support, updates, and reports.
+                </span>
+              </label>
+            </div>
 
-				if (subscriptionSelected) {
-				  addToCart({
-					id: 2,
-					name: 'Monthly Subscription',
-					price: '£6/month',
-					priceAmount: 600,
-					description: 'Support + updates for the AdBlocker.',
-				  })
-				}
-			  }}
-			>
-			  Add to Cart
-			</button>
-		  </div>
-		  </div>
-		</section>
-		
-		{isGalleryOpen && (
-		  <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur bg-black/40">
-			<button
-			  className="absolute top-6 right-6 text-white text-3xl font-bold"
-			  onClick={closeGallery}
-			>
-			  &times;
-			</button>
+            {/* Add to Cart + Redirect */}
+            <button
+              className="btn bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
+              onClick={handleAddToCartAndCheckout}
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </section>
 
-			<button
-			  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
-			  onClick={showPrevImage}
-			>
-			  &#10094;
-			</button>
+      {/* Fullscreen Image Gallery Overlay */}
+      {isGalleryOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur bg-black/40">
+          <button
+            className="absolute top-6 right-6 text-white text-3xl font-bold"
+            onClick={closeGallery}
+          >
+            &times;
+          </button>
 
-			<Image src={adblockerImages[currentImageIndex]} alt="Expanded AdBlocker" className="max-w-[90vw] max-h-[80vh] rounded shadow-xl"/>
+          <button
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
+            onClick={showPrevImage}
+          >
+            &#10094;
+          </button>
 
-			<button
-			  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
-			  onClick={showNextImage}
-			>
-			  &#10095;
-			</button>
-		  </div>
-		)}
-		
-		{/* Hourly Support Section */}
-		<section className="bg-gray-100 py-12 px-4 text-black text-center">
-		  <div className="max-w-2xl mx-auto">
-			<h2 className="text-2xl font-bold mb-4">Hourly Support</h2>
-			<p className="text-lg mb-2">Need extra help or training?</p>
-			<p className="text-xl font-semibold mb-4">£25/hr (Invoiced)</p>
-			<p className="mb-6">Technical assistance, remote troubleshooting, or custom configurations — charged per hour, billed after service.</p>
-			<Link href="/contact" className="btn bg-black text-white px-6 py-3 rounded hover:bg-gray-800">
-			  Contact Us
-			</Link>
-		  </div>
-		</section>
-	</>
+          <Image src={adblockerImages[currentImageIndex]} alt="Expanded AdBlocker" className="max-w-[90vw] max-h-[80vh] rounded shadow-xl" />
+
+          <button
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
+            onClick={showNextImage}
+          >
+            &#10095;
+          </button>
+        </div>
+      )}
+
+      {/* Hourly Support */}
+      <section className="bg-gray-100 py-12 px-4 text-black text-center">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold mb-4">Hourly Support</h2>
+          <p className="text-lg mb-2">Need extra help or training?</p>
+          <p className="text-xl font-semibold mb-4">£25/hr (Invoiced)</p>
+          <p className="mb-6">Technical assistance, remote troubleshooting, or custom configurations — billed after service.</p>
+          <Link href="/contact" className="btn bg-black text-white px-6 py-3 rounded hover:bg-gray-800">
+            Contact Us
+          </Link>
+        </div>
+      </section>
+    </>
   )
 }
