@@ -183,7 +183,6 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           </section>
         )}
-
         {children}
       </main>
     </div>
