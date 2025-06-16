@@ -7,7 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 import type { ReactNode } from 'react';
 import { useCart } from '@/context/CartContext';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Menu as MenuIcon, X as CloseIcon } from 'lucide-react';
 import { usePostcode } from '@/context/PostcodeContext';
 
 //import { PostcodeProvider } from '@/content/PostcodeContext';
@@ -22,6 +22,7 @@ export default function Layout({ children }: LayoutProps) {
   const [collapsed] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { serviceable } = usePostcode();
 
   const { cart, removeFromCart, addToCart, decreaseQuantity } = useCart();
@@ -34,11 +35,11 @@ export default function Layout({ children }: LayoutProps) {
   const isExpanded = !collapsed || hovering;
 
   return (
-    <div className="min-h-screen flex text-gray-900 relative">
-      {/* Sidebar */}
+    <div className="min-h-screen flex flex-col md:flex-row text-gray-900 relative">
+      {/* Sidebar for desktop */}
       <aside
         className={`
-          bg-gray-100 shadow-lg transition-all duration-300 ease-in-out
+          hidden md:block bg-gray-100 shadow-lg transition-all duration-300 ease-in-out
           ${isExpanded ? 'w-40' : 'w-10'}
         `}
         onMouseEnter={() => setHovering(true)}
@@ -53,7 +54,7 @@ export default function Layout({ children }: LayoutProps) {
               {user ? (
                 <>
                   <Link href="/dashboard" className="block hover:text-black">Dashboard</Link>
-				  <Link href="/support" className="block hover:text-black">Tickets</Link>
+                  <Link href="/support" className="block hover:text-black">Tickets</Link>
                   <button className="block hover:text-gray" onClick={handleLogout}>Log Out</button>
                 </>
               ) : (
@@ -71,83 +72,93 @@ export default function Layout({ children }: LayoutProps) {
         </nav>
       </aside>
 
-      {/* Main Content */}
+      {/* Mobile top nav */}
+      <header className="md:hidden bg-gray-100 shadow p-4 flex justify-center relative">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="absolute left-4 top-4 text-black"
+        >
+          {mobileMenuOpen ? <CloseIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+        </button>
+        <h1 className="text-lg font-semibold">Menu</h1>
+
+        {mobileMenuOpen && (
+          <div className="absolute top-full left-0 w-full bg-white shadow-md z-40 p-4 space-y-2">
+            <Link href="/" className="block" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link href="/shop" className="block" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
+            {user ? (
+              <>
+                <Link href="/dashboard" className="block" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                <Link href="/support" className="block" onClick={() => setMobileMenuOpen(false)}>Tickets</Link>
+                <button onClick={() => { setMobileMenuOpen(false); handleLogout(); }} className="block text-left w-full">Log Out</button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="block" onClick={() => setMobileMenuOpen(false)}>Login</Link>
+                <Link href="/register" className="block" onClick={() => setMobileMenuOpen(false)}>Register</Link>
+              </>
+            )}
+          </div>
+        )}
+      </header>
+
+      {/* Main content */}
       <main className="flex-1 relative bg-white">
         {/* Floating Cart */}
         {cart.length > 0 && (
           <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full h-16">
-		  <div className="fixed top-4 right-4 z-50">
-            <button
-              onClick={() => setShowCart((prev) => !prev)}
-              className="relative p-2 rounded-full bg-black text-white hover:bg-gray-800"
-            >
-              <ShoppingCart className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 bg-red-600 text-xs rounded-full px-1">
-                {cart.reduce((sum, item) => sum + item.quantity, 0)}
-              </span>
-            </button>
+            <div className="fixed top-4 right-4 z-50">
+              <button
+                onClick={() => setShowCart((prev) => !prev)}
+                className="relative p-2 rounded-full bg-black text-white hover:bg-gray-800"
+              >
+                <ShoppingCart className="w-6 h-6" />
+                <span className="absolute -top-1 -right-1 bg-red-600 text-xs rounded-full px-1">
+                  {cart.reduce((sum, item) => sum + item.quantity, 0)}
+                </span>
+              </button>
 
-            {showCart && (
-			  <div className="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded p-4 border">
-				<h3 className="font-bold text-lg mb-2">Cart</h3>
-				<ul className="space-y-2 max-h-60 overflow-y-auto">
-				  {cart.map((item) => (
-					<li key={item.id} className="flex justify-between items-center">
-					  <div>
-						<p className="font-semibold">{item.name}</p>
-						<p className="text-sm text-gray-500">Qty: {item.quantity}</p>
-					  </div>
-					  <div className="flex items-center space-x-2">
-						<button onClick={() => decreaseQuantity(item.id)} className="text-xs bg-gray-200 px-2 py-1 rounded">−</button>
-						<button onClick={() => addToCart(item)} className="text-xs bg-gray-200 px-2 py-1 rounded">+</button>
-						<button onClick={() => removeFromCart(item.id)} className="text-xs bg-red-500 text-white px-2 py-1 rounded">X</button>
-					  </div>
-					</li>
-				  ))}
-				</ul>
+              {showCart && (
+                <div className="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded p-4 border">
+                  <h3 className="font-bold text-lg mb-2">Cart</h3>
+                  <ul className="space-y-2 max-h-60 overflow-y-auto">
+                    {cart.map((item) => (
+                      <li key={item.id} className="flex justify-between items-center">
+                        <div>
+                          <p className="font-semibold">{item.name}</p>
+                          <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <button onClick={() => decreaseQuantity(item.id)} className="text-xs bg-gray-200 px-2 py-1 rounded">−</button>
+                          <button onClick={() => addToCart(item)} className="text-xs bg-gray-200 px-2 py-1 rounded">+</button>
+                          <button onClick={() => removeFromCart(item.id)} className="text-xs bg-red-500 text-white px-2 py-1 rounded">X</button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
 
-				{/* Conditional Checkout Buttons */}
-				{!user ? (
-				  // Not logged in
-				  <div className="mt-4">
-					<p className="text-sm text-red-600 text-center mb-2">
-					  You must be logged in to checkout.
-					</p>
-					<div className="flex justify-between gap-2">
-					  <Link
-						href="/login"
-						className="flex-1 text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-					  >
-						Login
-					  </Link>
-					  <Link
-						href="/register"
-						className="flex-1 text-center bg-black text-white py-2 rounded hover:bg-gray-800"
-					  >
-						Register
-					  </Link>
-					</div>
-				  </div>
-				) : !serviceable ? (
-				  // Logged in but not serviceable
-				  <div className="mt-4">
-					<p className="text-sm text-red-600 text-center">
-					  Please enter a valid postcode within our serviceable area to proceed to checkout.
-					</p>
-				  </div>
-				) : (
-				  // Logged in and serviceable
-				  <Link
-					href="/shop?checkout=true"
-					className="block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700"
-				  >
-					Checkout
-				  </Link>
-				)}
-			  </div>
-			)}
-          </div>
-		  </section>
+                  {/* Conditional Checkout */}
+                  {!user ? (
+                    <div className="mt-4">
+                      <p className="text-sm text-red-600 text-center mb-2">You must be logged in to checkout.</p>
+                      <div className="flex justify-between gap-2">
+                        <Link href="/login" className="flex-1 text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</Link>
+                        <Link href="/register" className="flex-1 text-center bg-black text-white py-2 rounded hover:bg-gray-800">Register</Link>
+                      </div>
+                    </div>
+                  ) : !serviceable ? (
+                    <div className="mt-4">
+                      <p className="text-sm text-red-600 text-center">
+                        Please enter a valid postcode within our serviceable area to proceed to checkout.
+                      </p>
+                    </div>
+                  ) : (
+                    <Link href="/shop?checkout=true" className="block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700">Checkout</Link>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
         )}
 
         {children}
