@@ -12,14 +12,6 @@ import Image from 'next/image';
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
-type Product = {
-  id: number
-  name: string
-  price: string
-  priceAmount: number
-  description: string
-}
-
 function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 3958.8
   const toRad = (x: number) => (x * Math.PI) / 180
