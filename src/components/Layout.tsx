@@ -163,7 +163,7 @@ export default function Layout({ children }: LayoutProps) {
                   {/* Conditional Checkout */}
                   {!user ? (
                     <div className="mt-4">
-                      <p className="text-sm text-red-600 text-center mb-2">You must be logged in to checkout.</p>
+                      <p className="text-sm text-red-600 text-center mb-2">You must be logged in and within a valid Postcode to checkout.</p>
                       <div className="flex justify-between gap-2">
                         <Link href="/login" className="flex-1 text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</Link>
                         <Link href="/register" className="flex-1 text-center bg-black text-white py-2 rounded hover:bg-gray-800">Register</Link>
