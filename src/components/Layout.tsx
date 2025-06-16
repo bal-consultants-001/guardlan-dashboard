@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
@@ -18,6 +19,7 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const { user } =useAuth();
+  const [collapsed, setCollapsed] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const { serviceable } = usePostcode();
