@@ -28,7 +28,6 @@ export default function Layout({ children }: LayoutProps) {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-	setUser(null);
     router.push('/');
   };
 
