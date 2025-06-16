@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/context/AuthContext';
 import type { User } from '@supabase/supabase-js';
 import type { ReactNode } from 'react';
 import { useCart } from '@/context/CartContext';
@@ -18,31 +19,13 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const { user } =useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const { serviceable } = usePostcode();
 
   const { cart, removeFromCart, addToCart, decreaseQuantity } = useCart();
-
-  useEffect(() => {
-	  
-	  supabase.auth.getSession().then(({ data: { session } }) => {
-		setUser(session?.user ?? null);
-	  });
-
-	  const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-		setUser(session?.user ?? null);
-	  });
-
-	  const timer = setTimeout(() => setCollapsed(true), 3000);
-
-	  return () => {
-		clearTimeout(timer);
-		authListener?.subscription.unsubscribe();
-	  };
-  }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "../globals.css";
 
 import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from '@/context/AuthContext';
 import { PostcodeProvider } from '@/context/PostcodeContext'; // ✅ your new context
 import Layout from '@/components/Layout'; // ✅ layout with sidebar, cart, etc.
 
@@ -31,11 +32,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${oswald.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <CartProvider>
-          <PostcodeProvider>
-            <Layout>{children}</Layout>
-          </PostcodeProvider>
-        </CartProvider>
+        <AuthProvider>
+		  <CartProvider>
+            <PostcodeProvider>
+              <Layout>{children}</Layout>
+            </PostcodeProvider>
+          </CartProvider>
+		</AuthProvider>
       </body>
     </html>
   );
