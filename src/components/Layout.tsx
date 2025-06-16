@@ -107,20 +107,42 @@ export default function Layout({ children }: LayoutProps) {
 				</ul>
 
 				{/* Conditional Checkout Buttons */}
-				{user && serviceable ? (
-				  <Link href="/shop?checkout=true" className="block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700">
-					Checkout
-				  </Link>
-				) : (
+				{!user ? (
+				  // Not logged in
 				  <div className="mt-4">
 					<p className="text-sm text-red-600 text-center mb-2">
-					  You must be logged in and in a serviceable area to checkout.
+					  You must be logged in to checkout.
 					</p>
 					<div className="flex justify-between gap-2">
-					  <Link href="/login" className="flex-1 text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</Link>
-					  <Link href="/register" className="flex-1 text-center bg-black text-white py-2 rounded hover:bg-gray-800">Register</Link>
+					  <Link
+						href="/login"
+						className="flex-1 text-center bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+					  >
+						Login
+					  </Link>
+					  <Link
+						href="/register"
+						className="flex-1 text-center bg-black text-white py-2 rounded hover:bg-gray-800"
+					  >
+						Register
+					  </Link>
 					</div>
 				  </div>
+				) : !serviceable ? (
+				  // Logged in but not serviceable
+				  <div className="mt-4">
+					<p className="text-sm text-red-600 text-center">
+					  Please enter a valid postcode within our serviceable area to proceed to checkout.
+					</p>
+				  </div>
+				) : (
+				  // Logged in and serviceable
+				  <Link
+					href="/shop?checkout=true"
+					className="block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700"
+				  >
+					Checkout
+				  </Link>
 				)}
 			  </div>
 			)}
