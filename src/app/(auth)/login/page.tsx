@@ -69,10 +69,7 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <header className="p-8 w-full">
-	    <Image src="/images/logo-color.png" alt="BAL-IT" width={100} height={100} className="flex-shrink-0 aligh-left rounded-2xl" />
-	  </header>
-	  
+
 	  <section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
         <input
