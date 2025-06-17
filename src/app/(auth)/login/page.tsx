@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import Image from 'next/image'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -68,7 +69,10 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-sm">
+      <section>
+	    <Image src="/images/logo-color.png" alt="BAL-IT" width={100} height={100} className="flex-shrink-0 aligh-left rounded-2xl" />
+	  </section>
+	  <section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
         <input
           className="border p-2 w-full mb-4 rounded"
