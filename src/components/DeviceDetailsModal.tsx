@@ -21,7 +21,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
 
   const handleListToggle = (listIndex: number, groupId: number) => {
     const newLists = [...listsState];
-    const groupList = newLists[listIndex].groups ?? [];
+    const groupList: number[] = newLists[listIndex].groups ?? [];
 
     const isChecked = groupList.includes(groupId);
     newLists[listIndex].groups = isChecked
@@ -35,7 +35,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
 
   const handleClientToggle = (clientIndex: number, groupId: number) => {
     const newClients = [...clientsState];
-    const groupList = newClients[clientIndex].groups ?? [];
+    const groupList: number[] = newClients[clientIndex].groups ?? [];
 
     const isChecked = groupList.includes(groupId);
     newClients[clientIndex].groups = isChecked
