@@ -3,7 +3,7 @@
 // Device Lists
 export type DeviceList = {
   comment: string | null;
-  groups: number[] | string[]; // assuming this is an array of strings
+  groups: number[]; // assuming this is an array of strings
   type: string;
 };
 
@@ -18,7 +18,7 @@ export type DeviceGroup = {
 export type DeviceClient = {
   name: string | null;
   client: string; // assuming this is a MAC address or similar
-  groups: number[] | string[]; // assuming array
+  groups: number[]; // assuming array
   cli_id: number; // adjust if it's a UUID
 };
 

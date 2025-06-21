@@ -13,15 +13,40 @@ interface DeviceDetailsModalProps {
   onClose: () => void;
 }
 
+const parseGroups = (groups: any): number[] => {
+  if (Array.isArray(groups)) return groups.map(Number);
+  if (typeof groups === 'string') {
+    try {
+      const parsed = JSON.parse(groups);
+      if (Array.isArray(parsed)) return parsed.map(Number);
+    } catch {
+      return [];
+    }
+  }
+  return [];
+};
+
 const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, onClose }) => {
-  const [listsState, setListsState] = useState<DeviceList[]>(data.lists);
-  const [clientsState, setClientsState] = useState<DeviceClient[]>(data.clients);
+  // Parse groups strings into number arrays on initial load
+  const [listsState, setListsState] = useState<DeviceList[]>(
+    data.lists.map((list) => ({
+      ...list,
+      groups: parseGroups(list.groups),
+    }))
+  );
+
+  const [clientsState, setClientsState] = useState<DeviceClient[]>(
+    data.clients.map((client) => ({
+      ...client,
+      groups: parseGroups(client.groups),
+    }))
+  );
 
   if (!device) return null;
 
   const handleListToggle = (listIndex: number, groupId: number) => {
     const newLists = [...listsState];
-    const groupList = (newLists[listIndex].groups ?? []).map(Number);
+    const groupList = newLists[listIndex].groups ?? [];
 
     const isChecked = groupList.includes(groupId);
     newLists[listIndex].groups = isChecked
@@ -29,13 +54,12 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
       : [...groupList, groupId];
 
     setListsState(newLists);
-
     // TODO: Call Supabase update here if needed
   };
 
   const handleClientToggle = (clientIndex: number, groupId: number) => {
     const newClients = [...clientsState];
-    const groupList = (newClients[clientIndex].groups ?? []).map(Number);
+    const groupList = newClients[clientIndex].groups ?? [];
 
     const isChecked = groupList.includes(groupId);
     newClients[clientIndex].groups = isChecked
@@ -43,7 +67,6 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
       : [...groupList, groupId];
 
     setClientsState(newClients);
-
     // TODO: Call Supabase update here if needed
   };
 
