@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { DeviceWithLog, DeviceList, DeviceGroup, DeviceClient } from '@/types';
 
+type GroupsRaw = number[] | string[] | string | null | undefined;
+
 interface DeviceDetailsModalProps {
   device: DeviceWithLog;
   data: {
@@ -13,7 +15,7 @@ interface DeviceDetailsModalProps {
   onClose: () => void;
 }
 
-const parseGroups = (groups: any): number[] => {
+const parseGroups = (groups: GroupsRaw): number[] => {
   if (Array.isArray(groups)) return groups.map(Number);
   if (typeof groups === 'string') {
     try {
