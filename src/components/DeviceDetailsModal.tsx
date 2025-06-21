@@ -80,7 +80,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
         {/* Lists Section */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-2">Lists (Assign via Groups)</h3>
-          <table className="w-full border border-gray-300 text-sm rounded-lg">
+          <table className="w-full border-collapse border outline outline-1 outline-gray-400 overflow-hidden text-sm rounded-lg">
             <thead className="bg-gray-100">
               <tr>
                 <th className="border px-4 py-2 text-left">Category</th>
@@ -115,7 +115,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
         {/* Clients Section */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-2">Clients (Assign via Groups)</h3>
-          <table className="w-full border border-gray-300 text-sm rounded-lg">
+          <table className="w-full border-collapse border outline outline-1 outline-gray-400 overflow-hidden text-sm rounded-lg">
             <thead className="bg-gray-100">
               <tr>
                 <th className="border px-4 py-2 text-left">Name</th>
