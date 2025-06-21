@@ -19,9 +19,6 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
 
   if (!device) return null;
 
-  const isGroupAssigned = (groupId: number) =>
-    data.groups.some((group) => group.pi_id === groupId);
-
   const handleListToggle = (listIndex: number, groupId: number) => {
     const newLists = [...listsState];
     const groupList = newLists[listIndex].groups ?? [];
