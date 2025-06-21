@@ -80,10 +80,10 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
         {/* Lists Section */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-2">Lists (Assign via Groups)</h3>
-          <table className="w-full border border-gray-300 text-sm">
+          <table className="w-full border border-gray-300 text-sm rounded-lg">
             <thead className="bg-gray-100">
               <tr>
-                <th className="border px-4 py-2 text-left">Comment</th>
+                <th className="border px-4 py-2 text-left">Category</th>
                 <th className="border px-4 py-2 text-left">Type</th>
                 {data.groups.map((group) => (
                   <th key={group.pi_id} className="border px-2 py-2 text-center">
@@ -115,7 +115,7 @@ const DeviceDetailsModal: React.FC<DeviceDetailsModalProps> = ({ device, data, o
         {/* Clients Section */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-2">Clients (Assign via Groups)</h3>
-          <table className="w-full border border-gray-300 text-sm">
+          <table className="w-full border border-gray-300 text-sm rounded-lg">
             <thead className="bg-gray-100">
               <tr>
                 <th className="border px-4 py-2 text-left">Name</th>
