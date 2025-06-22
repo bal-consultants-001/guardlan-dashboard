@@ -137,7 +137,7 @@ export default function HomePage() {
 			<li>Input Power: 5V DC 2.5A</li>
 			<li>Dimensions: 65 x 30 mm</li>
 		  </ul>
-		  <p>
+		  <p className="mb-4 py-3">
 			It runs a combination of tailored applications, however the content filter itself utilised an application called Pi-Hole.
 			Pi-Hole is a DNS blackhole, this means that any requests made by a device on a network using it that match it&#39;s list of blocked addresses get dumped.
 			This is an open source project and we donate 10% of each device sale to the program to keep it funded.
