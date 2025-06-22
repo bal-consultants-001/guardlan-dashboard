@@ -126,13 +126,24 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold mb-4">About the product</h2>
 		  <Image src="/images/rpi1.png" alt="Base board" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
           <p className="mb-4 py-3">
-            Our content filter is built on a Raspberry Pi Zero 2 w using a 32GB A1 MicroSD card for storage.
+            Our content filter is built on a Raspberry Pi Zero 2 w using a 32GB A1 MicroSD card for storage. A Raspberry Pi is an SBC (Single Board Computer) that can run basic programs. It has:
+		  </p>
+		  <ul className="list-disc list-inside mt-2 space-y-1">
+			<li>Processor: Broadcom BCM2710A1, quad-core 64-bit SoC (Arm Cortex-A53 @ 1GHz)</li>
+			<li>RAM: 512MB LPDDR2</li>
+			<li>Connectivity: 2.4GHz IEEE 802.11ac WiFi, Bluetooth 4.2 (with BLE Support), microSD Card Slot</li>
+			<li>USB: 1 × USB 2.0 interface with OTG</li>
+			<li>HDMI: Mini HDMI Port</li>
+			<li>Input Power: 5V DC 2.5A</li>
+			<li>Dimensions: 65 x 30 mm</li>
+		  </ul>
+		  <p>
 			It runs a combination of tailored applications, however the content filter itself utilised an application called Pi-Hole.
 			Pi-Hole is a DNS blackhole, this means that any requests made by a device on a network using it that match it&#39;s list of blocked addresses get dumped.
 			This is an open source project and we donate 10% of each device sale to the program to keep it funded.
 			You can get more information the project here:
           </p>
-		  <Link href="https://pi-hole.net/" className="text-xl text-center mx-auto py-3">Pi-Hole</Link>
+		  <Link href="https://pi-hole.net/" className="text-xl text-center mx-auto py-3 hover:text-white">Pi-Hole</Link>
 		  <p className="mb-4 py-3">
 		    We also integrate it with a one way VPN service to provide the managed service for the devices. This allows up to get the basic data you will see in your dashboard.
 			As well as fascilitating updates, status monitoring and remote fixes.
