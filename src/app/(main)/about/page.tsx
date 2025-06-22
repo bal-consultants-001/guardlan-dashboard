@@ -44,7 +44,7 @@ export default function HomePage() {
 		</section>
 
       {/* Hero Section */}
-      <section className="relative w-full h-[50vh] bg-white min-h-[500]">
+      <section className="relative w-full h-[50vh] bg-white min-h-[400]">
 	    <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
             <Image
@@ -52,7 +52,7 @@ export default function HomePage() {
 			  alt="BAL-IT"
 			  width={400}
 			  height={400}
-			  className="flex-shrink-0 py-8 w-[90%]h-[90%]"
+			  className="flex-shrink-0 py-6 w-[90%]h-[90%]"
 			/>
           </div>
 		</div>
@@ -74,12 +74,12 @@ export default function HomePage() {
         {/* Scene 2: Backstory */}
           <div className="py-5">
             <p>
-              With online safety at our center it&#39;s worth going over how we got here. The founder of BAL-IT is an IT consultant with two children.
-			  As is common in society today they had access to a smart device from the are of 5. It was regulated heavily, configured as kids devices with content filters put in place,
+              With online safety at our center it&#39;s worth going over how we got here. I am the founder of BAL-IT, an IT consultant with two children.
+			  As is common in society today they had access to a smart device from the age of 5. It was regulated heavily, configured as kids devices with content filters put in place,
 			  Age restrictions applied to apps and online access curbed to only sites required for school homework. However, even with these processes in place there was still one area that seemed to be immune...Adverts.
 			  Apps and websites use the most eye catching, emotive and attractive Ads they can to get our attention quickly, they also don&#39;t seem to adhere to any kind of personal restrictions.
-			  After some online research he found some solutions that could work and after some trials he had a simple version of the current product.
-			  Implementing it saw an immediate reduction in adverts in his childrens Ad exposure. They noticed the difference too and generally appreciated being able to play or work without the interruptions, sometimes they complained they could get bonus&#39; by watching Ads.
+			  After some online research I found some solutions that could work. After some trials I had a simple version of the current product.
+			  Implementing it saw an immediate reduction in my childrens Ad exposure. They noticed the difference too and generally appreciated being able to play or work without the interruptions, sometimes they complained they could get bonus&#39; by watching Ads.
 			  But generally they were happier with the smoother experience.
             </p>
           </div>
@@ -87,20 +87,23 @@ export default function HomePage() {
         {/* Scene 3: Easy Setup & Integration */}
           <div className="py-5">
             <p>
-              As his children grew older he was increasingly aware of other content they may be exposed to as they moved through the devices Age barriers.
-			  He decided to encorporate additional filtering rules for Adult Sites as well as looking into gambling, chatrooms and social media filters.
-			  All of these additions allowed him a certain peace of mind when it came to his childrens devices, as well as some good conversations with them about the online world and safer ways to interact with it.
+              As my children grew older I was increasingly aware of other content they may be exposed to as they moved through the devices Age barriers.
+			  I decided to encorporate additional filtering rules for Adult Sites as well as looking into gambling, chatrooms and social media filters.
+			  All of these additions allowed me a certain peace of mind when it came to my childrens devices, as well as some good conversations with them about the online world and safer ways to interact with it.
 			  The main push for the product line however didn&#39;t come until 3 years after the initial implementation of the content filter.
-			  His parents noticed that the children didn&#39;t have Ads at his house but at theirs they were getting more than ever with escalating problems with age appropriate content.
-			  So he built another device to install at their house. They didn&#39;t want their devices to be filtered in the same way so he configured it to only affect the kids devices whilst leaving everything else on the network.
+			  My parents noticed that the children didn&#39;t have Ads at our house but at theirs they were getting more than ever with escalating problems with age appropriate content.
+			  So I built another device to install at their house. They didn&#39;t want their devices to be filtered in the same way so I configured it to only affect the kids devices whilst leaving everything else on the network.
 			  They also weren&#39;t particularly interested in maintaining it themselves so a rudementary version of this site was configured to monitor, fix and enhance the device as needed.
-			  Finally this lead us here. A device that can be installed in your home to protect you and your family from online threats. It isn&#39;t just children who are at risk.
-			  Every site you visit, Advert you click on or media you interact with builds a digital copy of you.
+			  Finally this lead us here. A device that can be installed in your home to protect you and your family from online threats.
             </p>
           </div>
 		  
+		  <div className="py-5">
+		   <h3 className="text-center text-2xl font-bold font-italic mb-4"><em>"Every site you visit, Advert you click on or media you interact with builds a digital copy of you."</em></h3>
+		  </div>
+		  
 		{/* Scene 4: It's all about you */}
-          <div>
+          <div className="py-5">
             <p>
               It isn&#39;t just children who are at risk.
 			  Every site you visit, Advert you click on or media you interact with builds a digital copy of you.
