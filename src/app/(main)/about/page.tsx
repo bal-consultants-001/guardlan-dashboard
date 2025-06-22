@@ -125,11 +125,14 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">About the product</h2>
 		  <Image src="/images/rpi1.png" alt="Base board" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
-          <p className="mb-4">
+          <p className="mb-4 py-3">
             Our content filter is built on a Raspberry Pi Zero 2 w using a 32GB A1 MicroSD card for storage.
+			It runs a combination of tailored applications, however the content filter itself utilised an application called Pi-Hole.
+			You can get more information here:
           </p>
+		  <Link href="https://pi-hole.net/" className="text-xl text-center mx-auto py-3">Pi-Hole</Link>
           <Link href="/shop" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-            Subscribe
+            Purchase
           </Link>
         </div>
 		</div>
