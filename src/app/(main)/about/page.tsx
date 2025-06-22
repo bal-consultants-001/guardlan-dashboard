@@ -128,7 +128,7 @@ export default function HomePage() {
           <p className="mb-4 py-3">
             Our content filter is built on a Raspberry Pi Zero 2 w using a 32GB A1 MicroSD card for storage.
 			It runs a combination of tailored applications, however the content filter itself utilised an application called Pi-Hole.
-			Pi-Hole is a DNS blackhole, this means that any requests made by a device on a network using it that match it's list of blocked addresses get dumped.
+			Pi-Hole is a DNS blackhole, this means that any requests made by a device on a network using it that match it&#39;s list of blocked addresses get dumped.
 			This is an open source project and we donate 10% of each device sale to the program to keep it funded.
 			You can get more information the project here:
           </p>
