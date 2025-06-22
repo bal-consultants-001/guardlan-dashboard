@@ -119,17 +119,14 @@ export default function HomePage() {
 
       </section>
 
-      {/* Subscription Plan */}
+      {/* About the product */}
       <section className="bg-gray-100">
 	  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 shadow-lg">
         <div className="max-w-4xl mx-auto text-center">
-          <Image src="/images/subscription1.jpg" alt="Monthly Subscription" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
-          <h2 className="text-3xl font-bold mb-4">Monthly Subscription & Insights</h2>
+          <h2 className="text-3xl font-bold mb-4">About the product</h2>
+		  <Image src="/images/rpi1.png" alt="Base board" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
           <p className="mb-4">
-            Keep your GuardLAN AdBlocker up-to-date with the latest filters, security patches, and performance tweaks. Monitor what’s being blocked and get personalized reports.
-          </p>
-          <p className="mb-6">
-            Enjoy a free remote support session each month, and manage everything through your online dashboard.
+            Our content filter is built on a Raspberry Pi Zero 2 w using a 32GB A1 MicroSD card for storage.
           </p>
           <Link href="/shop" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
             Subscribe
