@@ -101,6 +101,7 @@ export default function Layout({ children }: LayoutProps) {
 		  {mobileMenuOpen && (
 			<div className="absolute top-full left-0 w-full bg-white shadow-md z-40 p-4 space-y-2">
 			  <Link href="/" className="block" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+			  <Link href="/about" className="block hover:text-black">About</Link>
 			  <Link href="/shop" className="block" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
 			  {user ? (
 				<>
