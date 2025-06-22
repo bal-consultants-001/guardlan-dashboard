@@ -54,7 +54,7 @@ export default function HomePage() {
 			  height={400}
 			  className="flex-shrink-0 py-8 w-[90%]h-[90%]"
 			/>
-		<div className="grip grid-col-1 md:grid-cols-2 gap-5>
+		<div className="grip grid-col-1 md:grid-cols-2 gap-5">
           <div>
 		  <Link href="/about" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
             About Us
