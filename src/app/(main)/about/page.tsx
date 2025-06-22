@@ -45,15 +45,17 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative w-full h-[50vh] bg-white min-h-[500]">
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <Image
+	    <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+            <Image
 			  src="/images/logo-no-background.png"
 			  alt="BAL-IT"
 			  width={400}
 			  height={400}
 			  className="flex-shrink-0 py-8 w-[90%]h-[90%]"
 			/>
-        </div>
+          </div>
+		</div>
       </section>
 
       {/* About us Flow */}

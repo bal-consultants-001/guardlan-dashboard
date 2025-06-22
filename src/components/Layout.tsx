@@ -50,6 +50,7 @@ export default function Layout({ children }: LayoutProps) {
             <>
               <h2 className="text-xl font-bold mb-4">Menu</h2>
               <Link href="/" className="block hover:text-black">Home</Link>
+			  <Link href="/about" className="block hover:text-black">About</Link>
               <Link href="/shop" className="block hover:text-black">Shop</Link>
               {user ? (
                 <>
