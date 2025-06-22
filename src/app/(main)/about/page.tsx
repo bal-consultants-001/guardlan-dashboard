@@ -64,7 +64,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold mb-4">About Us</h2>
             <p>
               At BAL-IT our goal is to provide a safer online experience for everyone. The digital landscape is increasingly evolving and shifting and it can be hard to keep up with it.
-			  There are cookies to accept or reject, adverts on every page and content you just don't want to have in your life. Then if you in a position where you are responsible for other human beings there is so much more to think about.
+			  There are cookies to accept or reject, adverts on every page and content you just don&#39;t want to have in your life. Then if you in a position where you are responsible for other human beings there is so much more to think about.
 			  We want to help take some of the stress out of existing online.
             </p>
           </div>
@@ -72,10 +72,10 @@ export default function HomePage() {
         {/* Scene 2: Backstory */}
           <div className="py-5">
             <p>
-              With online safety at our center it's worth going over how we got here. The founder of BAL-IT is an IT consultant with two children.
+              With online safety at our center it&#39;s worth going over how we got here. The founder of BAL-IT is an IT consultant with two children.
 			  As is common in society today they had access to a smart device from the are of 5. It was regulated heavily, configured as kids devices with content filters put in place,
 			  Age restrictions applied to apps and online access curbed to only sites required for school homework. However, even with these processes in place there was still one area that seemed to be immune...Adverts.
-			  Apps and websites use the most eye catching, emotive and attractive Ads they can to get our attention quickly, they also don't seem to adhere to any kind of personal restrictions.
+			  Apps and websites use the most eye catching, emotive and attractive Ads they can to get our attention quickly, they also don&#39;t seem to adhere to any kind of personal restrictions.
 			  After some online research he found some solutions that could work and after some trials he had a simple version of the current product.
 			  Implementing it saw an immediate reduction in adverts in his childrens Ad exposure. They noticed the difference too and generally appreciated being able to play or work without the interruptions, sometimes they complained they could get bonus&#39; by watching Ads.
 			  But generally they were happier with the smoother experience.
@@ -88,11 +88,11 @@ export default function HomePage() {
               As his children grew older he was increasingly aware of other content they may be exposed to as they moved through the devices Age barriers.
 			  He decided to encorporate additional filtering rules for Adult Sites as well as looking into gambling, chatrooms and social media filters.
 			  All of these additions allowed him a certain peace of mind when it came to his childrens devices, as well as some good conversations with them about the online world and safer ways to interact with it.
-			  The main push for the product line however didn't come until 3 years after the initial implementation of the content filter.
-			  His parents noticed that the children didn't have Ads at his house but at theirs they were getting more than ever with escalating problems with age appropriate content.
-			  So he built another device to install at their house. They didn't want their devices to be filtered in the same way so he configured it to only affect the kids devices whilst leaving everything else on the network.
-			  They also weren't particularly interested in maintaining it themselves so a rudementary version of this site was configured to monitor, fix and enhance the device as needed.
-			  Finally this lead us here. A device that can be installed in your home to protect you and your family from online threats. It isn't just children who are at risk.
+			  The main push for the product line however didn&#39;t come until 3 years after the initial implementation of the content filter.
+			  His parents noticed that the children didn&#39;t have Ads at his house but at theirs they were getting more than ever with escalating problems with age appropriate content.
+			  So he built another device to install at their house. They didn&#39;t want their devices to be filtered in the same way so he configured it to only affect the kids devices whilst leaving everything else on the network.
+			  They also weren&#39;t particularly interested in maintaining it themselves so a rudementary version of this site was configured to monitor, fix and enhance the device as needed.
+			  Finally this lead us here. A device that can be installed in your home to protect you and your family from online threats. It isn&#39;t just children who are at risk.
 			  Every site you visit, Advert you click on or media you interact with builds a digital copy of you.
             </p>
           </div>
@@ -100,7 +100,7 @@ export default function HomePage() {
 		{/* Scene 4: It's all about you */}
           <div>
             <p>
-              It isn't just children who are at risk.
+              It isn&#39;t just children who are at risk.
 			  Every site you visit, Advert you click on or media you interact with builds a digital copy of you.
 			  This copy is used to build a marketing profile which targets you with content Advertisers think you will like.
 			  The more you interact with the world online the smarter it gets and soon enough it is able to advertise things you might like which you had never considered before.
