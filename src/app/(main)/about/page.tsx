@@ -99,7 +99,7 @@ export default function HomePage() {
           </div>
 		  
 		  <div className="py-5">
-		   <h3 className="text-center text-2xl font-bold font-italic mb-4"><em>"Every site you visit, Advert you click on or media you interact with builds a digital copy of you."</em></h3>
+		   <h3 className="text-center text-2xl font-bold font-italic mb-4"><em>&#34;Every site you visit, Advert you click on or media you interact with builds a digital copy of you.&#34;</em></h3>
 		  </div>
 		  
 		{/* Scene 4: It's all about you */}
