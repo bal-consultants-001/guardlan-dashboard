@@ -128,7 +128,7 @@ export default function HomePage() {
           <p className="mb-4 py-3">
             Our content filter is built on a Raspberry Pi Zero 2 w using a 32GB A1 MicroSD card for storage. A Raspberry Pi is an SBC (Single Board Computer) that can run basic programs. It has:
 		  </p>
-		  <ul className="list-disc list-inside mt-2 space-y-1">
+		  <ul className="list-disc list-inside mt-2 space-y-1 py-3">
 			<li>Processor: Broadcom BCM2710A1, quad-core 64-bit SoC (Arm Cortex-A53 @ 1GHz)</li>
 			<li>RAM: 512MB LPDDR2</li>
 			<li>Connectivity: 2.4GHz IEEE 802.11ac WiFi, Bluetooth 4.2 (with BLE Support), microSD Card Slot</li>
