@@ -78,8 +78,13 @@ export default function CompleteProfilePage() {
   }
 
   return (
-    <main className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Complete Your Profile</h1>
+    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+	<section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-sm">
+      <h1 className="text-2xl font-bold mb-6 text-center">Complete Your Profile</h1>
+	  <p className="mb-6 text-center">
+	  <em className="text-16px]">As part of our delivery, installation and support process we need to confirm certain details.
+	  Please fill in the fields below to complete your profile setup, thank you.</em>
+	  </p>
       {Object.keys(formData).map((field) => (
         <input
           key={field}
@@ -87,17 +92,26 @@ export default function CompleteProfilePage() {
           placeholder={field}
           value={formData[field as keyof typeof formData]}
           onChange={handleChange}
-          className="border p-2 w-full mb-4"
+          className="border p-2 w-full mb-4 rounded"
         />
       ))}
+	  <div className="flex flex-col space-y-2">
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-gray-800"
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
       >
         {loading ? 'Saving...' : 'Submit'}
       </button>
+	  <button
+            className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 transition"
+            onClick={() => router.push('/')}
+          >
+            Cancel
+          </button>
+	  </div>
       {message && <p className="mt-4 text-sm text-gray-600">{message}</p>}
+	  </section>
     </main>
   )
 }
