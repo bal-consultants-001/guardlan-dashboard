@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <>
       {/* Top Auth Actions Bar */}
-		<section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4">
+		<section className="bg-[var(--color-blue2)] w-full py-4">
 		  <div className="flex items-center justify-between px-6">
 			{/* Left-aligned Logo */}
 			<Image
@@ -45,10 +45,10 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative w-full h-[50vh] bg-black min-h-[500]">
-        <Image src="/images/AdBlocker0.png" alt="GuardLAN AdBlocker" fill className="object-cover opacity-80" />
+        <Image src="/images/blockers.png" alt="GuardLAN AdBlocker" fill className="object-cover opacity-10 w-[80%] h-[80%]" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
           <Image
-			  src="/images/logo-no-background.png"
+			  src="/images/bal-it.png"
 			  alt="BAL-IT"
 			  width={400}
 			  height={400}
@@ -70,8 +70,9 @@ export default function HomePage() {
       </section>
 
       {/* Product Showcase Flow */}
-      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white">
+      <section className="bg-[var(--color-blue2)] text-white">
         {/* Scene 1: Core Value */}
+		<h2 className="font-bold mb-4 text-center py-8">Blocking Adverts and unwanted content across all your devices, no software needed!</h2>
 		<div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
         <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
           <Image src="/images/AdBlocker1.png" alt="Network Filtering" width={500} height={300} className="rounded-lg object-cover" />
@@ -166,7 +167,7 @@ export default function HomePage() {
       </section>
 
       {/* Hourly Support */}
-      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white">
+      <section className="bg-[var(--color-blue2)] text-white">
 	  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-b-lg shadow-lg">
         <div className="max-w-4xl mx-auto text-center">
           <Image src="/images/support.jpg" alt="Support & Training" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
