@@ -44,7 +44,7 @@ export default function HomePage() {
 		</section>
 
       {/* Hero Section */}
-      <section className="relative w-full h-[50vh] bg-black min-h-[500] max-h-[600]">
+      <section className="relative w-full h-[50vh] bg-black min-h-[500] max-h-[500]">
         <Image src="/images/blockers.png" alt="GuardLAN AdBlocker" fill className="object-cover opacity-10 max-h-[600]" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
           <Image
