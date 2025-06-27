@@ -20,7 +20,7 @@ export default function HomePage() {
 		  <div className="flex items-center justify-between px-6">
 			{/* Left-aligned Logo */}
 			<Image
-			  src="/images/bal-it.png"
+			  src="/images/bal-it-grayscale.png"
 			  alt="BAL-IT"
 			  width={100}
 			  height={100}
