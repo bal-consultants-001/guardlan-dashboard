@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
 const roadmapData = [
