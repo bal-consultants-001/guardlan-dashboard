@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import type { User } from '@supabase/supabase-js';
 import Image from 'next/image';
 
 const roadmapData = [
@@ -45,13 +44,8 @@ const roadmapData = [
 ];
 
 export default function HomePage() {
-  const [user, setUser] = useState<User | null>(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-  }, []);
 
   const handleMouseEnter = (index: number) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);

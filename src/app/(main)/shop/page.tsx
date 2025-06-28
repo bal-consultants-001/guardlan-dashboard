@@ -7,7 +7,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import type { User } from '@supabase/supabase-js'
 import { useCart } from '@/context/CartContext'
 import { usePostcode } from '@/context/PostcodeContext'
 
@@ -26,7 +25,6 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
 }
 
 export default function ShopPage() {
-  const [user, setUser] = useState<User | null>(null)
   const [postcodeInput, setPostcodeInput] = useState('')
   const { serviceable, setServiceable } = usePostcode()
   const [showNotifyForm, setShowNotifyForm] = useState(false)
@@ -35,9 +33,6 @@ export default function ShopPage() {
   const { addToCart } = useCart()
   const router = useRouter()
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
-  }, [])
 
   const handleCheckPostcode = async () => {
     try {
