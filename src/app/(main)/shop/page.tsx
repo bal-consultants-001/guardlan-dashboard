@@ -114,25 +114,6 @@ export default function ShopPage() {
 
   return (
     <>
-      {/* Header */}
-      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4">
-        <div className="flex items-center justify-between px-6">
-          <Image src="/images/logo-no-background.png" alt="BAL-IT" width={100} height={100} className="flex-shrink-0" />
-          <div className="flex gap-4 items-center">
-            {user ? (
-              <>
-                <Link href="/" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Home</Link>
-                <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Dashboard</Link>
-              </>
-            ) : (
-              <>
-                <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
-                <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
 
       {/* Intro */}
       <section className="py-20 px-4 text-center">

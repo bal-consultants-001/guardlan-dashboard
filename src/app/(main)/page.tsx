@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import type { User } from '@supabase/supabase-js';
-import Image from 'next/image';
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -15,175 +15,109 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Top Auth Actions Bar */}
-		<section className="bg-[var(--color-blue2)] w-full py-4">
-		  <div className="flex items-center justify-between px-6">
-			{/* Left-aligned Logo */}
-			<Image
-			  src="/images/bal-it-grayscale.png"
-			  alt="BAL-IT"
-			  width={100}
-			  height={100}
-			  className="flex-shrink-0"
-			/>
 
-			{/* Right-aligned Links */}
-			<div className="flex gap-4 items-center">
-			  {user ? (
-				<Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-				  Dashboard
-				</Link>
-			  ) : (
-				<>
-				  <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
-				  <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
-				</>
-			  )}
-			</div>
-		  </div>
-		</section>
-
-      {/* Hero Section */}
-      <section className="relative w-full h-[50vh] bg-black min-h-[500] max-h-[500]">
-        <Image src="/images/blockers.png" alt="GuardLAN AdBlocker" fill className="object-cover opacity-10 max-h-[600]" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-          <Image
-			  src="/images/bal-it.png"
-			  alt="BAL-IT"
-			  width={400}
-			  height={400}
-			  className="flex-shrink-0 py-8 w-[90%]h-[90%]"
-			/>
-		<div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
-          <div>
-		  <Link href="/about" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
-            About Us
-          </Link>
-		  </div>
-		  <div>
-		  <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
-            Shop Now
-          </Link>
-		  </div>
-		</div>
+      {/* Hero */}
+      <section className="relative bg-black text-white h-[400px] flex items-center justify-center">
+	  {/*<Image src="/images/blockers.png" alt="Network Protection" fill className="object-cover opacity-10" />*/}
+        <div className="absolute z-10 text-center px-4 max-w-2xl">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Total Ad & Content Control — No Apps, No Downloads.</h1>
+          <p className="mb-6 text-lg">Plug in. Block ads. Filter content. Protect every device on your home network — instantly.</p>
+          <div className="flex gap-4 justify-center">
+            <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">Get Yours Now</Link>
+            <Link href="#how-it-works" className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-300">How It Works</Link>
+          </div>
         </div>
       </section>
 
-      {/* Product Showcase Flow */}
-      <section className="bg-[var(--color-blue2)] text-white">
-        {/* Scene 1: Core Value */}
-		<h2 className="font-bold mb-4 text-center py-8">Blocking Adverts and unwanted content across all your devices, no software needed!</h2>
-		<div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
-        <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
-          <Image src="/images/AdBlocker1.png" alt="Network Filtering" width={500} height={300} className="rounded-lg object-cover" />
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Ad-Free Browsing on All Devices</h2>
-            <p>
-              From phones to smart devices, block intrusive ads, pop-ups, and unwanted content at the router level — no extra software required.
-              Enhance your browsing speed, battery life, and peace of mind.
-            </p>
-          </div>
+      {/* How It Works */}
+      <section id="how-it-works" className="bg-gray-50 py-20 text-center">
+        <h2 className="text-3xl font-bold mb-8">How It Works</h2>
+        <p className="mb-12 text-gray-700">So simple, it feels like magic.</p>
+
+        <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto text-left">
+          {[
+            { step: 'Plug In', desc: 'Connect the BAL-IT device to your home router.' },
+            { step: 'Set Preferences', desc: 'Use our web dashboard to choose filters and protections.' },
+            { step: 'Enjoy Internet', desc: 'Ads gone. Content filtered. Family-safe browsing for all devices.' }
+          ].map(({ step, desc }, i) => (
+            <div key={i} className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition">
+              <div className="text-blue-600 text-3xl font-bold mb-2">{i + 1}</div>
+              <h3 className="text-xl font-semibold mb-2">{step}</h3>
+              <p className="text-gray-600">{desc}</p>
+            </div>
+          ))}
         </div>
 
-        {/* Scene 2: Parental & Privacy */}
-        <div className="flex flex-col md:flex-row-reverse items-center gap-12 max-w-6xl mx-auto">
-          <Image src="/images/AdBlocker2.png" alt="Family Protection" width={500} height={300} className="rounded-lg object-cover" />
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Protect What Matters</h2>
-            <p>
-              Block adult content, gambling sites, and social media distractions. Set boundaries for your kids — or yourself —
-			  with customizable filtering profiles tailored to your household&#39;s needs.
-			  With GuardLAN, technology becomes a safer space — not something to fear. Empower your family to explore, learn, and connect online with confidence, knowing harmful content is kept out.
-			  Create healthy digital habits while preserving privacy and peace of mind.
-            </p>
-          </div>
-        </div>
+        <p className="mt-10 text-lg font-semibold text-gray-800">Works with ALL smart devices — no installs required.</p>
+      </section>
 
-        {/* Scene 3: Easy Setup & Integration */}
-        <div className="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
-          <Image src="/images/AdBlocker5.png" alt="Easy Installation" width={500} height={300} className="rounded-lg object-cover" />
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Setup & Go Simplicity</h2>
-            <p>
-              Installation is fully handled by our team — no technical experience required. Once connected to your router, your GuardLAN AdBlocker begins protecting your entire network instantly.
-			  The device is compact and unobtrusive, designed to fit seamlessly into any home environment. It&#39;s quiet, energy-efficient, and made using durable, environmentally responsible materials — because protecting your family shouldn&#39;t come at the planet&#39;s expense.
-			  With every installation, you get peace of mind and a 30-day parts guarantee as standard. Safe, sustainable, and built with families in mind.
-            </p>
-          </div>
-        </div>
-		
-		{/* Scene 4: Before & After Example */}
-		<div className="max-w-6xl mx-auto text-center space-y-6">
-		  <h2 className="text-3xl font-bold">See the Difference</h2>
-		  <p className="mb-8">Here’s a real example of the web experience with and without GuardLAN’s ad blocking in action.</p>
-		  
-		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      {/* Features */}
+      <section className="bg-white py-20">
+		  <h2 className="text-3xl font-bold text-center mb-12">What Makes BAL-IT Different?</h2>
+
+		  {/* Before and After Images */}
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto mb-16 px-4">
 			{/* AdBlocker OFF */}
-			<div>
-			  <Image
-				src="/images/AdBlocker-off.png"
-				alt="With Ads (AdBlocker Off)"
-				width={600}
-				height={400}
-				className="rounded-lg shadow-lg object-cover"
-			  />
-			  <p className="mt-2 text-lg font-semibold text-red-300">Without GuardLAN (Ads Active)</p>
+			<div className="text-center">
+			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-lg">
+				<Image
+				  src="/images/AdBlocker-off.png"
+				  alt="With Ads (AdBlocker Off)"
+				  width={600}
+				  height={400}
+				  className="object-cover object-center"
+				  sizes="(max-width: 668px) 100vw, 50vw"
+				/>
+			  </div>
+			  <p className="mt-4 text-lg font-semibold text-red-500">Without Ad & Content Shield (Ads Active)</p>
 			</div>
 
 			{/* AdBlocker ON */}
-			<div>
-			  <Image
-				src="/images/AdBlocker-on.png"
-				alt="Ad-Free (AdBlocker On)"
-				width={600}
-				height={400}
-				className="rounded-lg shadow-lg object-cover"
-			  />
-			  <p className="mt-2 text-lg font-semibold text-green-300">With GuardLAN (Ads Blocked)</p>
+			<div className="text-center">
+			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-lg">
+				<Image
+				  src="/images/AdBlocker-on.png"
+				  alt="Ad-Free (AdBlocker On)"
+				  width={600}
+				  height={400}
+				  className="object-cover object-center"
+				  sizes="(max-width: 368px) 100vw, 50vw"
+				/>
+			  </div>
+			  <p className="mt-4 text-lg font-semibold text-green-500">With Ad & Content Shield (Ads Blocked)</p>
 			</div>
 		  </div>
-		</div>
 
-		</div>
+		  {/* Features Grid */}
+		  <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center px-4">
+			{[
+			  ['Ad Blocking Across Your Network', 'block'],
+			  ['Parental Controls & Custom Filters', 'shield-check'],
+			  ['Easy Web Dashboard', 'layout-dashboard']
+			].map(([title], i) => (
+			  <div key={i} className="bg-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition">
+				<h3 className="text-lg font-semibold mb-2">{title}</h3>
+				<p className="text-gray-600">Simple, powerful protection for your entire digital home.</p>
+			  </div>
+			))}
+		  </div>
+		</section>
+
+
+
+      {/* Product Callout */}
+      <section className="bg-blue-50 py-20 text-center">
+        <h2 className="text-3xl font-bold mb-6">Buy BAL-IT Today</h2>
+        <p className="mb-8 text-gray-700 max-w-xl mx-auto">Protect every device in your home from intrusive ads, harmful content, and distractions — all with one tiny box.</p>
+        <Image src="/images/bal-it.png" alt="BAL-IT Device" width={200} height={200} className="mx-auto mb-6" />
+        <p className="text-xl font-semibold mb-4">€79.99 — Free UK Shipping</p>
+        <Link href="/shop" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">Order Now</Link>
       </section>
 
-      {/* Subscription Plan */}
-      <section className="bg-gray-100">
-	  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 shadow-lg">
-        <div className="max-w-4xl mx-auto text-center">
-          <Image src="/images/subscription1.jpg" alt="Monthly Subscription" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
-          <h2 className="text-3xl font-bold mb-4">Monthly Subscription & Insights</h2>
-          <p className="mb-4">
-            Keep your GuardLAN AdBlocker up-to-date with the latest filters, security patches, and performance tweaks. Monitor what’s being blocked and get personalized reports.
-          </p>
-          <p className="mb-6">
-            Enjoy a free remote support session each month, and manage everything through your online dashboard.
-          </p>
-          <Link href="/shop" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-            Subscribe
-          </Link>
-        </div>
-		</div>
-      </section>
-
-      {/* Hourly Support */}
-      <section className="bg-[var(--color-blue2)] text-white">
-	  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-b-lg shadow-lg">
-        <div className="max-w-4xl mx-auto text-center">
-          <Image src="/images/support.jpg" alt="Support & Training" width={800} height={300} className="mx-auto rounded-lg mb-8 object-cover" />
-          <h2 className="text-3xl font-bold mb-4">On-Demand Support & Training</h2>
-          <p className="mb-4">
-            Need help? Book hourly sessions for in-home troubleshooting, custom setup, or even training for your household.
-          </p>
-          <p className="mb-6">
-            We&#39;re here to ensure your AdBlocker is running smoothly — and you know exactly how to get the most from it.
-          </p>
-          <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">
-            Book Support
-          </Link>
-        </div>
-		</div>
-      </section>
+      {/* Footer */}
+      <footer className="bg-black text-white py-8 text-center">
+        <p className="text-sm">&copy; {new Date().getFullYear()} BAL-IT. All rights reserved.</p>
+      </footer>
     </>
   );
 }
