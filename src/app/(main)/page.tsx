@@ -61,6 +61,15 @@ export default function HomePage() {
 				  sizes="(max-width: 668px) 100vw, 50vw"
 				/>
 			  </div>
+			  
+			  <div className="flex flex-col md:flex-row gap-4 justify-center items-center my-8">
+			  	<video
+				  src="/videos/With-Ads.mp4"
+				  controls
+				  className="w-full md:w-1/2 rounded shadow-lg"
+			    />
+			  </div>	
+			  
 			  <p className="mt-4 text-lg font-semibold text-red-500">Without Ad & Content Shield (Ads Active)</p>
 			</div>
 
@@ -78,11 +87,6 @@ export default function HomePage() {
 			  </div>
 			  
 			  <div className="flex flex-col md:flex-row gap-4 justify-center items-center my-8">
-			    <video
-				  src="/videos/With-Ads.mp4"
-				  controls
-				  className="w-full md:w-1/2 rounded shadow-lg"
-			    />
 			    <video
 				  src="/videos/Without-Ads.mp4"
 				  controls
