@@ -44,7 +44,7 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="bg-white py-20">
+      <section className="bg-[var(--color-blue2)] py-20">
 		  <h2 className="text-3xl font-bold text-center mb-12">What Makes BAL-IT Different?</h2>
 
 		  {/* Before and After Images */}
