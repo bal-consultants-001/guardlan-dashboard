@@ -2,13 +2,14 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { useCart } from '@/context/CartContext'
 import { usePostcode } from '@/context/PostcodeContext'
+import type { User } from '@supabase/supabase-js'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
@@ -25,6 +26,7 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
 }
 
 export default function ShopPage() {
+  const [user, setUser] = useState<User | null>(null)
   const [postcodeInput, setPostcodeInput] = useState('')
   const { serviceable, setServiceable } = usePostcode()
   const [showNotifyForm, setShowNotifyForm] = useState(false)
@@ -33,6 +35,9 @@ export default function ShopPage() {
   const { addToCart } = useCart()
   const router = useRouter()
 
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
+  }, [])
 
   const handleCheckPostcode = async () => {
     try {
@@ -76,14 +81,8 @@ export default function ShopPage() {
   }
 
   const closeGallery = () => setIsGalleryOpen(false)
-
-  const showNextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
-  }
-
-  const showPrevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
-  }
+  const showNextImage = () => setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
+  const showPrevImage = () => setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
 
   const handleAddToCartAndCheckout = () => {
     addToCart({
@@ -109,183 +108,124 @@ export default function ShopPage() {
 
   return (
     <>
-
       {/* Intro */}
-      <section className="py-20 px-4 text-center">
-        <h1 className="text-3xl font-bold mb-4">Shop Products</h1>
-        <p className="mb-6 text-lg">
+      <section className="py-16 px-4 text-center bg-white">
+        <h1 className="text-4xl font-bold mb-4">Shop Products</h1>
+        <p className="text-lg text-gray-700 max-w-xl mx-auto">
           Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
         </p>
       </section>
 
       {/* Postcode Check */}
-      <section className="p-4 bg-white text-center">
+      <section className="p-6 bg-gray-50 text-center">
         <h2 className="text-xl font-semibold mb-2">Check if we service your area</h2>
-        <div className="flex justify-center gap-2 mb-2">
+        <div className="flex justify-center gap-2 flex-wrap mb-3">
           <input
-            className="border p-2 w-64"
+            className="border border-gray-300 p-2 w-64 rounded"
             placeholder="Enter your postcode"
             value={postcodeInput}
             onChange={(e) => setPostcodeInput(e.target.value)}
           />
-          <button className="btn bg-blue-600 text-white" onClick={handleCheckPostcode}>
+          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onClick={handleCheckPostcode}>
             Check
           </button>
         </div>
         {message && <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>}
       </section>
 
-      {/* Notify Modal */}
-      {showNotifyForm && (
-        <div className="fixed inset-0 bg-gray-800/60 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow max-w-sm w-full">
-            <h2 className="text-lg font-bold mb-4">Notify Me</h2>
-            <p>Unfortunately we do not currently provide our service to your Postcode. If you are interested in our product please fill in your information and we will contact you when we are in your area, thank you.</p>
-            <form
-			  onSubmit={async (e) => {
-				e.preventDefault()
-				const formData = new FormData(e.currentTarget)
-				const name = formData.get('name')
-				const email = formData.get('email')
-
-				// Validate inputs
-				if (!name || !email || !postcodeInput) {
-				  console.error('Missing fields')
-				  return
-				}
-
-				// ✅ Insert into Supabase "interest" table
-				const { error } = await supabase.from('interest').insert([
-				  {
-					name,
-					email,
-					postcode: postcodeInput,
-				  },
-				])
-
-				if (error) {
-				  console.error('Error saving to Supabase:', error.message)
-				} else {
-				  console.log('Interest saved to Supabase')
-				}
-
-				// Reset form/UI state
-				setShowNotifyForm(false)
-				setPostcodeInput('')
-				setServiceable(null)
-				setMessage('')
-			  }}
-			  className="space-y-3"
-			>
-              <input name="name" required className="w-full border p-2" placeholder="Name" />
-              <input name="email" required type="email" className="w-full border p-2" placeholder="Email" />
-              <button type="submit" className="btn bg-blue-600 text-white w-full">Notify Me</button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowNotifyForm(false)
-                  setPostcodeInput('')
-                  setServiceable(null)
-                  setMessage('')
-                }}
-                className="text-sm text-gray-500 mt-2 hover:underline"
-              >
-                Cancel
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
       {/* Product Section */}
-      <section id="products" className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white w-full">
-        <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Home Network AdBlocker</h2>
-            <p className="text-lg mb-6">
-              Block ads, trackers, and unwanted content across every device on your home network.
-            </p>
-            <p className="text-2xl font-semibold mb-4">£75 (one-time)</p>
+      <section className="bg-gradient-to-r from-red-500 via-purple-600 to-blue-600 text-white py-20">
+        <div className="bg-black/40 rounded-xl max-w-5xl mx-auto p-10 shadow-xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-3">Home Network AdBlocker</h2>
+            <p className="text-lg mb-4">Block ads, trackers, and unwanted content across every device on your home network.</p>
+            <p className="text-2xl font-semibold">£75 (one-time)</p>
+          </div>
 
-            {/* Image Gallery Thumbnails */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              {adblockerImages.map((src, index) => (
-                <div
-                  key={index}
-                  className="w-full aspect-[16/9] overflow-hidden rounded-lg shadow cursor-pointer"
-                  onClick={() => openGallery(index)}
-                >
-                  <Image src={src} alt={`AdBlocker preview ${index + 1}`} className="w-full h-full object-cover transition hover:opacity-80" />
-                </div>
-              ))}
-            </div>
+          {/* Gallery */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {adblockerImages.map((src, i) => (
+              <div key={i} className="relative w-full aspect-[4/3] rounded overflow-hidden shadow cursor-pointer" onClick={() => openGallery(i)}>
+                <Image src={src} alt={`AdBlocker ${i + 1}`} fill className="object-cover hover:opacity-80 transition" />
+              </div>
+            ))}
+          </div>
 
-            {/* Subscription Option */}
-            <div className="text-left bg-gray-100 p-6 rounded mb-6 text-black">
-              <h3 className="text-lg font-bold mb-2">Optional Add-on:</h3>
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={subscriptionSelected}
-                  onChange={() => setSubscriptionSelected(!subscriptionSelected)}
-                />
-                <span>
-                  <strong>Monthly Subscription (£6/month)</strong> — Includes support, updates, and reports.
-                </span>
-              </label>
-            </div>
+          {/* Subscription Add-on */}
+          <div className="bg-white text-black p-6 rounded mb-6">
+            <label className="flex items-start gap-3">
+              <input type="checkbox" checked={subscriptionSelected} onChange={() => setSubscriptionSelected(!subscriptionSelected)} />
+              <span><strong>Monthly Subscription (£6/month)</strong><br />Includes support, updates, and usage reports.</span>
+            </label>
+          </div>
 
-            {/* Add to Cart + Redirect */}
-            <button
-              className="btn bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
-              onClick={handleAddToCartAndCheckout}
-            >
+          {/* CTA */}
+          <div className="text-center">
+            <button onClick={handleAddToCartAndCheckout} className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
               Add to Cart
             </button>
           </div>
         </div>
       </section>
 
-      {/* Fullscreen Image Gallery Overlay */}
+      {/* Lightbox */}
       {isGalleryOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur bg-black/40">
-          <button
-            className="absolute top-6 right-6 text-white text-3xl font-bold"
-            onClick={closeGallery}
-          >
-            &times;
-          </button>
-
-          <button
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
-            onClick={showPrevImage}
-          >
-            &#10094;
-          </button>
-
-          <Image src={adblockerImages[currentImageIndex]} alt="Expanded AdBlocker" className="max-w-[90vw] max-h-[80vh] rounded shadow-xl" />
-
-          <button
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl"
-            onClick={showNextImage}
-          >
-            &#10095;
-          </button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+          <button className="absolute top-6 right-6 text-white text-3xl" onClick={closeGallery}>&times;</button>
+          <button className="absolute left-6 text-white text-4xl" onClick={showPrevImage}>&#10094;</button>
+          <Image src={adblockerImages[currentImageIndex]} alt="Gallery" className="max-w-[90vw] max-h-[80vh] rounded-lg shadow" />
+          <button className="absolute right-6 text-white text-4xl" onClick={showNextImage}>&#10095;</button>
         </div>
       )}
 
       {/* Hourly Support */}
-      <section className="bg-gray-100 py-12 px-4 text-black text-center">
+      <section className="bg-white py-16 px-4 text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl font-bold mb-4">Hourly Support</h2>
-          <p className="text-lg mb-2">Need extra help or training?</p>
-          <p className="text-xl font-semibold mb-4">£25/hr (Invoiced)</p>
+          <h2 className="text-2xl font-bold mb-2">Hourly Support</h2>
+          <p className="text-lg mb-1">Need extra help or training?</p>
+          <p className="text-xl font-semibold text-blue-600 mb-4">£25/hr (Invoiced)</p>
           <p className="mb-6">Technical assistance, remote troubleshooting, or custom configurations — billed after service.</p>
-          <Link href="/contact" className="btn bg-black text-white px-6 py-3 rounded hover:bg-gray-800">
+          <Link href="/contact" className="inline-block bg-black text-white px-6 py-3 rounded hover:bg-gray-800">
             Contact Us
           </Link>
         </div>
       </section>
+
+      {/* Notify Modal */}
+      {showNotifyForm && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-xl w-full max-w-md shadow-lg">
+            <h2 className="text-xl font-bold mb-2">Notify Me</h2>
+            <p className="text-sm mb-4">
+              We don’t currently provide service in your area. Fill out your details and we’ll let you know when we do.
+            </p>
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault()
+                const form = new FormData(e.currentTarget)
+                const name = form.get('name')
+                const email = form.get('email')
+
+                if (!name || !email || !postcodeInput) return
+
+                const { error } = await supabase.from('interest').insert([{ name, email, postcode: postcodeInput }])
+                if (error) console.error(error.message)
+
+                setShowNotifyForm(false)
+                setPostcodeInput('')
+                setServiceable(null)
+                setMessage('')
+              }}
+              className="space-y-3"
+            >
+              <input name="name" required className="w-full border p-2 rounded" placeholder="Name" />
+              <input name="email" required type="email" className="w-full border p-2 rounded" placeholder="Email" />
+              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Notify Me</button>
+              <button type="button" onClick={() => setShowNotifyForm(false)} className="text-gray-500 text-sm mt-2 hover:underline">Cancel</button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   )
 }

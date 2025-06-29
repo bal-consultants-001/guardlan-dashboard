@@ -28,7 +28,7 @@ export default function HomePage() {
 
         <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto text-left">
           {[
-            { step: 'Plug In', desc: 'Connect the BAL-IT device to your home router.' },
+            { step: 'Connect In', desc: 'We connect your Ad & Content filter device to your home wifi.' },
             { step: 'Set Preferences', desc: 'Use our web dashboard to choose filters and protections.' },
             { step: 'Enjoy Internet', desc: 'Ads gone. Content filtered. Family-safe browsing for all devices.' }
           ].map(({ step, desc }, i) => (
@@ -99,10 +99,10 @@ export default function HomePage() {
 
       {/* Product Callout */}
       <section className="bg-blue-50 py-20 text-center">
-        <h2 className="text-3xl font-bold mb-6">Buy BAL-IT Today</h2>
+        <h2 className="text-3xl font-bold mb-6">Get Yours Today</h2>
         <p className="mb-8 text-gray-700 max-w-xl mx-auto">Protect every device in your home from intrusive ads, harmful content, and distractions — all with one tiny box.</p>
-        <Image src="/images/bal-it.png" alt="BAL-IT Device" width={200} height={200} className="mx-auto mb-6" />
-        <p className="text-xl font-semibold mb-4">€79.99 — Free UK Shipping</p>
+        <Image src="/images/AdBlocker5.png" alt="BAL-IT Device" width={200} height={200} className="mx-auto mb-6" />
+        <p className="text-xl font-semibold mb-4">£75 — Including installtion</p>
         <Link href="/shop" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">Order Now</Link>
       </section>
 
