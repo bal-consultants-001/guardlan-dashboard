@@ -66,10 +66,15 @@ export default function Layout({ children }: LayoutProps) {
           {/* Cart & Mobile Toggle */}
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => setShowCart((prev) => !prev)}
-              className="relative p-2 rounded-full bg-black text-white hover:bg-gray-800"
-              aria-label="Cart"
-            >
+			  onClick={() => {
+				if (cart.length > 0) {
+				  setShowCart((prev) => !prev);
+				}
+			  }}
+			  className={`relative p-2 rounded-full ${cart.length > 0 ? 'bg-black hover:bg-gray-800' : 'bg-gray-300 cursor-not-allowed'} text-white`}
+			  aria-label="Cart"
+			>
+
               <ShoppingCart className="w-6 h-6" />
               <span className="absolute -top-1 -right-1 bg-red-600 text-xs rounded-full px-1">
                 {cart.reduce((sum, item) => sum + item.quantity, 0)}
