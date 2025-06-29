@@ -105,11 +105,6 @@ export default function HomePage() {
         <p className="text-xl font-semibold mb-4">£75 — Including installtion</p>
         <Link href="/shop" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">Order Now</Link>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-8 text-center">
-        <p className="text-sm">&copy; {new Date().getFullYear()} BAL-IT. All rights reserved.</p>
-      </footer>
     </>
   );
 }

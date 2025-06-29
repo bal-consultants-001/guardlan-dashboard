@@ -38,9 +38,9 @@ export default function Layout({ children }: LayoutProps) {
             <Image
               src="/images/bal-it-grayscale.png"
               alt="BAL-IT"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
+              width={160}
+              height={80}
+              className="h-14 w-auto"
             />
           </Link>
 
@@ -159,6 +159,11 @@ export default function Layout({ children }: LayoutProps) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {children}
       </main>
+	        {/* Footer */}
+      <footer className="bg-black text-white py-8 text-center">
+        <p className="text-sm">&copy; {new Date().getFullYear()} BAL-IT. All rights reserved.</p>
+      </footer>
+	  
     </div>
   );
 }

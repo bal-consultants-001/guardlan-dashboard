@@ -60,10 +60,10 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative w-full h-[50vh] bg-white min-h-[400]">
-	    <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
+	    <div className="w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
             <Image
-			  src="/images/logo-no-background.png"
+			  src="/images/bal-it.png"
 			  alt="BAL-IT"
 			  width={400}
 			  height={400}
@@ -74,7 +74,7 @@ export default function HomePage() {
       </section>
 
       {/* About us Flow */}
-		<section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white">
+		<section className="bg-[var(--color-blue2)] text-white">
 		  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-16 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
 
 			{/* Scene 1: Core Value */}
@@ -97,7 +97,7 @@ export default function HomePage() {
 			</div>
 
 			{/* Scene 2: Backstory */}
-			<div className="max-w-4xl mx-auto py-5 text-center space-y-6">
+			<div className="max-w-4xl mx-auto py-3 text-center space-y-6">
 			  <p>
 				With online safety at our center it&#39;s worth going over how we got here. I am the founder of BAL-IT, an IT consultant with two children.
 				As is common in society today they had access to a smart device from the age of 5. It was regulated heavily, configured as kids devices with content filters put in place,
@@ -107,6 +107,19 @@ export default function HomePage() {
 				Implementing it saw an immediate reduction in my childrens Ad exposure. They noticed the difference too and generally appreciated being able to play or work without the interruptions, sometimes they complained they could get bonus&#39; by watching Ads.
 				But generally they were happier with the smoother experience.
 			  </p>
+			</div>
+			
+			{/* Divider */}
+			<div className="flex justify-center">
+			  <div className="flex items-center space-x-4 text-gray-400">
+				<span className="w-24 h-px bg-gray-500" />
+				<span className="text-xl">🔧</span>
+				<span className="w-24 h-px bg-gray-500" />
+			  </div>
+			</div>
+
+			<div className="flex justify-center">
+			  <Image src="/images/using-devices.jpg" alt="Using Devices" width={500} height={500} className="mx-auto rounded-lg mb-4 object-cover bg-white" />
 			</div>
 
 			{/* Divider */}
@@ -171,6 +184,10 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">About the product</h2>
 		  <p className="mb-4 py-3">
+            The Ad & Content filter is capable of blocking around 95% of the adverts across all devices. The current version does have some limitations when it comes to sites that host their own Adverts, such as YouTube,
+			but we are constantly developing new features and solutions to maximise your online experiences.
+		  </p>
+		  <p className="mb-4 py-3">
             Our content filter is built on a Raspberry Pi Zero 2 w using a 32GB A1 MicroSD card for storage. A Raspberry Pi is an SBC (Single Board Computer) that can run basic programs. Here are the technical specifications:
 		  </p>
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
@@ -208,7 +225,7 @@ export default function HomePage() {
       </section>
 
       {/* Road map */}
-      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white">
+      <section className="bg-[var(--color-blue2)] text-white">
 		<div className="bg-gray-800/60 relative max-w-7xl mx-auto px-4 z-10">
 			<h2 className="text-3xl font-bold text-center py-12 mb-16">Device Development Roadmap</h2>
 
