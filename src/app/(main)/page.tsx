@@ -10,7 +10,7 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="relative bg-black text-white h-[400px] flex items-center justify-center">
-	  <Image src="/images/AdBlocker0.png" alt="Ad Blocker" fill className="object-cover opacity-10" />
+	  <Image src="/images/AdBlocker0.png" alt="Ad Blocker" fill className="object-cover opacity-30" />
         <div className="absolute z-10 text-center px-4 max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Total Ad & Content Control — No Apps, No Downloads.</h1>
           <p className="mb-6 text-lg">Plug in. Block ads. Filter content. Protect every device on your home network — instantly.</p>
