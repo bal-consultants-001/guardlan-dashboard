@@ -45,7 +45,6 @@ import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase';
-import Image from 'next/image';
 import TicketNotesModal from '@/components/TicketNotesModal';
 
 export default function DashboardPage() {
@@ -67,15 +66,6 @@ export default function DashboardPage() {
 	groups: [],
 	clients: [],
   });
-  
-  const handleLogout = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.error('Error signing out:', error.message);
-  } else {
-    router.push('/');
-  }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
