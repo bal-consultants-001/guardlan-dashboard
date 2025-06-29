@@ -44,7 +44,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import type { User } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabase';
 import TicketNotesModal from '@/components/TicketNotesModal';
 
 export default function DashboardPage() {
