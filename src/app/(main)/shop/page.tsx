@@ -135,9 +135,16 @@ export default function ShopPage() {
       <section className="py-8 px-4 text-center bg-white">
         <h1 className="text-4xl font-bold mb-4">Shop Products</h1>
         <p className="text-lg text-gray-700 max-w-xl mx-auto">
-          Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
+          Our Ad & Content filter secures your whole network from intrusive ads and trackers.
         </p>
       </section>
+
+	  {/* Divider */}
+			<div className="flex justify-center">
+			  <div className="flex items-center space-x-4 text-gray-400">
+				<span className="w-24 h-px bg-[var(--color-blue2)]" />
+			  </div>
+			</div>
 
       {/* Postcode Check */}
       <section className="p-6 bg-gray-50 text-center">
