@@ -2,7 +2,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -32,6 +32,9 @@ export default function ShopPage() {
   const [message, setMessage] = useState('')
   const { addToCart } = useCart()
   const router = useRouter()
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleCheckPostcode = async () => {
     try {
@@ -72,6 +75,38 @@ export default function ShopPage() {
   const closeGallery = () => setIsGalleryOpen(false)
   const showNextImage = () => setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
   const showPrevImage = () => setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
+  
+    // Auto-cycle every 5 seconds (or adjust time as you like)
+  useEffect(() => {
+    if (isPaused) return // Don't cycle when paused
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isPaused])
+  
+    // When user clicks a thumbnail
+  const handleThumbnailClick = (index: number) => {
+    setCurrentImageIndex(index)
+    setIsPaused(true)
+
+    // Clear any existing timeout so it restarts
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current)
+
+    // Resume cycling after 30 seconds
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false)
+    }, 30000)
+  }
+
+  // Remember to clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current)
+    }
+  }, [])
 
   const handleAddToCartAndCheckout = () => {
     addToCart({
@@ -132,41 +167,41 @@ export default function ShopPage() {
           </div>
 
           {/* Main Large Image */}
-			<div className="mb-8 flex justify-center">
-			  <div className="relative w-full max-w-3xl aspect-[16/9] rounded overflow-hidden shadow-lg border-4 border-blue-500">
-				<Image
-				  src={adblockerImages[currentImageIndex]}
-				  alt={`AdBlocker ${currentImageIndex + 1}`}
-				  fill
-				  className="object-cover"
-				  priority
-				/>
-			  </div>
+		  <div className="mb-8 flex justify-center">
+			<div className="relative w-full max-w-3xl aspect-[4/3] rounded overflow-hidden shadow-lg border-4 border-blue-500">
+			  <Image
+				src={adblockerImages[currentImageIndex]}
+				alt={`AdBlocker ${currentImageIndex + 1}`}
+				fill
+				className="object-cover"
+				priority
+			  />
 			</div>
+		  </div>
 
-			{/* Gallery Thumbnails */}
-			<div className="flex justify-center gap-4 flex-wrap py-6">
-			  {adblockerImages.map((src, i) => {
-				const isSelected = i === currentImageIndex;
-				return (
-				  <div
-					key={i}
-					onClick={() => setCurrentImageIndex(i)}
-					className={`relative w-24 h-18 rounded overflow-hidden cursor-pointer border-4 transition-all duration-300
-					  ${isSelected ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}
-					`}
-				  >
-					<Image
-					  src={src}
-					  alt={`Thumbnail ${i + 1}`}
-					  fill
-					  className="object-cover"
-					  priority={isSelected} // prioritize loading for selected
-					/>
-				  </div>
-				);
-			  })}
-			</div>
+		  {/* Gallery Thumbnails */}
+		  <div className="flex justify-center gap-4 flex-wrap">
+			{adblockerImages.map((src, i) => {
+			  const isSelected = i === currentImageIndex
+			  return (
+				<div
+				  key={i}
+				  onClick={() => handleThumbnailClick(i)}
+				  className={`relative w-24 h-18 rounded overflow-hidden cursor-pointer border-4 transition-all duration-300
+					${isSelected ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}
+				  `}
+				>
+				  <Image
+					src={src}
+					alt={`Thumbnail ${i + 1}`}
+					fill
+					className="object-cover"
+					priority={isSelected}
+				  />
+				</div>
+			  )
+			})}
+		  </div>
 
           {/* Subscription Add-on */}
           <div className="bg-white text-black p-6 rounded mb-6">
