@@ -170,6 +170,22 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* Map Section */}
+		<section className="bg-gray-100 py-20">
+		  <div className="max-w-6xl mx-auto px-6">
+			<div className="bg-white text-black p-8 rounded-lg shadow-xl">
+			  <div className="text-center space-y-8">
+				<p className="text-xl font-medium">We operate in the following postcodes:</p>
+				<div className="flex flex-wrap justify-center gap-3 text-base">
+				  {postcodeAreas.map(code => (
+					<span key={code} className="bg-gray-200 px-4 py-2 rounded">{code}</span>
+				  ))}
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</section>
+
     </>
   );
 }
