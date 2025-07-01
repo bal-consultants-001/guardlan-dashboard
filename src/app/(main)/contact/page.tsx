@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -51,16 +52,20 @@ export default function Contact() {
     <>
 	
       {/* Hero */}
-      <section className="relative bg-black text-white h-[400px] flex items-center justify-center">
-	  <Image src="/images/AdBlocker0.png" alt="Ad Blocker" fill className="object-cover opacity-30" />
-        <div className="absolute z-10 text-center px-4 max-w-2xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Total Ad & Content Control — No Apps, No Downloads.</h1>
-          <p className="mb-6 text-lg">Plug in. Block ads. Filter content. Protect every device on your home network — instantly.</p>
-          <div className="flex gap-4 justify-center">
-            <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">Get Yours Now</Link>
-            <Link href="#how-it-works" className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-300">How It Works</Link>
+      <section className="relative w-full h-[50vh] bg-white min-h-[400]">
+	    <div className="w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+            <Link href="/" className="flex items-center space-x-2">
+			<Image
+			  src="/images/bal-it.png"
+			  alt="BAL-IT"
+			  width={400}
+			  height={400}
+			  className="flex-shrink-0 py-6 w-[90%]h-[90%]"
+			/>
+			</Link>
           </div>
-        </div>
+		</div>
       </section>
 
       {/* Contact Section */}
