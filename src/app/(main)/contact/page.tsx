@@ -6,7 +6,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import type { User } from '@supabase/supabase-js';
-import dynamic from 'next/dynamic';
 
 export default function Contact() {
   const [user, setUser] = useState<User | null>(null);
@@ -17,8 +16,6 @@ export default function Contact() {
     subject: 'General Information',
     message: '',
   });
-
-  const ServiceAreaMap = dynamic(() => import('@/components/ServiceAreaMap'), { ssr: false });
 
   const subjects = [
     'General Information',
@@ -172,28 +169,6 @@ export default function Contact() {
 		</div>
         </div>
       </section>
-
-      {/* Map Section */}
-		<section className="bg-gray-100 py-20">
-		  <div className="max-w-6xl mx-auto px-6">
-			<div className="bg-white text-black p-8 rounded-lg shadow-xl">
-			  <div className="text-center space-y-8">
-				<div className="w-full h-[480px] rounded-lg overflow-hidden shadow">
-				  <div className="w-full h-[480px] rounded-lg overflow-hidden shadow">
-				  <ServiceAreaMap />
-				</div>
-				</div>
-
-				<p className="text-xl font-medium">We operate in the following postcodes:</p>
-				<div className="flex flex-wrap justify-center gap-3 text-base">
-				  {postcodeAreas.map(code => (
-					<span key={code} className="bg-gray-200 px-4 py-2 rounded">{code}</span>
-				  ))}
-				</div>
-			  </div>
-			</div>
-		  </div>
-		</section>
 
     </>
   );
