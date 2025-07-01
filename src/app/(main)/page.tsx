@@ -94,7 +94,7 @@ export default function HomePage() {
 		  </div>
 		  
 		  <p className="text-xl text-white text-center mb-6">
-			It's not just websites. Mobile devices see the benefit also...
+			It&#39;s not just websites. Mobile devices see the benefit also...
 		  </p>
 		  
 		  {/*Divider*/}
