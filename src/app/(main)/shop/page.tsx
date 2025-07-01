@@ -133,7 +133,7 @@ export default function ShopPage() {
 
           {/* Main Large Image */}
 			<div className="mb-8 flex justify-center">
-			  <div className="relative w-full max-w-3xl aspect-[4/3] rounded overflow-hidden shadow-lg border-4 border-blue-500">
+			  <div className="relative w-full max-w-3xl aspect-[16/9] rounded overflow-hidden shadow-lg border-4 border-blue-500">
 				<Image
 				  src={adblockerImages[currentImageIndex]}
 				  alt={`AdBlocker ${currentImageIndex + 1}`}
