@@ -7,10 +7,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { name, email, phone, subject, message } = req.body;
 
   const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    host: 'smtp.zoho.eu', // Use your correct region
+    port: 465,
+    secure: true,
     auth: {
-      user: 'yourgmail@gmail.com', // use app password
-      pass: 'your_app_password',
+      user: 'information@bal-it.com',
+      pass: process.env.ZOHO_APP!, // 👈 Set this in your .env file
     },
   });
 
@@ -25,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await transporter.sendMail(mailOptions);
     res.status(200).json({ success: true });
   } catch (err) {
+    console.error('Email send failed:', err); // ✅ fixes lint error
     res.status(500).json({ error: 'Email could not be sent' });
   }
 }
