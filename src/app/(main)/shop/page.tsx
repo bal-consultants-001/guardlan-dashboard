@@ -103,7 +103,7 @@ export default function ShopPage() {
   return (
     <>
       {/* Intro */}
-      <section className="py-16 px-4 text-center bg-white">
+      <section className="py-8 px-4 text-center bg-white">
         <h1 className="text-4xl font-bold mb-4">Shop Products</h1>
         <p className="text-lg text-gray-700 max-w-xl mx-auto">
           Our hardware AdBlocker GuardLAN secures your whole network from intrusive ads and trackers.
@@ -128,7 +128,7 @@ export default function ShopPage() {
       </section>
 
       {/* Product Section */}
-      <section className="bg-gradient-to-r from-red-500 via-purple-600 to-blue-600 text-white py-20">
+      <section className="bg-[var(--color-blue2)] text-white py-20">
         <div className="bg-black/40 rounded-xl max-w-5xl mx-auto p-10 shadow-xl">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold mb-3">Home Network AdBlocker</h2>
