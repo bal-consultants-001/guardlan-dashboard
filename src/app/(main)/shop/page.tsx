@@ -145,7 +145,7 @@ export default function ShopPage() {
 			</div>
 
 			{/* Gallery Thumbnails */}
-			<div className="flex justify-center gap-4 flex-wrap">
+			<div className="flex justify-center gap-4 flex-wrap py-6">
 			  {adblockerImages.map((src, i) => {
 				const isSelected = i === currentImageIndex;
 				return (
