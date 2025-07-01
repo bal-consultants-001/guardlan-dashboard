@@ -49,6 +49,7 @@ export default function Layout({ children }: LayoutProps) {
             <Link href="/" className="hover:text-blue-600">Home</Link>
             <Link href="/about" className="hover:text-blue-600">About</Link>
             <Link href="/shop" className="hover:text-blue-600">Shop</Link>
+			<Link href="/contact" className="hover:text-blue-600">Contact</Link>
             {user ? (
               <>
                 <Link href="/dashboard" className="hover:text-blue-600">Dashboard</Link>

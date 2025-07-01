@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { PostcodeProvider } from "@/context/PostcodeContext";
+import 'leaflet/dist/leaflet.css';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
