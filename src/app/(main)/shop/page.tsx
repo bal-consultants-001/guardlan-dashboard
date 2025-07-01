@@ -127,23 +127,48 @@ export default function ShopPage() {
         {message && <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>}
       </section>
 
-      {/* Product Section */}
-      <section className="bg-[var(--color-blue2)] text-white py-20">
-        <div className="bg-black/40 rounded-xl max-w-5xl mx-auto p-10 shadow-xl">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold mb-3">Home Network AdBlocker</h2>
-            <p className="text-lg mb-4">Block ads, trackers, and unwanted content across every device on your home network.</p>
-            <p className="text-2xl font-semibold">£75 (one-time)</p>
-          </div>
+		{/* Product Section */}
+		<section className="bg-[var(--color-blue2)] text-white py-20">
+		  <div className="bg-black/40 rounded-xl max-w-5xl mx-auto p-10 shadow-xl">
 
-          {/* Gallery */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {adblockerImages.map((src, i) => (
-              <div key={i} className="relative w-full aspect-[4/3] rounded overflow-hidden shadow cursor-pointer" onClick={() => openGallery(i)}>
-                <Image src={src} alt={`AdBlocker ${i + 1}`} fill className="object-cover hover:opacity-80 transition" />
-              </div>
-            ))}
-          </div>
+			{/* ...other content above... */}
+
+			{/* Main Large Image */}
+			<div className="mb-8 flex justify-center">
+			  <div className="relative w-full max-w-3xl aspect-[4/3] rounded overflow-hidden shadow-lg border-4 border-blue-500">
+				<Image
+				  src={adblockerImages[currentImageIndex]}
+				  alt={`AdBlocker ${currentImageIndex + 1}`}
+				  fill
+				  className="object-cover"
+				  priority
+				/>
+			  </div>
+			</div>
+
+			{/* Gallery Thumbnails */}
+			<div className="flex justify-center gap-4 flex-wrap">
+			  {adblockerImages.map((src, i) => {
+				const isSelected = i === currentImageIndex;
+				return (
+				  <div
+					key={i}
+					onClick={() => setCurrentImageIndex(i)}
+					className={`relative w-24 h-18 rounded overflow-hidden cursor-pointer border-4 transition-all duration-300
+					  ${isSelected ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}
+					`}
+				  >
+					<Image
+					  src={src}
+					  alt={`Thumbnail ${i + 1}`}
+					  fill
+					  className="object-cover"
+					  priority={isSelected} // prioritize loading for selected
+					/>
+				  </div>
+				);
+			  })}
+			</div>
 
           {/* Subscription Add-on */}
           <div className="bg-white text-black p-6 rounded mb-6">
