@@ -16,9 +16,10 @@ export async function POST(req: Request) {
   });
 
   const mailOptions = {
-    from: email,
+    from: 'information@bal-it.com', // must be your Zoho address
     to: 'information@bal-it.com',
     subject,
+    replyTo: email, // ← user's email for easy reply
     text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
   };
 
