@@ -122,13 +122,16 @@ export default function ShopPage() {
         {message && <p className={serviceable ? 'text-green-600' : 'text-red-600'}>{message}</p>}
       </section>
 
-		{/* Product Section */}
-		<section className="bg-[var(--color-blue2)] text-white py-20">
-		  <div className="bg-black/40 rounded-xl max-w-5xl mx-auto p-10 shadow-xl">
+      {/* Product Section */}
+      <section className="bg-[var(--color-blue2)] text-white py-20">
+        <div className="bg-black/40 rounded-xl max-w-5xl mx-auto p-10 shadow-xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-3">Home Network AdBlocker</h2>
+            <p className="text-lg mb-4">Block ads, trackers, and unwanted content across every device on your home network.</p>
+            <p className="text-2xl font-semibold">£75 (one-time)</p>
+          </div>
 
-			{/* ...other content above... */}
-
-			{/* Main Large Image */}
+          {/* Main Large Image */}
 			<div className="mb-8 flex justify-center">
 			  <div className="relative w-full max-w-3xl aspect-[4/3] rounded overflow-hidden shadow-lg border-4 border-blue-500">
 				<Image
