@@ -69,11 +69,6 @@ export default function ShopPage() {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const openGallery = (index: number) => {
-    setCurrentImageIndex(index)
-    setIsGalleryOpen(true)
-  }
-
   const closeGallery = () => setIsGalleryOpen(false)
   const showNextImage = () => setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
   const showPrevImage = () => setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
