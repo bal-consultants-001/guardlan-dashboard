@@ -5,10 +5,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
-import type { User } from '@supabase/supabase-js';
 
 export default function Contact() {
-  const [user, setUser] = useState<User | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,10 +23,6 @@ export default function Contact() {
     'Complaints',
     'Other',
   ];
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,25 +51,6 @@ export default function Contact() {
 
   return (
     <>
-      {/* Auth bar */}
-      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] w-full py-4">
-        <div className="flex items-center justify-between px-6">
-          <Image src="/images/logo-no-background.png" alt="BAL-IT" width={100} height={100} />
-          <div className="flex gap-4 items-center">
-            {user ? (
-              <Link href="/dashboard" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">
-                Dashboard
-              </Link>
-            ) : (
-              <>
-                <Link href="/register" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Register</Link>
-                <Link href="/login" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800">Login</Link>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Hero Section */}
       <section className="relative w-full h-[50vh] bg-black min-h-[500]">
         <Image src="/images/AdBlocker0.png" alt="GuardLAN AdBlocker" fill className="object-cover opacity-80" />
@@ -85,7 +60,7 @@ export default function Contact() {
       </section>
 
       {/* Contact Section */}
-      <section className="bg-[linear-gradient(to_right,var(--color-red1),var(--color-purple2),var(--color-blue2))] text-white">
+      <section className="bg-[var(--color-blue2)] text-white">
         <div className="bg-gray-800/60 max-w-7xl mx-auto py-20 px-6 space-y-12 rounded-t-lg shadow-lg">
           <div>
             <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
