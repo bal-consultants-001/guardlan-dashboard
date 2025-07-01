@@ -1,10 +1,8 @@
 // contact.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
 import Image from 'next/image';
-import { supabase } from '@/lib/supabase';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
