@@ -25,6 +25,10 @@ export default function HomePage() {
       <section id="how-it-works" className="bg-gray-50 py-20 text-center">
         <h2 className="text-3xl font-bold mb-8">How It Works</h2>
         <p className="mb-12 text-gray-700">So simple, it feels like magic.</p>
+		
+			<div className="flex justify-center py-5">
+			  <span className="w-8/9 mx-auto h-px bg-[var(--color-blue2)] block" />
+			</div>
 
         <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto text-left">
           {[
@@ -39,19 +43,27 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+		
+		<div className="flex justify-center py-5">
+		  <span className="w-8/9 mx-auto h-px bg-[var(--color-blue2)] block" />
+		</div>
 
         <p className="mt-10 text-lg font-semibold text-gray-800">Works with ALL smart devices — no installs required.</p>
       </section>
 
       {/* Features */}
       <section className="bg-[var(--color-blue2)] py-20">
-		  <h2 className="text-3xl font-bold text-center mb-12">What Makes BAL-IT Different?</h2>
+		  <h2 className="text-3xl font-bold text-white text-center mb-12">What Makes BAL-IT Different?</h2>
+		  <p className="text-xl text-white text-center mb-6">
+			We remove Ads and unwanted content before they hit your devices
+		  </p>
 
 		  {/* Before and After Images */}
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto mb-16 px-4">
 			{/* AdBlocker OFF */}
 			<div className="text-center">
-			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-lg">
+			  <h2 className="mt-4 text-lg font-semibold text-red-800 py-6">Without Ad & Content Shield</h2>
+			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
 				<Image
 				  src="/images/AdBlocker-off.png"
 				  alt="With Ads (AdBlocker Off)"
@@ -62,7 +74,37 @@ export default function HomePage() {
 				/>
 			  </div>
 			  
-			  <div className="flex flex-col md:flex-row gap-4 justify-center items-center my-8">
+			</div>
+
+			{/* AdBlocker ON */}
+			<div className="text-center">
+			  <h2 className="mt-4 text-lg font-semibold text-green-500 py-6">With Ad & Content Shield</h2>
+			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
+			  	<Image
+				  src="/images/AdBlocker-on.png"
+				  alt="Ad-Free (AdBlocker On)"
+				  width={600}
+				  height={400}
+				  className="object-cover object-center"
+				  sizes="(max-width: 368px) 100vw, 50vw"
+				/>
+			  </div>
+			  
+			</div>
+		  </div>
+		  
+		  <p className="text-xl text-white text-center mb-6">
+			It's not just websites. Mobile devices see the benefit also...
+		  </p>
+		  
+		  {/*Divider*/}
+		  	<div className="flex justify-center">
+			  <span className="w-8/9 mx-auto h-px bg-white block" />
+			</div>
+		  
+		  {/*Videos*/}
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto mb-10 px-4">
+		  	  <div className="flex flex-col md:flex-row gap-4 justify-center items-center py-8">
 			  	<video
 				  src="/videos/With-Ads.mp4"
 				  autoPlay
@@ -73,23 +115,7 @@ export default function HomePage() {
 			    />
 			  </div>
 			  
-			  <p className="mt-4 text-lg font-semibold text-red-500">Without Ad & Content Shield (Ads Active)</p>
-			</div>
-
-			{/* AdBlocker ON */}
-			<div className="text-center">
-			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-lg">
-				<Image
-				  src="/images/AdBlocker-on.png"
-				  alt="Ad-Free (AdBlocker On)"
-				  width={600}
-				  height={400}
-				  className="object-cover object-center"
-				  sizes="(max-width: 368px) 100vw, 50vw"
-				/>
-			  </div>
-			  
-			  <div className="flex flex-col md:flex-row gap-4 justify-center items-center my-8">
+			  <div className="flex flex-col md:flex-row gap-4 justify-center items-center py-8">
 			    <video
 				  src="/videos/Without-Ads.mp4"
 				  autoPlay
@@ -99,13 +125,15 @@ export default function HomePage() {
 				  className="w-full md:w-1/2 rounded shadow-lg"
 			    />
 			  </div>
-
-			  <p className="mt-4 text-lg font-semibold text-green-500">With Ad & Content Shield (Ads Blocked)</p>
 			</div>
-		  </div>
+			
+		  {/*Divider*/}
+		  	<div className="flex justify-center">
+			  <span className="w-8/9 mx-auto h-px bg-white block" />
+			</div>
 
 		  {/* Features Grid */}
-		  <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center px-4">
+		  <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center px-4 py-6">
 			{[
 			  ['Ad Blocking Across Your Network', 'block'],
 			  ['Parental Controls & Custom Filters', 'shield-check'],
@@ -125,8 +153,8 @@ export default function HomePage() {
       <section className="bg-blue-50 py-20 text-center">
         <h2 className="text-3xl font-bold mb-6">Get Yours Today</h2>
         <p className="mb-8 text-gray-700 max-w-xl mx-auto">Protect every device in your home from intrusive ads, harmful content, and distractions — all with one tiny box.</p>
-        <Image src="/images/AdBlocker5.png" alt="BAL-IT Device" width={200} height={200} className="mx-auto mb-6" />
-        <p className="text-xl font-semibold mb-4">£75 — Including installtion</p>
+        <Image src="/images/AdBlocker5.png" alt="BAL-IT Device" width={400} height={400} className="mx-auto mb-6 shadow-md hover:shadow-lg transition" />
+        <p className="text-xl font-semibold mb-4">£75 — Including Installation</p>
         <Link href="/shop" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">Order Now</Link>
       </section>
     </>
