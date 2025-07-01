@@ -167,7 +167,7 @@ export default function ShopPage() {
 
           {/* Main Large Image */}
 		  <div className="mb-8 flex justify-center">
-			<div className="relative w-full max-w-3xl aspect-[4/3] rounded overflow-hidden shadow-lg border-4 border-blue-500">
+			<div className="relative w-full max-w-3xl aspect-[16/9] rounded overflow-hidden shadow-lg border-4 border-blue-500">
 			  <Image
 				src={adblockerImages[currentImageIndex]}
 				alt={`AdBlocker ${currentImageIndex + 1}`}
@@ -186,7 +186,7 @@ export default function ShopPage() {
 				<div
 				  key={i}
 				  onClick={() => handleThumbnailClick(i)}
-				  className={`relative w-24 h-18 rounded overflow-hidden cursor-pointer border-4 transition-all duration-300
+				  className={`relative w-30 h-24 rounded overflow-hidden cursor-pointer border-4 transition-all duration-300
 					${isSelected ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}
 				  `}
 				>
