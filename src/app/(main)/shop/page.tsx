@@ -179,14 +179,14 @@ export default function ShopPage() {
 		  </div>
 
 		  {/* Gallery Thumbnails */}
-		  <div className="flex justify-center gap-4 flex-wrap py-4 max-w-4xl">
+		  <div className="flex justify-center gap-4 flex-wrap py-4">
 			{adblockerImages.map((src, i) => {
 			  const isSelected = i === currentImageIndex
 			  return (
 				<div
 				  key={i}
 				  onClick={() => handleThumbnailClick(i)}
-				  className={`relative w-48 h-27 rounded overflow-hidden cursor-pointer border-4 transition-all duration-300
+				  className={`relative w-48 h-27 rounded overflow-hidden cursor-pointer border-8 transition-all duration-300
 					${isSelected ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}
 				  `}
 				>
