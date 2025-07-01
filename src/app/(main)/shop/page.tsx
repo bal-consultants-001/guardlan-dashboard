@@ -81,7 +81,7 @@ export default function ShopPage() {
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
-    }, 5000)
+    }, 6000)
 
     return () => clearInterval(interval)
   }, [isPaused])
