@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     port: 465,
     secure: true,
     auth: {
-      user: 'information@bal-it.com',
+      user: 'bal-admin@bal-it.com',
       pass: process.env.ZOHO_APP!,
     },
   });
