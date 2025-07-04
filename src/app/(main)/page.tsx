@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShieldCheck, Block, LayoutDashboard } from 'lucide-react'; // Add this at top
+import { ShieldCheck, LayoutDashboard, Ban } from 'lucide-react';
+
 
 const icons = {
-  block: Block,
+  'ban': Ban,
   'shield-check': ShieldCheck,
   'layout-dashboard': LayoutDashboard,
 };
@@ -143,28 +144,20 @@ export default function HomePage() {
 		  {/* Features Grid */}
 			<div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center px-4 py-6">
 			  {[
-				[
-				  'Ad Blocking Across Your Network',
-				  'block',
-				  'Automatically block intrusive ads, trackers, and malware for all devices at once.',
-				],
-				[
-				  'Parental Controls & Custom Filters',
-				  'shield-check',
-				  'Set age-appropriate restrictions and customize web access for every user.',
-				],
-				[
-				  'Easy Web Dashboard',
-				  'layout-dashboard',
-				  'Manage settings, view reports, and control access from a simple online interface.',
-				],
-			  ].map(([title, icon, description], i) => (
-				<div key={i} className="bg-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition">
-				  <Icon className="w-8 h-8 text-blue-600 mb-3 mx-auto" />
-				  <h3 className="text-lg font-semibold mb-2">{title}</h3>
-				  <p className="text-gray-600">{description}</p>
-				</div>
-			  ))}
+				  ['Ad Blocking Across Your Network', 'ban', 'Automatically block intrusive ads, trackers, and malware for all devices at once.'],
+				  ['Parental Controls & Custom Filters', 'shield-check', 'Set age-appropriate restrictions and customize web access for every user.'],
+				  ['Easy Web Dashboard', 'layout-dashboard', 'Manage settings, view reports, and control access from a simple online interface.'],
+				].map(([title, iconKey, description], i) => {
+				  const IconComponent = icons[iconKey as keyof typeof icons];
+				  return (
+					<div key={i} className="bg-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition">
+					  <IconComponent className="w-8 h-8 text-blue-600 mb-3 mx-auto" />
+					  <h3 className="text-lg font-semibold mb-2">{title}</h3>
+					  <p className="text-gray-600">{description}</p>
+					</div>
+				  );
+				})}
+
 			</div>
 		</section>
 
