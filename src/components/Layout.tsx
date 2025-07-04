@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
@@ -22,6 +22,13 @@ export default function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { serviceable } = usePostcode();
   const { cart, removeFromCart, addToCart, decreaseQuantity } = useCart();
+
+  useEffect(() => {
+    if (cart.length === 0 && showCart) {
+      setShowCart(false);
+    }
+  }, [cart, showCart]);
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
