@@ -68,7 +68,7 @@ export default function HomePage() {
 		  </p>
 
 		  {/* Before and After Images */}
-		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center max-w-6/9 mx-auto mb-16 px-4">
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center max-w-7/9 mx-auto mb-16 px-4">
 			{/* AdBlocker OFF */}
 			<div className="text-center">
 			  <h2 className="mt-4 text-lg font-semibold text-red-800 py-6">Without Ad & Content Shield</h2>
