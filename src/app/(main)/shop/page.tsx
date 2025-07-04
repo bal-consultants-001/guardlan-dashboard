@@ -76,15 +76,16 @@ export default function ShopPage() {
   const showPrevImage = () => setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
   
     // Auto-cycle every 5 seconds (or adjust time as you like)
-  useEffect(() => {
-    if (isPaused) return // Don't cycle when paused
+	useEffect(() => {
+	  if (isPaused) return
 
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
-    }, 6000)
+	  const interval = setInterval(() => {
+		setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
+	  }, 6000)
 
-    return () => clearInterval(interval)
-  }, [isPaused])
+	  return () => clearInterval(interval)
+	}, [isPaused, adblockerImages.length])
+
   
     // When user clicks a thumbnail
   const handleThumbnailClick = (index: number) => {
