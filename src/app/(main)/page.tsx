@@ -2,6 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { ShieldCheck, Block, LayoutDashboard } from 'lucide-react'; // Add this at top
+
+const icons = {
+  block: Block,
+  'shield-check': ShieldCheck,
+  'layout-dashboard': LayoutDashboard,
+};
+
 
 export default function HomePage() {
 
@@ -152,6 +160,7 @@ export default function HomePage() {
 				],
 			  ].map(([title, icon, description], i) => (
 				<div key={i} className="bg-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition">
+				  <Icon className="w-8 h-8 text-blue-600 mb-3 mx-auto" />
 				  <h3 className="text-lg font-semibold mb-2">{title}</h3>
 				  <p className="text-gray-600">{description}</p>
 				</div>
