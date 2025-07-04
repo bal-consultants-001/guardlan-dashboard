@@ -52,7 +52,7 @@ export default function Contact() {
     <>
 	
       {/* Hero */}
-      <section className="relative w-full h-[50vh] bg-white min-h-[400]">
+      <section className="relative w-full h-[400px] bg-white min-h-[400]">
 	    <div className="w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 rounded-t-lg shadow-lg">
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
             <Link href="/" className="flex items-center space-x-2">

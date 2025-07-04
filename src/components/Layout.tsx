@@ -39,7 +39,7 @@ export default function Layout({ children }: LayoutProps) {
     <div className="min-h-screen bg-white text-gray-900">
       {/* Sticky Top Navigation */}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div className="max-w-8/9 mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image
@@ -169,7 +169,7 @@ export default function Layout({ children }: LayoutProps) {
       )}
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+      <main className="max-w-8/9 mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {children}
       </main>
 	        {/* Footer */}

@@ -30,7 +30,7 @@ export default function HomePage() {
 			  <span className="w-8/9 mx-auto h-px bg-[var(--color-blue2)] block" />
 			</div>
 
-        <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto text-left">
+        <div className="grid md:grid-cols-3 gap-12 max-w-6/9 mx-auto text-left">
           {[
             { step: 'Connect In', desc: 'We connect your Ad & Content filter device to your home wifi.' },
             { step: 'Set Preferences', desc: 'Use our web dashboard to choose filters and protections.' },
@@ -59,17 +59,17 @@ export default function HomePage() {
 		  </p>
 
 		  {/* Before and After Images */}
-		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto mb-16 px-4">
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center max-w-6/9 mx-auto mb-16 px-4">
 			{/* AdBlocker OFF */}
 			<div className="text-center">
 			  <h2 className="mt-4 text-lg font-semibold text-red-800 py-6">Without Ad & Content Shield</h2>
-			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
+			  <div className="aspect-[16/13] w-full min-w-8/9 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
 				<Image
 				  src="/images/AdBlocker-off.png"
 				  alt="With Ads (AdBlocker Off)"
-				  width={600}
-				  height={400}
-				  className="object-cover object-center"
+				  width={900}
+				  height={800}
+				  className="object-cover object-center w-full h-full"
 				  sizes="(max-width: 668px) 100vw, 50vw"
 				/>
 			  </div>
@@ -79,13 +79,13 @@ export default function HomePage() {
 			{/* AdBlocker ON */}
 			<div className="text-center">
 			  <h2 className="mt-4 text-lg font-semibold text-green-500 py-6">With Ad & Content Shield</h2>
-			  <div className="w-full h-[500px] md:h-[400px] overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
+			  <div className="aspect-[16/13] w-full min-w-8/9 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
 			  	<Image
 				  src="/images/AdBlocker-on.png"
 				  alt="Ad-Free (AdBlocker On)"
-				  width={600}
-				  height={400}
-				  className="object-cover object-center"
+				  width={900}
+				  height={800}
+				  className="object-cover object-center w-full h-full"
 				  sizes="(max-width: 368px) 100vw, 50vw"
 				/>
 			  </div>
@@ -103,7 +103,7 @@ export default function HomePage() {
 			</div>
 		  
 		  {/*Videos*/}
-		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto mb-10 px-4">
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6/9 mx-auto mb-10 px-4">
 		  	  <div className="flex flex-col md:flex-row gap-4 justify-center items-center py-8">
 			  	<video
 				  src="/videos/With-Ads.mp4"
@@ -133,18 +133,30 @@ export default function HomePage() {
 			</div>
 
 		  {/* Features Grid */}
-		  <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center px-4 py-6">
-			{[
-			  ['Ad Blocking Across Your Network', 'block'],
-			  ['Parental Controls & Custom Filters', 'shield-check'],
-			  ['Easy Web Dashboard', 'layout-dashboard']
-			].map(([title], i) => (
-			  <div key={i} className="bg-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition">
-				<h3 className="text-lg font-semibold mb-2">{title}</h3>
-				<p className="text-gray-600">Simple, powerful protection for your entire digital home.</p>
-			  </div>
-			))}
-		  </div>
+			<div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center px-4 py-6">
+			  {[
+				[
+				  'Ad Blocking Across Your Network',
+				  'block',
+				  'Automatically block intrusive ads, trackers, and malware for all devices at once.',
+				],
+				[
+				  'Parental Controls & Custom Filters',
+				  'shield-check',
+				  'Set age-appropriate restrictions and customize web access for every user.',
+				],
+				[
+				  'Easy Web Dashboard',
+				  'layout-dashboard',
+				  'Manage settings, view reports, and control access from a simple online interface.',
+				],
+			  ].map(([title, icon, description], i) => (
+				<div key={i} className="bg-gray-100 p-6 rounded-xl shadow-sm hover:shadow-md transition">
+				  <h3 className="text-lg font-semibold mb-2">{title}</h3>
+				  <p className="text-gray-600">{description}</p>
+				</div>
+			  ))}
+			</div>
 		</section>
 
 
