@@ -179,7 +179,7 @@ export default function HomePage() {
 
 
       {/* About the product */}
-      <section className="bg-gray-100">
+      <section className="bg-gray-100 text-white">
 	  <div className="bg-gray-800/60 w-full mx-auto max-w-7xl py-20 px-6 h-full space-y-24 shadow-lg">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">About the product</h2>
