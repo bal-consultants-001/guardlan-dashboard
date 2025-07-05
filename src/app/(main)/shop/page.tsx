@@ -65,7 +65,6 @@ export default function ShopPage() {
   const adblockerImages = [
     '/images/AdBlocker9.jpg',
     '/images/AdBlocker1.png',
-    '/images/AdBlocker2.png',
     '/images/AdBlocker5.png',
   ]
 

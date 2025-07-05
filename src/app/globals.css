@@ -29,6 +29,15 @@
   }
 }
 
+.text-outline-white {
+  text-shadow: 
+    -0.5px -0.5px 0 white,
+     0.5px -0.5px 0 white,
+    -0.5px  0.5px 0 white,
+     0.5px  0.5px 0 white;
+}
+
+
 .btn {
   @apply px-4 py-2 rounded font-semibold transition hover:opacity-90;
 }

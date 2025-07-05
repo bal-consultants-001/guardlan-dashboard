@@ -41,8 +41,8 @@ export default function HomePage() {
 
         <div className="grid md:grid-cols-3 gap-12 max-w-6/9 mx-auto text-left">
           {[
-            { step: 'Connect In', desc: 'We connect your Ad & Content filter device to your home wifi.' },
-            { step: 'Set Preferences', desc: 'Use our web dashboard to choose filters and protections.' },
+            { step: 'Connect In', desc: 'We connect the Ad & Content filter device to your home wifi.' },
+            { step: 'Set Preferences', desc: 'You use our web dashboard to choose filters and protections.' },
             { step: 'Enjoy Internet', desc: 'Ads gone. Content filtered. Family-safe browsing for all devices.' }
           ].map(({ step, desc }, i) => (
             <div key={i} className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition">
@@ -71,7 +71,7 @@ export default function HomePage() {
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center max-w-7/9 mx-auto mb-16 px-4">
 			{/* AdBlocker OFF */}
 			<div className="text-center">
-			  <h2 className="mt-4 text-lg font-semibold text-red-800 py-6">Without Ad & Content Shield</h2>
+			  <h2 className="mt-4 text-lg font-semibold text-red-800 py-6 text-outline-white">Without Ad & Content Shield</h2>
 			  <div className="aspect-[16/13] w-full min-w-8/9 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
 				<Image
 				  src="/images/AdBlocker-off.png"
@@ -87,7 +87,7 @@ export default function HomePage() {
 
 			{/* AdBlocker ON */}
 			<div className="text-center">
-			  <h2 className="mt-4 text-lg font-semibold text-green-500 py-6">With Ad & Content Shield</h2>
+			  <h2 className="mt-4 text-lg font-semibold text-green-500 py-6 text-outline-white">With Ad & Content Shield</h2>
 			  <div className="aspect-[16/13] w-full min-w-8/9 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
 			  	<Image
 				  src="/images/AdBlocker-on.png"
