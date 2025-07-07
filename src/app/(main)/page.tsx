@@ -66,12 +66,17 @@ export default function HomePage() {
 		  <p className="text-xl text-white text-center mb-6">
 			We remove Ads and unwanted content before they hit your devices
 		  </p>
+		  
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center w-full bg-color-white h-40 mx-auto mb-16 px-4">
+		    <h2 className="mt-4 text-lg font-semibold text-red-800 py-6">Without Ad & Content Shield</h2>
+		    <h2 className="mt-4 text-lg font-semibold text-green-500 py-6">With Ad & Content Shield</h2>
+		  </div>
 
 		  {/* Before and After Images */}
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center max-w-7/9 mx-auto mb-16 px-4">
 			{/* AdBlocker OFF */}
 			<div className="text-center">
-			  <h2 className="mt-4 text-lg font-semibold text-red-800 py-6 text-outline-white">Without Ad & Content Shield</h2>
+			  
 			  <div className="aspect-[16/13] w-full min-w-8/9 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
 				<Image
 				  src="/images/AdBlocker-off.png"
@@ -87,7 +92,7 @@ export default function HomePage() {
 
 			{/* AdBlocker ON */}
 			<div className="text-center">
-			  <h2 className="mt-4 text-lg font-semibold text-green-500 py-6 text-outline-white">With Ad & Content Shield</h2>
+			  
 			  <div className="aspect-[16/13] w-full min-w-8/9 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition">
 			  	<Image
 				  src="/images/AdBlocker-on.png"
