@@ -67,9 +67,9 @@ export default function HomePage() {
 			We remove Ads and unwanted content before they hit your devices
 		  </p>
 		  
-		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center w-full bg-white h-20 mx-auto mb-16 px-4 text-center">
-		    <h2 className="mt-4 text-lg font-semibold text-red-800 py-6">Without Ad & Content Shield</h2>
-		    <h2 className="mt-4 text-lg font-semibold text-green-500 py-6">With Ad & Content Shield</h2>
+		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center w-full bg-white h-25 mx-auto mb-16 px-4 text-center">
+		    <h2 className="mt-4 text-lg font-semibold text-red-800">Without Ad & Content Shield</h2>
+		    <h2 className="mt-4 text-lg font-semibold text-green-500">With Ad & Content Shield</h2>
 		  </div>
 
 		  {/* Before and After Images */}
