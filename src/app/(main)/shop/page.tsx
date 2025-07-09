@@ -40,25 +40,6 @@ export default function ShopPage() {
   const [isPaused, setIsPaused] = useState(false)
   const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  useEffect(() => {
-    if (isPaused) return
-    const iv = setInterval(() => {
-      setCurrentImageIndex(i => (i + 1) % adblockerImages.length)
-    }, 6000)
-    return () => clearInterval(iv)
-  }, [isPaused])
-
-  const handleThumbnailClick = (i: number) => {
-    setCurrentImageIndex(i)
-    setIsPaused(true)
-    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current)
-    pauseTimeoutRef.current = setTimeout(() => setIsPaused(false), 30000)
-  }
-
-  useEffect(() => () => {
-    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current)
-  }, [])
-
   const handleCheckPostcode = async () => {
     try {
       const res = await fetch(`https://api.postcodes.io/postcodes/${postcodeInput}`)
