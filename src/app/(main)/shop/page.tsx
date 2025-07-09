@@ -60,7 +60,29 @@ export default function ShopPage() {
   }, [])
 
   const handleCheckPostcode = async () => {
-    /* same postcode logic as before */
+    try {
+      const res = await fetch(`https://api.postcodes.io/postcodes/${postcodeInput}`)
+      const data = await res.json()
+
+      if (data.status === 200) {
+        const { latitude, longitude } = data.result
+        const distance = getDistanceMiles(latitude, longitude, BUSINESS_COORDS.lat, BUSINESS_COORDS.lon)
+
+        if (distance <= 20) {
+          setServiceable(true)
+          setMessage('✅ We service your area!')
+        } else {
+          setServiceable(false)
+          setMessage('❌ Sorry, we don’t service your area.')
+          setShowNotifyForm(true)
+        }
+      } else {
+        setMessage('❌ Invalid postcode. Please try again.')
+      }
+    } catch (err) {
+      console.error(err)
+      setMessage('❌ Error checking postcode.')
+    }
   }
 
   const handleCheckout = async () => {
