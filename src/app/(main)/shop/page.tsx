@@ -10,9 +10,9 @@ import { usePostcode } from '@/context/PostcodeContext'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
-function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number) {
+function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 3958.8
-  const toRad = x => (x * Math.PI) / 180
+  const toRad = (x: number) => (x * Math.PI) / 180
   const dLat = toRad(lat2 - lat1)
   const dLon = toRad(lon2 - lon1)
   const a =
