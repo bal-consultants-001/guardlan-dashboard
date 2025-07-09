@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
 import { usePostcode } from '@/context/PostcodeContext'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
