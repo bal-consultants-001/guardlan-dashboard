@@ -84,6 +84,45 @@ export default function ShopPage() {
       setMessage('❌ Error checking postcode.')
     }
   }
+ 
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false)
+
+  const closeGallery = () => setIsGalleryOpen(false)
+  const showNextImage = () => setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
+  const showPrevImage = () => setCurrentImageIndex((prev) => (prev - 1 + adblockerImages.length) % adblockerImages.length)
+  
+    // Auto-cycle every 5 seconds (or adjust time as you like)
+	useEffect(() => {
+	  if (isPaused) return
+
+	  const interval = setInterval(() => {
+		setCurrentImageIndex((prev) => (prev + 1) % adblockerImages.length)
+	  }, 6000)
+
+	  return () => clearInterval(interval)
+	}, [isPaused, adblockerImages.length])
+
+  
+    // When user clicks a thumbnail
+  const handleThumbnailClick = (index: number) => {
+    setCurrentImageIndex(index)
+    setIsPaused(true)
+
+    // Clear any existing timeout so it restarts
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current)
+
+    // Resume cycling after 30 seconds
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false)
+    }, 30000)
+  }
+
+  // Remember to clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current)
+    }
+  }, [])
 
   const handleCheckout = async () => {
     try {
