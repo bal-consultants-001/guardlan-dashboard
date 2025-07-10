@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { usePostcode } from '@/context/PostcodeContext'
+import { useCart } from '@/context/CartContext'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
@@ -106,25 +107,30 @@ export default function ShopPage() {
     }
   }, [])
 
-  const handleCheckout = async () => {
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          productPriceId: process.env.NEXT_PUBLIC_STRIPE_PRODUCT_PRICE_ID,
-          subscriptionPriceId: process.env.NEXT_PUBLIC_STRIPE_SUBSCRIPTION_PRICE_ID,
-          includeSubscription: subscriptionSelected,
-        }),
-      })
-      const data = await res.json()
-      if (data.url) router.push(data.url)
-      else alert(data.error || 'Unknown checkout error')
-    } catch (err) {
-      console.error(err)
-      alert('Failed to start checkout')
-    }
-  }
+	const { addToCart } = useCart()
+
+	const handleAddToCartAndCheckout = () => {
+	  addToCart({
+		id: 1,
+		name: 'Home Network AdBlocker',
+		price: '£75',
+		priceAmount: 7500,
+		description: 'Block Ads and filter content for every device on your network.',
+	  })
+
+	  if (subscriptionSelected) {
+		addToCart({
+		  id: 2,
+		  name: 'Monthly Subscription',
+		  price: '£6/month',
+		  priceAmount: 600,
+		  description: 'Support + updates for the AdBlocker.',
+		})
+	  }
+
+	  router.push('?checkout=true') // Or change to '/cart' if you have a cart page
+	}
+
 
   return (
     <>
@@ -217,9 +223,10 @@ export default function ShopPage() {
 
           {/* CTA */}
 		  <div className="text-center">
-			<button onClick={handleCheckout} className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-			  Checkout £75{subscriptionSelected ? ' + £6/month' : ''}
+			<button onClick={handleAddToCartAndCheckout} className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+			  Add to Cart £75{subscriptionSelected ? ' + £6/month' : ''}
 			</button>
+
 		  </div>
         </div>
       </section>
