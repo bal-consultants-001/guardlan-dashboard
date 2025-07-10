@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useCart } from '@/contexts/cartContext' // adjust import as needed
+import { useCart } from '@/contexts/CartContext' // adjust import as needed
 import { useTransition } from 'react'
 
 export function CheckoutButton() {
