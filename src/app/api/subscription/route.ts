@@ -9,6 +9,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 const SUBSCRIPTION_PRICE_ID = process.env.STRIPE_SUBSCRIPTION_PRICE_ID! // set in env
 
+console.log('STRIPE_SUBSCRIPTION_PRICE_ID:', SUBSCRIPTION_PRICE_ID)
+
+
 export async function POST(req: NextRequest) {
   try {
     const session = await stripe.checkout.sessions.create({
