@@ -114,7 +114,7 @@ export default function ShopPage() {
 		id: 1,
 		name: 'Home Network AdBlocker',
 		price: '£75',
-		priceAmount: 7500,
+		priceAmount: 75,
 		description: 'Block Ads and filter content for every device on your network.',
 	  })
 
@@ -123,7 +123,7 @@ export default function ShopPage() {
 		  id: 2,
 		  name: 'Monthly Subscription',
 		  price: '£6/month',
-		  priceAmount: 600,
+		  priceAmount: 6,
 		  description: 'Support + updates for the AdBlocker.',
 		})
 	  }

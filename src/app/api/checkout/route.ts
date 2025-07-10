@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       mode: 'payment',
       line_items,
       success_url: `${req.nextUrl.origin}/success`,
-      cancel_url: `${req.nextUrl.origin}/cart`,
+      cancel_url: `${req.nextUrl.origin}/shop`,
     })
 
     return NextResponse.json({ url: session.url })
