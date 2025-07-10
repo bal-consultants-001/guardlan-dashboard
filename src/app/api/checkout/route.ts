@@ -21,18 +21,6 @@ export async function POST(req: NextRequest) {
   try {
     const { cart }: { cart: CartItem[] } = await req.json()
 
-    const line_items = cart.map((item: CartItem) => ({
-      price_data: {
-        currency: 'gbp',
-        product_data: {
-          name: item.name,
-          description: item.description,
-        },
-        unit_amount: Math.round(item.priceAmount * 100),
-      },
-      quantity: item.quantity,
-    }))
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
