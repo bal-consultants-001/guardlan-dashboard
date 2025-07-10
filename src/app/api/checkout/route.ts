@@ -8,24 +8,32 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 export async function POST(req: NextRequest) {
-  const { productPriceId, subscriptionPriceId, includeSubscription } = await req.json()
-
-  const line_items = [
-    { price: productPriceId, quantity: 1 },
-    ...(includeSubscription ? [{ price: subscriptionPriceId, quantity: 1 }] : []),
-  ]
-
   try {
+    const { cart } = await req.json()
+
+    const line_items = cart.map((item: any) => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: item.name,
+          description: item.description,
+        },
+        unit_amount: Math.round(item.priceAmount * 100), // Stripe expects cents
+      },
+      quantity: item.quantity,
+    }))
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      mode: includeSubscription ? 'subscription' : 'payment',
+      mode: 'payment',
       line_items,
       success_url: `${req.nextUrl.origin}/success`,
-      cancel_url: `${req.nextUrl.origin}/cancel`,
+      cancel_url: `${req.nextUrl.origin}/cart`,
     })
+
     return NextResponse.json({ url: session.url })
-  } catch (e) {
-    console.error(e)
-    return NextResponse.json({ error: e instanceof Error ? e.message : 'Internal error' }, { status: 500 })
+  } catch (err: any) {
+    console.error('Stripe error:', err)
+    return NextResponse.json({ error: 'Stripe checkout failed' }, { status: 500 })
   }
 }
