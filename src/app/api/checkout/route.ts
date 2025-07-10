@@ -1,5 +1,3 @@
-// app/api/checkout/route.ts
-
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
@@ -11,7 +9,7 @@ type CartItem = {
   description: string
   quantity: number
   stripePriceId: string
-  isSubscriptionAddon?: boolean // <-- mark subscription addon items
+  isSubscriptionAddon?: boolean
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -22,12 +20,21 @@ export async function POST(req: NextRequest) {
   try {
     const { cart }: { cart: CartItem[] } = await req.json()
 
-    // Create line_items for one-time purchase only
-    // Filter out subscription add-ons (subscriptions can't be in payment mode)
-    const oneTimeItems = cart.filter(item => !item.isSubscriptionAddon)
+    const oneTimeItems: CartItem[] = []
+    let hasSubscription = false
+
+    // Validate price types directly from Stripe
+    for (const item of cart) {
+      const price = await stripe.prices.retrieve(item.stripePriceId)
+
+      if (price.recurring) {
+        hasSubscription = true
+      } else {
+        oneTimeItems.push(item)
+      }
+    }
 
     if (oneTimeItems.length === 0) {
-      // If no one-time items, skip this checkout step and go directly to subscription
       return NextResponse.json({ redirectToSubscription: true })
     }
 
@@ -40,7 +47,7 @@ export async function POST(req: NextRequest) {
       payment_method_types: ['card'],
       mode: 'payment',
       line_items,
-      success_url: `${req.nextUrl.origin}/checkout-success?subscriptionAdded=${cart.some(i => i.isSubscriptionAddon)}`,
+      success_url: `${req.nextUrl.origin}/checkout-success?subscriptionAdded=${hasSubscription}`,
       cancel_url: `${req.nextUrl.origin}/shop`,
     })
 
