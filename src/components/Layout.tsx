@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 import type { ReactNode } from 'react';
+import type { FC } from 'react';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Menu as MenuIcon, X as CloseIcon } from 'lucide-react';
 import { usePostcode } from '@/context/PostcodeContext';
@@ -30,10 +31,9 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [cart, showCart]);
 
-	const CheckoutButton = dynamic<() => React.JSX.Element>(
-	  () => import('@/components/CheckoutButton'),
-	  { ssr: false }
-	)
+	const CheckoutButton = dynamic(() => import('@/components/CheckoutButton'), {
+	  ssr: false,
+	}) as FC;
 
 
 
