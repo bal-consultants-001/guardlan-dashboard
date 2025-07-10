@@ -116,6 +116,7 @@ export default function ShopPage() {
 		price: '£75',
 		priceAmount: 75,
 		description: 'Block Ads and filter content for every device on your network.',
+		stripePriceId: 'price_1Rj37DKNjLZvW6YxEyFBwtOn',
 	  })
 
 	  if (subscriptionSelected) {
@@ -125,6 +126,7 @@ export default function ShopPage() {
 		  price: '£6/month',
 		  priceAmount: 6,
 		  description: 'Support + updates for the AdBlocker.',
+		  stripePriceId: 'price_1Rj37VKNjLZvW6YxVWtfegpw',
 		})
 	  }
 

@@ -10,6 +10,7 @@ type CartItem = {
   priceAmount: number
   description: string
   quantity: number
+  stripePriceId: string
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -35,7 +36,10 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      line_items,
+        line_items: cartItems.map(item => ({
+		price: item.stripePriceId,
+		quantity: 1,
+	})),
       success_url: `${req.nextUrl.origin}/success`,
       cancel_url: `${req.nextUrl.origin}/shop`,
     })

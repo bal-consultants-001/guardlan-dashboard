@@ -33,7 +33,7 @@ export function CheckoutButton() {
     <button
       onClick={handleCheckout}
       disabled={isPending || cart.length === 0}
-      className="checkout-button"
+      className="checkout-button block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700 w-full"
     >
       {isPending ? 'Loading...' : 'Checkout'}
     </button>
