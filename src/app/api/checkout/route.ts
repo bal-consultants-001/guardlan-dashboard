@@ -24,9 +24,9 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-        line_items: cartItems.map(item => ({
+        line_items: cart.map(item => ({
 		price: item.stripePriceId,
-		quantity: 1,
+		quantity: item.quantity ?? 1,
 	})),
       success_url: `${req.nextUrl.origin}/success`,
       cancel_url: `${req.nextUrl.origin}/shop`,

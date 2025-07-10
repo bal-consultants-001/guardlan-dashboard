@@ -10,6 +10,7 @@ export type Product = {
   price: string
   priceAmount: number
   description: string
+  stripePriceId: string
 }
 
 export type CartItem = Product & { quantity: number }
