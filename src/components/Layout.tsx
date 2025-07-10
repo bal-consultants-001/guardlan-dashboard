@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, React } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 import type { ReactNode } from 'react';
+import type ReactType from 'react';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Menu as MenuIcon, X as CloseIcon } from 'lucide-react';
 import { usePostcode } from '@/context/PostcodeContext';
