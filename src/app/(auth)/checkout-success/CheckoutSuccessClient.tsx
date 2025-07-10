@@ -22,7 +22,7 @@ export default function CheckoutSuccessClient() {
 		try {
 		  data = await res.json()
 		} catch (e) {
-		  console.warn('No JSON response returned from /api/subscribe')
+		  console.warn('No JSON response returned from /api/subscribe', e)
 		}
 
 		if (data?.url) {
