@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
@@ -30,10 +30,11 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [cart, showCart]);
 
-	const CheckoutButton = dynamic<() => JSX.Element>(
+	const CheckoutButton = dynamic<() => React.JSX.Element>(
 	  () => import('@/components/CheckoutButton'),
 	  { ssr: false }
 	)
+
 
 
   const handleLogout = async () => {
