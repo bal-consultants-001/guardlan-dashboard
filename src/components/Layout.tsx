@@ -30,7 +30,11 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [cart, showCart]);
 
-  const CheckoutButton = dynamic(() => import('@/components/CheckoutButton'), { ssr: false })
+	const CheckoutButton = dynamic<() => JSX.Element>(
+	  () => import('@/components/CheckoutButton'),
+	  { ssr: false }
+	)
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
