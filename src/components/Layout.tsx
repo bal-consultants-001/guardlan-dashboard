@@ -166,7 +166,6 @@ export default function Layout({ children }: LayoutProps) {
             </div>
           ) : (
 		  <CheckoutButton />
-		  {/*<Link href="/shop?checkout=true" className="block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700">Checkout</Link>*/}
           )}
         </div>
       )}
