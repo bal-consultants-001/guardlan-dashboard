@@ -9,17 +9,35 @@ export default function CheckoutSuccessClient() {
   const subscriptionAdded = searchParams.get('subscriptionAdded') === 'true'
   const [loading, setLoading] = useState(false)
 
-  const handleSubscribe = async () => {
-    setLoading(true)
-    const res = await fetch('/api/subscribe', { method: 'POST' })
-    const data = await res.json()
-    if (data.url) {
-      router.push(data.url)
-    } else {
-      alert('Failed to create subscription checkout session')
-      setLoading(false)
-    }
-  }
+	const handleSubscribe = async () => {
+	  setLoading(true)
+	  try {
+		const res = await fetch('/api/subscribe', { method: 'POST' })
+
+		if (!res.ok) {
+		  throw new Error('Network response was not ok')
+		}
+
+		let data = null
+		try {
+		  data = await res.json()
+		} catch (e) {
+		  console.warn('No JSON response returned from /api/subscribe')
+		}
+
+		if (data?.url) {
+		  router.push(data.url)
+		} else {
+		  alert('Failed to create subscription checkout session')
+		  setLoading(false)
+		}
+	  } catch (err) {
+		console.error(err)
+		alert('Something went wrong.')
+		setLoading(false)
+	  }
+	}
+
 
   return (
     <div className="max-w-xl mx-auto p-4 text-center">
