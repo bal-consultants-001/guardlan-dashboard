@@ -12,7 +12,7 @@ export default function CheckoutSuccessClient() {
 	const handleSubscribe = async () => {
 	  setLoading(true)
 	  try {
-		const res = await fetch('/api/subscribe', { method: 'POST' })
+		const res = await fetch('/api/subscription', { method: 'POST' })
 
 		if (!res.ok) {
 		  throw new Error('Network response was not ok')
@@ -22,7 +22,7 @@ export default function CheckoutSuccessClient() {
 		try {
 		  data = await res.json()
 		} catch (e) {
-		  console.warn('No JSON response returned from /api/subscribe', e)
+		  console.warn('No JSON response returned from /api/subscription', e)
 		}
 
 		if (data?.url) {
