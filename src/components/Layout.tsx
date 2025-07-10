@@ -10,6 +10,7 @@ import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Menu as MenuIcon, X as CloseIcon } from 'lucide-react';
 import { usePostcode } from '@/context/PostcodeContext';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 type LayoutProps = {
   children: ReactNode;
@@ -29,6 +30,7 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [cart, showCart]);
 
+  const CheckoutButton = dynamic(() => import('@/components/CheckoutButton'), { ssr: false })
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -163,7 +165,8 @@ export default function Layout({ children }: LayoutProps) {
               </p>
             </div>
           ) : (
-            <Link href="/shop?checkout=true" className="block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700">Checkout</Link>
+		  <CheckoutButton />
+		  {/*<Link href="/shop?checkout=true" className="block mt-4 bg-green-600 text-white text-center py-2 rounded hover:bg-green-700">Checkout</Link>*/}
           )}
         </div>
       )}

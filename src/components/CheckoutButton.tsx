@@ -13,7 +13,7 @@ export default function CheckoutButton() {
         items: [
           {
             price_data: {
-              currency: 'usd',
+              currency: 'gbp',
               product_data: { name: 'Example Product' },
               unit_amount: 2000,
             },
