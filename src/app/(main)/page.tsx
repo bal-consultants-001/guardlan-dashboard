@@ -18,17 +18,26 @@ export default function HomePage() {
     <>
 
       {/* Hero */}
-      <section className="relative bg-black text-white h-[400px] flex items-center justify-center">
-	  <Image src="/images/AdBlocker0.png" alt="Ad Blocker" fill className="object-cover opacity-30" />
-        <div className="absolute z-10 text-center px-4 max-w-2xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Total Ad & Content Control — No Apps, No Downloads.</h1>
-          <p className="mb-6 text-lg">Plug in. Block ads. Filter content. Protect every device on your home network — instantly.</p>
-          <div className="flex gap-4 justify-center">
-            <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">Get Yours Now</Link>
-            <Link href="#how-it-works" className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-300">How It Works</Link>
-          </div>
-        </div>
-      </section>
+		<section className="relative bg-black text-white min-h-[400px] md:h-[400px] py-12 flex items-center justify-center">
+		  <Image src="/images/AdBlocker0.png" alt="Ad Blocker" fill className="object-cover opacity-30" />
+		  <div className="absolute z-10 text-center px-4 max-w-2xl">
+			<h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4">
+			  Total Ad & Content Control — No Apps, No Downloads.
+			</h1>
+			<p className="mb-6 text-lg">
+			  Plug in. Block ads. Filter content. Protect every device on your home network — instantly.
+			</p>
+			<div className="flex flex-col sm:flex-row gap-4 justify-center">
+			  <Link href="/shop" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">
+				Get Yours Now
+			  </Link>
+			  <Link href="#how-it-works" className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-300">
+				How It Works
+			  </Link>
+			</div>
+		  </div>
+		</section>
+
 
       {/* How It Works */}
       <section id="how-it-works" className="bg-gray-50 py-20 text-center">
@@ -67,10 +76,11 @@ export default function HomePage() {
 			We remove Ads and unwanted content before they hit your devices
 		  </p>
 		  
-		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center w-full bg-white h-25 mx-auto mb-16 px-4 text-center">
-		    <h2 className="mt-4 text-lg font-semibold text-red-800">Without Ad & Content Shield</h2>
-		    <h2 className="mt-4 text-lg font-semibold text-green-500">With Ad & Content Shield</h2>
+		  <div className="grid grid-cols-2 gap-4 w-full bg-white h-auto mx-auto mb-8 px-4 text-center">
+		    <h2 className="text-sm md:text-lg font-semibold text-red-800">Without Ad & Content Shield</h2>
+		    <h2 className="text-sm md:text-lg font-semibold text-green-500">With Ad & Content Shield</h2>
 		  </div>
+
 
 		  {/* Before and After Images */}
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start items-center max-w-7/9 mx-auto mb-16 px-4">
@@ -117,7 +127,7 @@ export default function HomePage() {
 			</div>
 		  
 		  {/*Videos*/}
-		  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6/9 mx-auto mb-10 px-4">
+		  <div className="grid grid-cols-2 gap-4 max-w-6/9 mx-auto mb-10 px-4">
 		  	  <div className="flex flex-col md:flex-row gap-4 justify-center items-center py-8">
 			  	<video
 				  src="/videos/With-Ads.mp4"
