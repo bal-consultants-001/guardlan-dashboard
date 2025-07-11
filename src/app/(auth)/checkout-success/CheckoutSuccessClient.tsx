@@ -49,24 +49,27 @@ export default function CheckoutSuccessClient() {
 				  <p className="mb-4">
 					This is a recurring payment. Please fill in your details below. You can use the same payment details as before.
 				  </p>
-				  <button
-					onClick={handleSubscribe}
-					disabled={loading}
-					className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700"
-				  >
-					{loading ? 'Redirecting...' : 'Proceed to Subscription Payment'}
-				  </button>
-				  <button
-					className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 transition"
-					onClick={() => router.push('/')}
-				  >
-					Cancel
-				  </button>
+				  <div className="flex flex-col space-y-2">
+					  <button
+						onClick={handleSubscribe}
+						disabled={loading}
+						className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700"
+					  >
+						{loading ? 'Redirecting...' : 'Proceed to Subscription Payment'}
+					  </button>
+					  <button
+						className="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-400 transition"
+						onClick={() => router.push('/')}
+					  >
+						Cancel
+					  </button>
+				  </div>
 				</>
 			  ) : (
 				<>
 				  <h1 className="text-2xl font-bold mb-4">Would you like to add a monthly support subscription?</h1>
 				  <p className="mb-4">You can add a subscription for ongoing support and updates.</p>
+				  <div className="flex flex-col space-y-2">
 				  <button
 					onClick={handleSubscribe}
 					disabled={loading}
@@ -75,12 +78,13 @@ export default function CheckoutSuccessClient() {
 					{loading ? 'Redirecting...' : 'Yes, add subscription'}
 				  </button>
 				  <button
-					onClick={() => router.push('/final-thank-you')}
+					onClick={() => router.push('/')}
 					disabled={loading}
 					className="bg-gray-400 text-white px-6 py-3 rounded hover:bg-gray-500"
 				  >
 					No, thanks
 				  </button>
+				  </div>
 				</>
 			  )}
 			</div>
