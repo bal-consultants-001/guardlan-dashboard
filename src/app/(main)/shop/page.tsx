@@ -58,6 +58,9 @@ export default function ShopPage() {
           setMessage('❌ Sorry, we don’t service your area.')
           setShowNotifyForm(true)
         }
+		
+		setPostcode('')
+		
       } else {
         setMessage('❌ Invalid postcode. Please try again.')
       }
