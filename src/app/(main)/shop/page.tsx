@@ -25,8 +25,7 @@ function getDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number
 }
 
 export default function ShopPage() {
-  const [postcodeInput, setPostcodeInput] = useState('')
-  const { serviceable, setServiceable } = usePostcode()
+  const { serviceable, setServiceable, postcode, setPostcode } = usePostcode()
 
   const [showNotifyForm, setShowNotifyForm] = useState(false)
   const [subscriptionSelected, setSubscriptionSelected] = useState(false)
@@ -44,7 +43,7 @@ export default function ShopPage() {
 
   const handleCheckPostcode = async () => {
     try {
-      const res = await fetch(`https://api.postcodes.io/postcodes/${postcodeInput}`)
+      const res = await fetch(`https://api.postcodes.io/postcodes/${postcode}`)
       const data = await res.json()
 
       if (data.status === 200) {
@@ -159,8 +158,8 @@ export default function ShopPage() {
           <input
             className="border border-gray-300 p-2 w-64 rounded"
             placeholder="Enter your postcode"
-            value={postcodeInput}
-            onChange={(e) => setPostcodeInput(e.target.value)}
+            value={postcode}
+            onChange={(e) => setPostcode(e.target.value)}
           />
           <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onClick={handleCheckPostcode}>
             Check
@@ -271,13 +270,13 @@ export default function ShopPage() {
                 const name = form.get('name')
                 const email = form.get('email')
 
-                if (!name || !email || !postcodeInput) return
+                if (!name || !email || !postcode) return
 
-                const { error } = await supabase.from('interest').insert([{ name, email, postcode: postcodeInput }])
+                const { error } = await supabase.from('interest').insert([{ name, email, postcode: postcode }])
                 if (error) console.error(error.message)
 
                 setShowNotifyForm(false)
-                setPostcodeInput('')
+                setPostcode('')
                 setServiceable(null)
                 setMessage('')
               }}
