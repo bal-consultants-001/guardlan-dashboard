@@ -24,7 +24,7 @@ export default function SuccessPage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-		<section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-7/10">
+		<section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-7/10 items-center text-center">
 		  <h1 className="text-3xl font-bold text-green-600 mb-4">Payment Successful 🎉</h1>
 		  <p className="mb-4">
 			Thank you for your purchase! Redirecting you to the homepage in{' '}
