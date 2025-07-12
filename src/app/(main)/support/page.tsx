@@ -14,7 +14,7 @@ type Ticket = {
   supp_user?: string
   users?: {
     firstname?: string
-  }[]
+  } | null
 }
 
 export default function TicketsPage() {
@@ -38,21 +38,26 @@ export default function TicketsPage() {
       const userId = session.user.id
       setUser(session.user)
 
-      const { data: ticketData } = await supabase
-        .from('tickets')
-        .select(`
-          id,
-          ticket_no,
-          status,
-          short_desc,
-          supp_user,
-          users:users (
-            firstname
-          )
-        `)
-        .eq('owner', userId)
+		const { data: ticketData } = await supabase
+		  .from('tickets')
+		  .select(`
+			id,
+			ticket_no,
+			status,
+			short_desc,
+			supp_user,
+			users:users (
+			  firstname
+			)
+		  `)
+		  .eq('owner', userId)
 
-      setTickets(ticketData || [])
+		const flattenedTickets = (ticketData || []).map((ticket) => ({
+		  ...ticket,
+		  users: ticket.users?.[0] || null, // flatten the array to a single object
+		}))
+
+		setTickets(flattenedTickets)
 
       const { data: userData } = await supabase
         .from('owner')
@@ -98,7 +103,7 @@ export default function TicketsPage() {
                   <td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
                   <td className="border px-4 py-2">{ticket.status}</td>
                   <td className="border px-4 py-2">
-                    {ticket.users?.[0]?.firstname || 'Unassigned'}
+                    {ticket.users?.firstname || 'Unassigned'}
                   </td>
                   <td className="border px-4 py-2">
                     <button
