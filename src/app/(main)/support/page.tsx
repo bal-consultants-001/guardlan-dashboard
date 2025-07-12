@@ -14,7 +14,7 @@ type Ticket = {
   supp_user?: string
   users?: {
     firstname?: string
-  }
+  } | null
 }
 
 export default function TicketsPage() {
@@ -46,7 +46,7 @@ export default function TicketsPage() {
           status,
           short_desc,
           supp_user,
-          users (
+          users:users (
             firstname
           )
         `)
