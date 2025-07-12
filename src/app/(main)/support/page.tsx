@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase';
-import TicketNotesModal from '@/components/TicketNotesModal' // ✅ Make sure this is imported
+import TicketNotesModal from '@/components/TicketNotesModal'
 
 type Ticket = {
   id: string
@@ -12,6 +12,9 @@ type Ticket = {
   status: string
   short_desc?: string
   supp_user?: string
+  users?: {
+    firstname?: string
+  }
 }
 
 export default function TicketsPage() {
@@ -19,7 +22,7 @@ export default function TicketsPage() {
   const [user, setUser] = useState<User | null>(null)
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [fullName, setFullName] = useState<string | null>(null)
-  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null) // ✅
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +40,16 @@ export default function TicketsPage() {
 
       const { data: ticketData } = await supabase
         .from('tickets')
-        .select('*')
+        .select(`
+          id,
+          ticket_no,
+          status,
+          short_desc,
+          supp_user,
+          users (
+            firstname
+          )
+        `)
         .eq('owner', userId)
 
       setTickets(ticketData || [])
@@ -76,7 +88,7 @@ export default function TicketsPage() {
                 <th className="border px-4 py-2">Subject</th>
                 <th className="border px-4 py-2">Status</th>
                 <th className="border px-4 py-2">Engineer</th>
-                <th className="border px-4 py-2">Notes</th> {/* ✅ New Column */}
+                <th className="border px-4 py-2">Notes</th>
               </tr>
             </thead>
             <tbody>
@@ -85,7 +97,9 @@ export default function TicketsPage() {
                   <td className="border px-4 py-2">{ticket.ticket_no}</td>
                   <td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
                   <td className="border px-4 py-2">{ticket.status}</td>
-                  <td className="border px-4 py-2">{ticket.supp_user || 'Unassigned'}</td>
+                  <td className="border px-4 py-2">
+                    {ticket.users?.firstname || 'Unassigned'}
+                  </td>
                   <td className="border px-4 py-2">
                     <button
                       className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -107,7 +121,6 @@ export default function TicketsPage() {
         </button>
       </section>
 
-      {/* ✅ Modal Render */}
       {selectedTicketId && user && (
         <TicketNotesModal
           ticketId={selectedTicketId}
