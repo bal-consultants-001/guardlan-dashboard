@@ -14,7 +14,7 @@ type Ticket = {
   supp_user?: string
   users?: {
     firstname?: string
-  } | null
+  }[]
 }
 
 export default function TicketsPage() {
@@ -99,7 +99,7 @@ export default function TicketsPage() {
                   <td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
                   <td className="border px-4 py-2">{ticket.status}</td>
                   <td className="border px-4 py-2">
-                    {ticket.users?.firstname || 'Unassigned'}
+                    {ticket.users?.[0]?.firstname || 'Unassigned'}
                   </td>
                   <td className="border px-4 py-2">
                     <button
