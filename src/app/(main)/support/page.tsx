@@ -46,18 +46,14 @@ export default function TicketsPage() {
 			status,
 			short_desc,
 			supp_user,
-			users:users (
+			users:users!supp_user (
 			  firstname
 			)
 		  `)
 		  .eq('owner', userId)
 
-		const flattenedTickets = (ticketData || []).map((ticket) => ({
-		  ...ticket,
-		  users: ticket.users?.[0] || null, // flatten the array to a single object
-		}))
+		setTickets(ticketData || [])
 
-		setTickets(flattenedTickets)
 
       const { data: userData } = await supabase
         .from('owner')
