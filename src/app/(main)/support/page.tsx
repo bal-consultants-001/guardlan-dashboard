@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from "next/link";
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase';
 import TicketNotesModal from '@/components/TicketNotesModal' // ✅ Make sure this is imported
@@ -21,11 +20,6 @@ export default function TicketsPage() {
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [fullName, setFullName] = useState<string | null>(null)
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null) // ✅
-
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (!error) router.push('/')
-  }
 
   useEffect(() => {
     const fetchData = async () => {
