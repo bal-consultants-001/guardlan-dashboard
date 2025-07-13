@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 export default function SuccessPage() {
   const router = useRouter()
-  const [seconds, setSeconds] = useState(5)
+  const [seconds, setSeconds] = useState(30)
 
   useEffect(() => {
     if (seconds === 0) {
