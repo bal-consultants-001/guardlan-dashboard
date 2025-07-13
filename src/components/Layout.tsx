@@ -180,7 +180,10 @@ export default function Layout({ children }: LayoutProps) {
       </main>
 	        {/* Footer */}
       <footer className="bg-black text-white py-8 text-center">
-        <p className="text-sm">&copy; {new Date().getFullYear()} BAL-IT. All rights reserved.</p>
+        <a href="/documents/Terms and Conditions.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">
+			Terms and Conditions
+        </a>
+		<p className="text-sm">&copy; {new Date().getFullYear()} BAL-IT. All rights reserved.</p>
       </footer>
 	  
     </div>

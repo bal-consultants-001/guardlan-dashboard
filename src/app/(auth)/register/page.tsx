@@ -18,11 +18,17 @@ export default function RegisterPage() {
     }
 
     const { supabase } = await import('@/lib/supabase'); // Lazy load Supabase
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      phone,
-    });
+	const { error } = await supabase.auth.signUp({
+	  email,
+	  password,
+	  phone,
+	  options: {
+		data: {
+		  terms_accepted: true,
+		  terms_accepted_at: new Date().toISOString(),
+		},
+	  },
+	});
 
     if (error) {
       setMessage(`Error: ${error.message}`);
