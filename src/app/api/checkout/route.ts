@@ -20,19 +20,32 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('🔍 Starting checkout request...')
+    
+    // Log cookies for debugging
+    const cookieHeader = req.headers.get('cookie')
+    console.log('🍪 Cookies present:', cookieHeader ? 'Yes' : 'No')
+    
     // Use only server-side session management
     const supabase = createRouteHandlerClient({ cookies })
     
+    console.log('🔍 Getting user from Supabase...')
     const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    console.log('🔍 Auth result:', { 
+      user: user?.id, 
+      error: authError?.message,
+      hasUser: !!user 
+    })
     
     if (authError) {
       console.error('🔴 Supabase auth error:', authError.message)
-      return NextResponse.json({ error: 'Authentication failed' }, { status: 401 })
+      return NextResponse.json({ error: 'Authentication failed', details: authError.message }, { status: 401 })
     }
 
     if (!user) {
       console.warn('🟡 No user found in Supabase auth')
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      return NextResponse.json({ error: 'Unauthorized - no user found' }, { status: 401 })
     }
 
     const userId = user.id
