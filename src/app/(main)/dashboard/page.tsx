@@ -23,8 +23,8 @@ type Ticket = {
   ticket_no: string
   status: string
   short_desc?: string
-  supp_user?: string
-  // Add more fields as needed
+  supp_user?: string // still store the UUID
+  engineerName?: string // this is what we’ll display
 }
 
 type LogEntry = {
@@ -138,21 +138,39 @@ export default function DashboardPage() {
 	  
 	  setDevicesWithLogs(devicesWithLogs || [])
 
-      // Fetch tickets
-      const { data: ticketData } = await supabase
-        .from('tickets')
-        .select('*')
-        .eq('owner', userId)
-      setTickets(ticketData || [])
-	  
-	  const {data: userData} = await supabase
-	  .from('owner')
-	  .select('"Fullname"')
-	  .eq('"ID"', userId)
-	  .single()
-	  
-	  if(userData){
-		  setFullName(userData["Fullname"])
+      // 1. Fetch all engineers (users)
+	  const { data: usersData } = await supabase
+		.from('users')
+		.select('uuid, firstname')
+
+	  const userMap = new Map<string, string>()
+	  usersData?.forEach((user) => {
+		userMap.set(user.uuid, user.firstname)
+	  })
+
+	  // 2. Fetch tickets
+	  const { data: ticketData } = await supabase
+		.from('tickets')
+		.select('id, ticket_no, status, short_desc, supp_user')
+		.eq('owner', userId)
+
+	  // 3. Map tickets to include engineer name
+	  const mappedTickets = (ticketData || []).map((ticket) => ({
+		...ticket,
+		engineerName: userMap.get(ticket.supp_user || '') || 'Unassigned',
+	  }))
+
+	  setTickets(mappedTickets)
+
+	  // 4. Fetch owner full name
+	  const { data: userData } = await supabase
+		.from('owner')
+		.select('"Fullname"')
+		.eq('"ID"', userId)
+		.single()
+
+	  if (userData) {
+		setFullName(userData["Fullname"])
 	  }
 	  
     };
@@ -292,20 +310,22 @@ export default function DashboardPage() {
 			  </thead>
 			  <tbody>
 				{tickets.map((ticket) => (
-				  <tr key={ticket.ticket_no}>
-					<td className="border px-4 py-2">{ticket.ticket_no}</td>
-					<td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
-					<td className="border px-4 py-2">{ticket.status}</td>
-					<td className="border px-4 py-2">{ticket.supp_user || 'Unassigned'}</td>
-					<td className="border px-4 py-2">
-					  <button
-						className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-						onClick={() => setSelectedTicketId(ticket.id)}
-					  >
-						View Notes
-					  </button>
-					</td>
-				  </tr>
+					<tr key={ticket.ticket_no}>
+					  <td className="border px-4 py-2">{ticket.ticket_no}</td>
+					  <td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
+					  <td className="border px-4 py-2">{ticket.status}</td>
+					  <td className="border px-4 py-2">
+						{ticket.engineerName}
+					  </td>
+					  <td className="border px-4 py-2">
+						<button
+						  className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+						  onClick={() => setSelectedTicketId(ticket.id)}
+						>
+						  View Notes
+						</button>
+					  </td>
+					</tr>
 				))}
 			  </tbody>
 			</table>
