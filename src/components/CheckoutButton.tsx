@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext' // adjust import as needed
 import { useTransition } from 'react'
+import { createBrowserClient } from '@supabase/auth-helpers-nextjs'
 
 export function CheckoutButton() {
   const { cart } = useCart()
@@ -10,6 +11,17 @@ export function CheckoutButton() {
   const [isPending, startTransition] = useTransition()
 
   const handleCheckout = async () => {
+	  
+	const supabase = createBrowserClient()
+
+	const {
+	  data: { session },
+	  } = await supabase.auth.getSession()
+
+	  if (!session) {
+		console.error('❌ No Supabase session found on client — user not authenticated')
+		return
+	  }
     startTransition(async () => {
       const response = await fetch('/api/checkout', {
         method: 'POST',
