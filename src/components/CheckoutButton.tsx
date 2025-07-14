@@ -1,8 +1,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useCart } from '@/context/CartContext'
+import { useCart } from '@/context/CartContext' // adjust import as needed
 import { useTransition } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
+import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 
 export function CheckoutButton() {
   const { cart } = useCart()
@@ -10,42 +10,59 @@ export function CheckoutButton() {
   const [isPending, startTransition] = useTransition()
 
   const handleCheckout = async () => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    const supabase = createPagesBrowserClient()
     
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
+    // First check if we have a user
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    console.log('🔍 User check:', { user: user?.id, error: userError })
     
-    if (!session) {
-      console.error('❌ No Supabase session found on client — user not authenticated')
+    // Then check session
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    console.log('🔍 Session check:', { 
+      session: session?.access_token ? 'exists' : 'missing', 
+      error: sessionError,
+      user: session?.user?.id 
+    })
+    
+    if (!session || !user) {
+      console.error('❌ No valid session/user found')
+      // Try to redirect to login or show error
+      alert('Please log in to continue with checkout')
       return
     }
 
     startTransition(async () => {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
-        },
-        credentials: 'include',
-        body: JSON.stringify({ cart }),
-      })
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Pass the access token in the Authorization header
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          credentials: 'include',
+          body: JSON.stringify({ cart }),
+        })
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        console.error('❌ Checkout failed:', errorData)
-        return
-      }
+        console.log('📡 Response status:', response.status)
 
-      const data = await response.json()
-      if (data?.url) {
-        router.push(data.url)
-      } else {
-        console.error('Failed to get checkout URL:', data)
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('❌ Checkout failed:', errorData)
+          alert(`Checkout failed: ${errorData.error || 'Unknown error'}`)
+          return
+        }
+
+        const data = await response.json()
+        if (data?.url) {
+          router.push(data.url)
+        } else {
+          console.error('Failed to get checkout URL:', data)
+          alert('Failed to get checkout URL')
+        }
+      } catch (error) {
+        console.error('❌ Checkout request failed:', error)
+        alert('Network error during checkout')
       }
     })
   }
