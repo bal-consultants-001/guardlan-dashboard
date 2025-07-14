@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 import { useTransition } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
 
 export function CheckoutButton() {
   const { cart } = useCart()
@@ -10,37 +9,15 @@ export function CheckoutButton() {
   const [isPending, startTransition] = useTransition()
 
   const handleCheckout = async () => {
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
-    
-    // Check both user and session
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-    
-    console.log('🔍 Auth check:', { 
-      user: user?.id, 
-      session: session?.access_token ? 'exists' : 'missing',
-      userError,
-      sessionError 
-    })
-    
-    if (!user || !session) {
-      console.error('❌ Authentication required')
-      alert('Please log in to continue with checkout')
-      return
-    }
-
     startTransition(async () => {
       try {
+        // Don't handle auth on client - let server handle it entirely
         const response = await fetch('/api/checkout', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`,
           },
-          credentials: 'include',
+          credentials: 'include', // This ensures cookies are sent
           body: JSON.stringify({ cart }),
         })
 
@@ -49,7 +26,15 @@ export function CheckoutButton() {
         if (!response.ok) {
           const errorData = await response.json()
           console.error('❌ Checkout failed:', errorData)
-          alert(`Checkout failed: ${errorData.error || 'Unknown error'}`)
+          
+          // Handle specific auth errors
+          if (response.status === 401) {
+            alert('Please log in to continue with checkout')
+            // Optionally redirect to login page
+            // router.push('/login')
+          } else {
+            alert(`Checkout failed: ${errorData.error || 'Unknown error'}`)
+          }
           return
         }
 

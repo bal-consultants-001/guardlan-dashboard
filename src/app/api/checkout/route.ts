@@ -20,34 +20,14 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
-    // Initialize supabase client
+    // Use only server-side session management
     const supabase = createRouteHandlerClient({ cookies })
     
-    // Try to get the authorization header first
-    const authHeader = req.headers.get('authorization')
-    let user
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
     
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      // Use the token from the Authorization header
-      const token = authHeader.substring(7)
-      const { data: { user: tokenUser }, error: tokenError } = await supabase.auth.getUser(token)
-      
-      if (tokenError) {
-        console.error('🔴 Token auth error:', tokenError.message)
-      } else {
-        user = tokenUser
-      }
-    }
-    
-    // Fallback to cookie-based auth if token auth didn't work
-    if (!user) {
-      const { data: { user: cookieUser }, error: cookieError } = await supabase.auth.getUser()
-      
-      if (cookieError) {
-        console.error('🔴 Cookie auth error:', cookieError.message)
-      } else {
-        user = cookieUser
-      }
+    if (authError) {
+      console.error('🔴 Supabase auth error:', authError.message)
+      return NextResponse.json({ error: 'Authentication failed' }, { status: 401 })
     }
 
     if (!user) {
