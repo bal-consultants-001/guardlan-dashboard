@@ -14,7 +14,7 @@ type Ticket = {
   supp_user?: string
   users?: {
     firstname?: string
-  }[]
+  } | null // 👈 single object, not array
 }
 
 export default function TicketsPage() {
@@ -46,9 +46,7 @@ export default function TicketsPage() {
 			status,
 			short_desc,
 			supp_user,
-			users:users!supp_user (
-			  firstname
-			)
+			users:supp_user ( firstname )
 		  `)
 		  .eq('owner', userId)
 
@@ -99,8 +97,8 @@ export default function TicketsPage() {
                   <td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
                   <td className="border px-4 py-2">{ticket.status}</td>
                   <td className="border px-4 py-2">
-                    {ticket.users?.[0]?.firstname || 'Unassigned'}
-                  </td>
+				    {ticket.users?.firstname || 'Unassigned'}
+				  </td>
                   <td className="border px-4 py-2">
                     <button
                       className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
