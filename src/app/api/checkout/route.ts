@@ -49,6 +49,9 @@ export async function POST(req: NextRequest) {
       line_items,
       success_url: `${req.nextUrl.origin}/checkout-success?subscriptionAdded=${hasSubscription}`,
       cancel_url: `${req.nextUrl.origin}/shop`,
+	  metadata: {
+		supabaseUserId: userId, // 🧠 <-- this is key
+	  },
     })
 
     return NextResponse.json({ url: session.url })
