@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
 type CartItem = {
@@ -19,18 +19,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 export async function POST(req: NextRequest) {
-  const supabase = createRouteHandlerClient({ cookies })
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 })
-  }
-
-  const userId = user.id
-
   try {
+    const supabase = createServerComponentClient({ cookies })
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const userId = user.id
     const { cart }: { cart: CartItem[] } = await req.json()
 
     const oneTimeItems: CartItem[] = []
@@ -38,7 +37,6 @@ export async function POST(req: NextRequest) {
 
     for (const item of cart) {
       const price = await stripe.prices.retrieve(item.stripePriceId)
-
       if (price.recurring) {
         hasSubscription = true
       } else {
@@ -62,13 +60,13 @@ export async function POST(req: NextRequest) {
       success_url: `${req.nextUrl.origin}/checkout-success?subscriptionAdded=${hasSubscription}`,
       cancel_url: `${req.nextUrl.origin}/shop`,
       metadata: {
-        supabaseUserId: userId, // 👈 now works
+        supabaseUserId: userId,
       },
     })
 
     return NextResponse.json({ url: session.url })
   } catch (err) {
-    console.error('Stripe error:', err instanceof Error ? err.message : err)
+    console.error('Stripe error:', err)
     return NextResponse.json({ error: 'Stripe checkout failed' }, { status: 500 })
   }
 }
