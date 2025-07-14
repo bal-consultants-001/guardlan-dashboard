@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext' // adjust import as needed
 import { useTransition } from 'react'
-import { createBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 
 export function CheckoutButton() {
   const { cart } = useCart()
@@ -12,7 +12,7 @@ export function CheckoutButton() {
 
   const handleCheckout = async () => {
 	  
-	const supabase = createBrowserClient()
+	const supabase = createPagesBrowserClient()
 
 	const {
 	  data: { session },
