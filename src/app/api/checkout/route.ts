@@ -20,15 +20,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
+    // Initialize supabase client
+    const supabase = createRouteHandlerClient({ cookies })
+    
     // Try to get the authorization header first
     const authHeader = req.headers.get('authorization')
-    let supabase
     let user
     
     if (authHeader && authHeader.startsWith('Bearer ')) {
       // Use the token from the Authorization header
       const token = authHeader.substring(7)
-      supabase = createRouteHandlerClient({ cookies })
       const { data: { user: tokenUser }, error: tokenError } = await supabase.auth.getUser(token)
       
       if (tokenError) {
@@ -40,7 +41,6 @@ export async function POST(req: NextRequest) {
     
     // Fallback to cookie-based auth if token auth didn't work
     if (!user) {
-      supabase = createRouteHandlerClient({ cookies })
       const { data: { user: cookieUser }, error: cookieError } = await supabase.auth.getUser()
       
       if (cookieError) {
