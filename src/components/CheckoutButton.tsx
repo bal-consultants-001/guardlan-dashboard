@@ -1,8 +1,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useCart } from '@/context/CartContext' // adjust import as needed
+import { useCart } from '@/context/CartContext'
 import { useTransition } from 'react'
-import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@supabase/ssr'
 
 export function CheckoutButton() {
   const { cart } = useCart()
@@ -10,23 +10,24 @@ export function CheckoutButton() {
   const [isPending, startTransition] = useTransition()
 
   const handleCheckout = async () => {
-    const supabase = createPagesBrowserClient()
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
     
-    // First check if we have a user
+    // Check both user and session
     const { data: { user }, error: userError } = await supabase.auth.getUser()
-    console.log('🔍 User check:', { user: user?.id, error: userError })
-    
-    // Then check session
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-    console.log('🔍 Session check:', { 
-      session: session?.access_token ? 'exists' : 'missing', 
-      error: sessionError,
-      user: session?.user?.id 
+    
+    console.log('🔍 Auth check:', { 
+      user: user?.id, 
+      session: session?.access_token ? 'exists' : 'missing',
+      userError,
+      sessionError 
     })
     
-    if (!session || !user) {
-      console.error('❌ No valid session/user found')
-      // Try to redirect to login or show error
+    if (!user || !session) {
+      console.error('❌ Authentication required')
       alert('Please log in to continue with checkout')
       return
     }
@@ -37,7 +38,6 @@ export function CheckoutButton() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            // Pass the access token in the Authorization header
             'Authorization': `Bearer ${session.access_token}`,
           },
           credentials: 'include',
