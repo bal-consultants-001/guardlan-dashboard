@@ -11,10 +11,8 @@ type Ticket = {
   ticket_no: string
   status: string
   short_desc?: string
-  supp_user?: string
-  users?: {
-    firstname?: string
-  } | null // 👈 single object, not array
+  supp_user?: string // still store the UUID
+  engineerName?: string // this is what we’ll display
 }
 
 export default function TicketsPage() {
@@ -25,44 +23,55 @@ export default function TicketsPage() {
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
+	const fetchData = async () => {
+	  const {
+		data: { session },
+	  } = await supabase.auth.getSession()
 
-      if (!session?.user) {
-        router.push('/login')
-        return
-      }
+	  if (!session?.user) {
+		router.push('/login')
+		return
+	  }
 
-      const userId = session.user.id
-      setUser(session.user)
+	  const userId = session.user.id
+	  setUser(session.user)
 
-		const { data: ticketData } = await supabase
-		  .from('tickets')
-		  .select(`
-			id,
-			ticket_no,
-			status,
-			short_desc,
-			supp_user,
-			users:supp_user ( firstname )
-		  `)
-		  .eq('owner', userId)
+	  // 1. Fetch all engineers (users)
+	  const { data: usersData } = await supabase
+		.from('users')
+		.select('uuid, firstname')
 
-		setTickets(ticketData || [])
+	  const userMap = new Map<string, string>()
+	  usersData?.forEach((user) => {
+		userMap.set(user.uuid, user.firstname)
+	  })
 
+	  // 2. Fetch tickets
+	  const { data: ticketData } = await supabase
+		.from('tickets')
+		.select('id, ticket_no, status, short_desc, supp_user')
+		.eq('owner', userId)
 
-      const { data: userData } = await supabase
-        .from('owner')
-        .select('"Fullname"')
-        .eq('"ID"', userId)
-        .single()
+	  // 3. Map tickets to include engineer name
+	  const mappedTickets = (ticketData || []).map((ticket) => ({
+		...ticket,
+		engineerName: userMap.get(ticket.supp_user || '') || 'Unassigned',
+	  }))
 
-      if (userData) {
-        setFullName(userData["Fullname"])
-      }
-    }
+	  setTickets(mappedTickets)
+
+	  // 4. Fetch owner full name
+	  const { data: userData } = await supabase
+		.from('owner')
+		.select('"Fullname"')
+		.eq('"ID"', userId)
+		.single()
+
+	  if (userData) {
+		setFullName(userData["Fullname"])
+	  }
+	}
+
 
     fetchData()
   }, [router])
@@ -97,7 +106,7 @@ export default function TicketsPage() {
                   <td className="border px-4 py-2">{ticket.short_desc || 'N/A'}</td>
                   <td className="border px-4 py-2">{ticket.status}</td>
                   <td className="border px-4 py-2">
-				    {ticket.users?.firstname || 'Unassigned'}
+				    {ticket.engineerName}
 				  </td>
                   <td className="border px-4 py-2">
                     <button
