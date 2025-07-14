@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
 type CartItem = {
   id: number
@@ -17,13 +19,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 export async function POST(req: NextRequest) {
+  const supabase = createRouteHandlerClient({ cookies })
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return NextResponse.json({ error: 'User not authenticated' }, { status: 401 })
+  }
+
+  const userId = user.id
+
   try {
     const { cart }: { cart: CartItem[] } = await req.json()
 
     const oneTimeItems: CartItem[] = []
     let hasSubscription = false
 
-    // Validate price types directly from Stripe
     for (const item of cart) {
       const price = await stripe.prices.retrieve(item.stripePriceId)
 
@@ -49,9 +61,9 @@ export async function POST(req: NextRequest) {
       line_items,
       success_url: `${req.nextUrl.origin}/checkout-success?subscriptionAdded=${hasSubscription}`,
       cancel_url: `${req.nextUrl.origin}/shop`,
-	  metadata: {
-		supabaseUserId: userId, // 🧠 <-- this is key
-	  },
+      metadata: {
+        supabaseUserId: userId, // 👈 now works
+      },
     })
 
     return NextResponse.json({ url: session.url })
