@@ -23,14 +23,25 @@ export async function POST(req: NextRequest) {
     const supabase = createServerComponentClient({ cookies })
     const {
       data: { user },
+      error: authError,
     } = await supabase.auth.getUser()
 
+    if (authError) {
+      console.error('🔴 Supabase auth error:', authError.message)
+    }
+
     if (!user) {
+      console.warn('🟡 No user found in Supabase auth')
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const userId = user.id
-    const { cart }: { cart: CartItem[] } = await req.json()
+    console.log('✅ Authenticated user:', userId)
+
+    const body = await req.json()
+    console.log('🛒 Cart request body:', body)
+
+    const { cart }: { cart: CartItem[] } = body
 
     const oneTimeItems: CartItem[] = []
     let hasSubscription = false
@@ -64,9 +75,11 @@ export async function POST(req: NextRequest) {
       },
     })
 
+    console.log('✅ Stripe checkout session created:', session.id)
+
     return NextResponse.json({ url: session.url })
   } catch (err) {
-    console.error('Stripe error:', err)
+    console.error('❌ Stripe checkout error:', err)
     return NextResponse.json({ error: 'Stripe checkout failed' }, { status: 500 })
   }
 }
