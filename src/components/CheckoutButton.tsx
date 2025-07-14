@@ -1,8 +1,8 @@
 'use client'
-
 import { useRouter } from 'next/navigation'
-import { useCart } from '@/context/CartContext' // adjust import as needed
+import { useCart } from '@/context/CartContext'
 import { useTransition } from 'react'
+import { createBrowserClient } from '@supabase/ssr'
 
 export function CheckoutButton() {
   const { cart } = useCart()
@@ -10,17 +10,38 @@ export function CheckoutButton() {
   const [isPending, startTransition] = useTransition()
 
   const handleCheckout = async () => {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+    
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+    
+    if (!session) {
+      console.error('❌ No Supabase session found on client — user not authenticated')
+      return
+    }
+
     startTransition(async () => {
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
         },
+        credentials: 'include',
         body: JSON.stringify({ cart }),
       })
 
-      const data = await response.json()
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('❌ Checkout failed:', errorData)
+        return
+      }
 
+      const data = await response.json()
       if (data?.url) {
         router.push(data.url)
       } else {
