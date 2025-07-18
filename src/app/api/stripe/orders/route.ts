@@ -1,8 +1,8 @@
-// app/api/stripe/orders/route.ts (Next.js 13/14)
-// or pages/api/stripe/orders.ts (Next.js 12)
+// app/api/stripe/orders/route.ts
 
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { createClient } from '@/lib/supabase/server' // adjust if needed
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2025-05-28.basil',
@@ -17,13 +17,13 @@ export async function GET(req: Request) {
   }
 
   try {
-    // Get the latest 10 charges for the customer
+    // 1. Fetch latest Stripe charges
     const charges = await stripe.charges.list({
       customer,
       limit: 10,
     })
 
-    const orders = charges.data.map((charge) => ({
+    const stripeOrders = charges.data.map((charge) => ({
       id: charge.id,
       amount: (charge.amount / 100).toFixed(2),
       currency: charge.currency,
@@ -32,14 +32,64 @@ export async function GET(req: Request) {
       description: charge.description,
     }))
 
-    return NextResponse.json(orders)
-  } catch (err: unknown) {
-  console.error('Stripe fetch error:', err)
+    const stripeIds = stripeOrders.map((c) => c.id)
 
-  if (err instanceof Error) {
-    return NextResponse.json({ error: err.message }, { status: 500 })
+    // 2. Connect to Supabase
+    const supabase = createClient()
+
+    // 3. Fetch existing Supabase orders
+    const { data: existingOrders, error: supaError } = await supabase
+      .from('ord')
+      .select('stripe_ord')
+      .in('stripe_ord', stripeIds)
+
+    if (supaError) throw supaError
+
+    const existingStripeIds = new Set(existingOrders?.map((o) => o.stripe_ord))
+
+    // 4. Filter Stripe ord not yet in Supabase
+    const missingOrders = stripeOrders.filter(
+      (order) => !existingStripeIds.has(order.id)
+    )
+
+    // 5. Insert missing orders into Supabase
+    if (missingOrders.length > 0) {
+      const insertPayload = missingOrders.map((order) => ({
+        stripe_ord: order.id,
+        note: '', // optional
+        status: 1, // default status, e.g., 1 = "Pending"
+      }))
+
+      const { error: insertError } = await supabase
+        .from('ord')
+        .insert(insertPayload)
+
+      if (insertError) throw insertError
+    }
+
+    // 6. Fetch enriched orders (from the view)
+    const { data: enrichedOrders, error: viewError } = await supabase
+      .from('orders_with_status')
+      .select('*')
+      .in('stripe_ord', stripeIds)
+
+    if (viewError) throw viewError
+
+    // 7. Merge and return enriched data
+    const merged = stripeOrders.map((s) => {
+      const match = enrichedOrders?.find((e) => e.stripe_ord === s.id)
+      return {
+        items: s.description ?? 'Unknown',
+        amount: s.amount,
+        status: match?.status_label ?? 'Unknown',
+        date: s.created,
+        note: match?.note ?? '',
+      }
+    })
+
+    return NextResponse.json(merged)
+  } catch (err) {
+    console.error('Order fetch error:', err)
+    return NextResponse.json({ error: 'Failed to fetch or sync orders' }, { status: 500 })
   }
-
-  return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 })
-}
 }
