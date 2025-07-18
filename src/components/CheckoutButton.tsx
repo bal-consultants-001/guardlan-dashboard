@@ -2,42 +2,40 @@
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 import { useTransition } from 'react'
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase' // Make sure this is your client-side Supabase client
 
 export function CheckoutButton() {
   const { cart } = useCart()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const session = await supabase.auth.getSession(); // get access token
-  const accessToken = session.data?.session?.access_token;
 
   const handleCheckout = async () => {
     startTransition(async () => {
       try {
-        // Don't handle auth on client - let server handle it entirely
+        const {
+          data: { session },
+        } = await supabase.auth.getSession()
+
+        const userId = session?.user?.id
+
+        if (!userId) {
+          alert('You must be logged in to checkout.')
+          router.push('/login')
+          return
+        }
+
         const response = await fetch('/api/checkout', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include', // This ensures cookies are sent
-          body: JSON.stringify({ cart }),
+          body: JSON.stringify({ cart, userId }),
         })
-
-        console.log('📡 Response status:', response.status)
 
         if (!response.ok) {
           const errorData = await response.json()
-          console.error('❌ Checkout failed:', errorData)
-          
-          // Handle specific auth errors
-          if (response.status === 401) {
-            alert('Please log in to continue with checkout')
-            // Optionally redirect to login page
-            // router.push('/login')
-          } else {
-            alert(`Checkout failed: ${errorData.error || 'Unknown error'}`)
-          }
+          console.error('Checkout failed:', errorData)
+          alert(`Checkout failed: ${errorData.error || 'Unknown error'}`)
           return
         }
 
@@ -48,18 +46,8 @@ export function CheckoutButton() {
           console.error('Failed to get checkout URL:', data)
           alert('Failed to get checkout URL')
         }
-		
-		const response = await fetch('/api/checkout', {
-		  method: 'POST',
-		  headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${accessToken}`, // ⬅️ pass token manually
-		  },
-		body: JSON.stringify({ cart }),
-		});
-		
       } catch (error) {
-        console.error('❌ Checkout request failed:', error)
+        console.error('Checkout request failed:', error)
         alert('Network error during checkout')
       }
     })
@@ -76,4 +64,4 @@ export function CheckoutButton() {
   )
 }
 
-export default CheckoutButton;
+export default CheckoutButton

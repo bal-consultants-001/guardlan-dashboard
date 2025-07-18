@@ -1,8 +1,8 @@
+// app/api/checkout/route.ts
+
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js'
 
 type CartItem = {
   id: number
@@ -16,69 +16,35 @@ type CartItem = {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-05-28.basil',
+  apiVersion: '2024-08-01',
 })
 
-const supabase = createClient(
+// Admin Supabase client
+const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  {
-    global: {
-      headers: {
-        Authorization: req.headers.get('Authorization') ?? '',
-      },
-    },
-  }
-);
+  process.env.SUPABASE_SERVICE_ROLE_KEY! // Service role, only for backend
+)
 
 export async function POST(req: NextRequest) {
   try {
-    console.log('🔍 Starting checkout request...')
-    
-    // Log cookies for debugging
-    const cookieHeader = req.headers.get('cookie')
-    console.log('🍪 Cookies present:', cookieHeader ? 'Yes' : 'No')
-    
-    // Use only server-side session management
-    const supabase = createRouteHandlerClient({ cookies })
-    
-    console.log('🔍 Getting user from Supabase...')
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
-    
-    console.log('🔍 Auth result:', { 
-      user: user?.id, 
-      error: authError?.message,
-      hasUser: !!user 
-    })
-    
-    if (authError) {
-      console.error('🔴 Supabase auth error:', authError.message)
-      return NextResponse.json({ error: 'Authentication failed', details: authError.message }, { status: 401 })
+    const body = await req.json()
+    const { cart, userId }: { cart: CartItem[]; userId: string } = body
+
+    if (!userId) {
+      return NextResponse.json({ error: 'Missing user ID' }, { status: 400 })
     }
 
-    if (!user) {
-      console.warn('🟡 No user found in Supabase auth')
-      return NextResponse.json({ error: 'Unauthorized - no user found' }, { status: 401 })
-    }
-
-    const userId = user.id
-    console.log('✅ Authenticated user:', userId)
-
-    // Get user details from owners table for customer creation
-    const { data: ownerData, error: ownerError } = await supabase
+    // Get user details from 'owner' table
+    const { data: ownerData, error: ownerError } = await supabaseAdmin
       .from('owner')
       .select('Email, Fullname, stripe_customer_id')
       .eq('ID', userId)
       .single()
 
-    if (ownerError) {
-      console.error('❌ Failed to fetch owner data:', ownerError)
-      return NextResponse.json({ error: 'Failed to fetch user data' }, { status: 500 })
+    if (ownerError || !ownerData) {
+      console.error('Error fetching user from DB:', ownerError)
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
-
-    const body = await req.json()
-    console.log('🛒 Cart request body:', body)
-    const { cart }: { cart: CartItem[] } = body
 
     const oneTimeItems: CartItem[] = []
     let hasSubscription = false
@@ -101,11 +67,10 @@ export async function POST(req: NextRequest) {
       quantity: item.quantity,
     }))
 
-    // Create or retrieve Stripe customer
+    // Get or create Stripe customer
     let customerId = ownerData.stripe_customer_id
 
     if (!customerId) {
-      // Create new Stripe customer
       const customer = await stripe.customers.create({
         email: ownerData.Email,
         name: ownerData.Fullname,
@@ -113,17 +78,21 @@ export async function POST(req: NextRequest) {
           supabaseUserId: userId,
         },
       })
+
       customerId = customer.id
-      console.log('✅ Created new Stripe customer:', customerId)
-    } else {
-      console.log('✅ Using existing Stripe customer:', customerId)
+
+      // Save new Stripe customer ID to Supabase
+      await supabaseAdmin
+        .from('owner')
+        .update({ stripe_customer_id: customerId })
+        .eq('ID', userId)
     }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       line_items,
-      customer: customerId, // Use the customer ID
+      customer: customerId,
       success_url: `${req.nextUrl.origin}/checkout-success?subscriptionAdded=${hasSubscription}`,
       cancel_url: `${req.nextUrl.origin}/shop`,
       metadata: {
@@ -131,10 +100,9 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    console.log('✅ Stripe checkout session created:', session.id)
     return NextResponse.json({ url: session.url })
   } catch (err) {
-    console.error('❌ Stripe checkout error:', err)
+    console.error('Stripe checkout error:', err)
     return NextResponse.json({ error: 'Stripe checkout failed' }, { status: 500 })
   }
 }
