@@ -225,7 +225,7 @@ useEffect(() => {
                 <tr key={order.id}>
                   <td className="border px-4 py-2">{order.id}</td>
                   <td className="border px-4 py-2">
-                    {order.amount} {order.currency.toUpperCase()}
+                    {order.amount} {order.currency}
                   </td>
                   <td className="border px-4 py-2">{order.status}</td>
                   <td className="border px-4 py-2">{order.created}</td>
