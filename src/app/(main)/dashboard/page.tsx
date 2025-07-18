@@ -15,7 +15,7 @@ type Order = {
   currency: string
   status: string
   date: string
-  description?: string
+  note?: string
   items?: string
 }
 
