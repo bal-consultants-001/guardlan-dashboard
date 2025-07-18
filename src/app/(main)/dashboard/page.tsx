@@ -165,14 +165,18 @@ export default function DashboardPage() {
 	  // 4. Fetch owner full name
 	  const { data: userData } = await supabase
 		.from('owner')
-		.select('"Fullname"')
+		.select('"Fullname", stripe_customer_id')
 		.eq('"ID"', userId)
 		.single()
 
 	  if (userData) {
 		setFullName(userData["Fullname"])
+		const stripeCustomerId = userData.stripe_customer_id
+		if (stripeCustomerId) {
+		  const ordersResponse = await fetch(`/api/stripe/orders?customer=${stripeCustomerId}`)
+		  const stripeOrders = await ordersResponse.json()
+		  setOrders(stripeOrders || [])
 	  }
-	  
     };
 
     fetchData()
@@ -244,13 +248,30 @@ export default function DashboardPage() {
         {orders.length === 0 ? (
           <p>No orders found.</p>
         ) : (
-          <ul className="list-disc ml-5">
-            {orders.map((order) => (
-			  <li key={order.id}>
-				Order #{order.id} — {order.status}
-			  </li>
-			))}
-          </ul>
+			<table className="mt-4 w-full table-auto border-collapse border text-sm">
+			  <thead>
+				<tr>
+				  <th className="border px-4 py-2">Order ID</th>
+				  <th className="border px-4 py-2">Amount</th>
+				  <th className="border px-4 py-2">Status</th>
+				  <th className="border px-4 py-2">Date</th>
+				  <th className="border px-4 py-2">Description</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				{orders.map((order) => (
+				  <tr key={order.id}>
+					<td className="border px-4 py-2">{order.id}</td>
+					<td className="border px-4 py-2">
+					  {order.amount} {order.currency.toUpperCase()}
+					</td>
+					<td className="border px-4 py-2">{order.status}</td>
+					<td className="border px-4 py-2">{order.created}</td>
+					<td className="border px-4 py-2">{order.description || '—'}</td>
+				  </tr>
+				))}
+			  </tbody>
+			</table>
         )}
       </section>
 
