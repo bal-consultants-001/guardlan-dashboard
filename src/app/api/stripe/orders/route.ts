@@ -34,6 +34,7 @@ export async function GET(req: Request) {
 
     const stripeIds = stripeOrders.map((c) => c.id)
 
+
     // 3. Fetch existing Supabase orders
     const { data: existingOrders, error: supaError } = await supabase
       .from('ord')
@@ -46,13 +47,13 @@ export async function GET(req: Request) {
 
     // 4. Filter Stripe ord not yet in Supabase
     const missingOrders = stripeOrders.filter(
-      (ord) => !existingStripeIds.has(order.id)
+      (order) => !existingStripeIds.has(order.id)
     )
 
     // 5. Insert missing orders into Supabase
     if (missingOrders.length > 0) {
-      const insertPayload = missingOrders.map((ord) => ({
-        stripe_ord: ord.id,
+      const insertPayload = missingOrders.map((order) => ({
+        stripe_ord: order.id,
         note: '', // optional
         status: 1, // default status, e.g., 1 = "Pending"
       }))
