@@ -252,23 +252,25 @@ useEffect(() => {
                 <th className="border px-4 py-2">Model</th>
                 <th className="border px-4 py-2">Queries</th>
                 <th className="border px-4 py-2">Blocked</th>
+				<th className="border px-4 py-2">Configuration</th>
               </tr>
             </thead>
             <tbody>
               {devicesWithLogs.map((device) => (
                 <tr key={device.taID}>
-                  <td>
-                    <button
-                      className="px-4 py-2 text-center hover:underline"
-                      onClick={() => openModal(device)}
-                    >
-                      {device["Hostname"]}
-                    </button>
-                  </td>
+                  <td className="border px-4 py-2">{device["Hostname"]}</td>
                   <td className="border px-4 py-2">{device["OS"]}</td>
                   <td className="border px-4 py-2">{device["Model"]}</td>
                   <td className="border px-4 py-2">{device.latestLog?.["Q_Total"] ?? 'N/A'}</td>
                   <td className="border px-4 py-2">{device.latestLog?.["Q_Perc"] ?? 'N/A'}</td>
+				  <td className="border px-4 py-2">
+                    <button
+                      className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                      onClick={() => openModal(device)}
+                    >
+                      View
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -303,7 +305,7 @@ useEffect(() => {
                   <td className="border px-4 py-2">{ticket.engineerName}</td>
                   <td className="border px-4 py-2">
                     <button
-                      className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                      className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
                       onClick={() => setSelectedTicketId(ticket.id)}
                     >
                       View Notes
