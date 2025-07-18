@@ -2,7 +2,7 @@
 
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { createClient } from '@/lib/supabase/server' // adjust if needed
+import { supabase } from '@/lib/supabase';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2025-05-28.basil',
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
     const stripeIds = stripeOrders.map((c) => c.id)
 
     // 2. Connect to Supabase
-    const supabase = createClient()
+    const supabase = supabase()
 
     // 3. Fetch existing Supabase orders
     const { data: existingOrders, error: supaError } = await supabase
