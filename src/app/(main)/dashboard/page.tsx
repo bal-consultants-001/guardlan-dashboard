@@ -53,102 +53,100 @@ export default function DashboardPage() {
     clients: [],
   })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { supabase } = await import('@/lib/supabase')
+useEffect(() => {
+  const fetchData = async () => {
+    const { supabase } = await import('@/lib/supabase')
 
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
 
-      if (!session?.user) {
-        router.push('/login')
-        return
-      }
-
-      const userId = session.user.id
-      setUser(session.user)
-
-      const { data: orderData } = await supabase
-        .from('ord')
-        .select('*')
-        .eq('id', userId)
-
-      setOrders(orderData || [])
-
-      const { data: deviceData } = await supabase
-        .from('devices')
-        .select('*')
-        .eq('"Owner"', userId)
-        .eq('"OS"', 'linux')
-
-      const taIDs = deviceData?.map((d) => d.taID) || []
-
-      let logsData: LogEntry[] = []
-      if (taIDs.length > 0) {
-        const logsResponse = await supabase
-          .from('logs')
-          .select('*')
-          .in('"UniID"', taIDs)
-
-        logsData = logsResponse.data ?? []
-      }
-
-      const latestLogsByUniID = logsData.reduce((acc, log) => {
-        const existing = acc[log.UniID]
-        if (!existing || new Date(log.Date) > new Date(existing.Date)) {
-          acc[log.UniID] = log
-        }
-        return acc
-      }, {} as Record<string, LogEntry>)
-
-      const devicesWithLogs = deviceData?.map((device) => ({
-        ...device,
-        latestLog: latestLogsByUniID[device.taID] || null,
-      }))
-
-      setDevicesWithLogs(devicesWithLogs || [])
-
-      const { data: usersData } = await supabase
-        .from('users')
-        .select('uuid, firstname')
-
-      const userMap = new Map<string, string>()
-      usersData?.forEach((u) => {
-        userMap.set(u.uuid, u.firstname)
-      })
-
-      const { data: ticketData } = await supabase
-        .from('tickets')
-        .select('id, ticket_no, status, short_desc, supp_user')
-        .eq('owner', userId)
-
-      const mappedTickets = (ticketData || []).map((ticket) => ({
-        ...ticket,
-        engineerName: userMap.get(ticket.supp_user || '') || 'Unassigned',
-      }))
-
-      setTickets(mappedTickets)
-
-      const { data: userData } = await supabase
-        .from('owner')
-        .select('"Fullname", stripe_customer_id')
-        .eq('"ID"', userId)
-        .single()
-
-      if (userData) {
-        setFullName(userData["Fullname"])
-        const stripeCustomerId = userData.stripe_customer_id
-        if (stripeCustomerId) {
-          const ordersResponse = await fetch(`/api/stripe/orders?customer=${stripeCustomerId}`)
-          const stripeOrders = await ordersResponse.json()
-          setOrders(stripeOrders || [])
-        }
-      }
+    if (!session?.user) {
+      router.push('/login')
+      return
     }
 
-    fetchData()
-  }, [router])
+    const userId = session.user.id
+    setUser(session.user)
+
+    // Devices
+    const { data: deviceData } = await supabase
+      .from('devices')
+      .select('*')
+      .eq('"Owner"', userId)
+      .eq('"OS"', 'linux')
+
+    const taIDs = deviceData?.map((d) => d.taID) || []
+
+    let logsData: LogEntry[] = []
+    if (taIDs.length > 0) {
+      const logsResponse = await supabase
+        .from('logs')
+        .select('*')
+        .in('"UniID"', taIDs)
+
+      logsData = logsResponse.data ?? []
+    }
+
+    const latestLogsByUniID = logsData.reduce((acc, log) => {
+      const existing = acc[log.UniID]
+      if (!existing || new Date(log.Date) > new Date(existing.Date)) {
+        acc[log.UniID] = log
+      }
+      return acc
+    }, {} as Record<string, LogEntry>)
+
+    const devicesWithLogs = deviceData?.map((device) => ({
+      ...device,
+      latestLog: latestLogsByUniID[device.taID] || null,
+    }))
+
+    setDevicesWithLogs(devicesWithLogs || [])
+
+    // Users map for ticket engineer names
+    const { data: usersData } = await supabase
+      .from('users')
+      .select('uuid, firstname')
+
+    const userMap = new Map<string, string>()
+    usersData?.forEach((u) => {
+      userMap.set(u.uuid, u.firstname)
+    })
+
+    // Tickets
+    const { data: ticketData } = await supabase
+      .from('tickets')
+      .select('id, ticket_no, status, short_desc, supp_user')
+      .eq('owner', userId)
+
+    const mappedTickets = (ticketData || []).map((ticket) => ({
+      ...ticket,
+      engineerName: userMap.get(ticket.supp_user || '') || 'Unassigned',
+    }))
+
+    setTickets(mappedTickets)
+
+    // Owner (Fullname + Stripe Customer ID)
+    const { data: userData } = await supabase
+      .from('owner')
+      .select('"Fullname", stripe_customer_id')
+      .eq('"ID"', userId)
+      .single()
+
+    if (userData) {
+      setFullName(userData["Fullname"])
+      const stripeCustomerId = userData.stripe_customer_id
+      if (stripeCustomerId) {
+        const ordersResponse = await fetch(`/api/stripe/orders?customer=${stripeCustomerId}`)
+        const stripeOrders = await ordersResponse.json()
+        setOrders(stripeOrders || [])
+      }
+    }
+  }
+
+  fetchData()
+}, [router])
+
 
   const openModal = async (device: DeviceWithLog) => {
     const { supabase } = await import('@/lib/supabase')
