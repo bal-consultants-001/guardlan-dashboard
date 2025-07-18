@@ -32,6 +32,10 @@ export async function GET(req: Request) {
       description: charge.description ?? 'Unknown item',
     }))
 
+	charges.data.forEach((charge, i) => {
+      console.log(`\n🔎 Charge ${i + 1}:\n`, JSON.stringify(charge, null, 2))
+	})
+
     const stripeIds = stripeOrders.map((c) => c.id)
 
     // 2. Check for existing records in Supabase
