@@ -26,8 +26,11 @@ export async function GET(req: Request) {
 	  charges.data.map(async (charge) => {
 		let items = 'Unknown item'
 
-		// TypeScript fix: assert charge as any to allow accessing invoice
-		const invoiceId = (charge as any).invoice as string | undefined
+		// Type guard to check if charge.invoice is a string (invoice ID)
+		const invoiceId =
+		  typeof (charge as unknown as { invoice?: unknown }).invoice === 'string'
+			? (charge as unknown as { invoice: string }).invoice
+			: undefined
 
 		if (invoiceId) {
 		  try {
@@ -53,6 +56,7 @@ export async function GET(req: Request) {
 		}
 	  })
 	)
+
 
 
     const stripeIds = stripeOrders.map((c) => c.id)
