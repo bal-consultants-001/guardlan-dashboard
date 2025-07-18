@@ -26,24 +26,32 @@ export async function GET(req: Request) {
 	  charges.data.map(async (charge) => {
 		let items = 'Unknown item'
 
-		// Type guard to check if charge.invoice is a string (invoice ID)
-		const invoiceId =
-		  typeof (charge as unknown as { invoice?: unknown }).invoice === 'string'
-			? (charge as unknown as { invoice: string }).invoice
-			: undefined
+		try {
+		  // 1. Get the payment intent id from the charge
+		  const paymentIntentId = charge.payment_intent as string | undefined
 
-		if (invoiceId) {
-		  try {
-			const invoice = await stripe.invoices.retrieve(invoiceId)
+		  if (paymentIntentId) {
+			// 2. List all checkout sessions filtered by this payment_intent
+			const sessions = await stripe.checkout.sessions.list({
+			  payment_intent: paymentIntentId,
+			  limit: 1, // usually one session per payment intent
+			})
 
-			if (invoice.lines && invoice.lines.data.length > 0) {
-			  items = invoice.lines.data
-				.map((line) => line.description || 'Unnamed item')
-				.join(', ')
+			if (sessions.data.length > 0) {
+			  const session = sessions.data[0]
+
+			  // 3. Get the line items for this checkout session
+			  const lineItems = await stripe.checkout.sessions.listLineItems(session.id)
+
+			  if (lineItems.data.length > 0) {
+				items = lineItems.data
+				  .map((line) => line.description || line.price?.product || 'Unnamed item')
+				  .join(', ')
+			  }
 			}
-		  } catch (err) {
-			console.error(`Failed to retrieve invoice for charge ${charge.id}:`, err)
 		  }
+		} catch (error) {
+		  console.error(`Failed to fetch line items for charge ${charge.id}:`, error)
 		}
 
 		return {
@@ -56,6 +64,7 @@ export async function GET(req: Request) {
 		}
 	  })
 	)
+
 
 
 
