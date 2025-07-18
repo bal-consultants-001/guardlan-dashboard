@@ -21,20 +21,27 @@ export async function GET(req: Request) {
     const charges = await stripe.charges.list({
       customer,
       limit: 10,
+	  expand: ['data.invoice'],
     })
 
-    const stripeOrders = charges.data.map((charge) => ({
-      id: charge.id,
-      amount: (charge.amount / 100).toFixed(2),
-      currency: charge.currency,
-      status: charge.status,
-      created: new Date(charge.created * 1000).toLocaleDateString(),
-      description: charge.calculated_statement_descriptor ?? 'Unknown item',
-    }))
+	const stripeOrders = charges.data.map((charge) => {
+	  const invoice = charge.invoice as Stripe.Invoice | null;
 
-	/*charges.data.forEach((charge, i) => {
+	  const items = invoice?.lines?.data.map(line => line.description).join(', ');
+
+	  return {
+		id: charge.id,
+		amount: (charge.amount / 100).toFixed(2),
+		currency: charge.currency,
+		status: charge.status,
+		created: new Date(charge.created * 1000).toLocaleDateString(),
+		description: items || charge.description || 'Unknown item',
+	  };
+	});
+
+	charges.data.forEach((charge, i) => {
       console.log(`\n🔎 Charge ${i + 1}:\n`, JSON.stringify(charge, null, 2))
-	})*/
+	})
 
     const stripeIds = stripeOrders.map((c) => c.id)
 
