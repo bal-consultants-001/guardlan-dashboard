@@ -16,7 +16,7 @@ type CartItem = {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-08-01',
+  apiVersion: '2025-05-28.basil',
 })
 
 // Admin Supabase client
