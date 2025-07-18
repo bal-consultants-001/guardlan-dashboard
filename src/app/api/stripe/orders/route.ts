@@ -46,13 +46,13 @@ export async function GET(req: Request) {
 
     // 4. Filter Stripe ord not yet in Supabase
     const missingOrders = stripeOrders.filter(
-      (order) => !existingStripeIds.has(order.id)
+      (ord) => !existingStripeIds.has(order.id)
     )
 
     // 5. Insert missing orders into Supabase
     if (missingOrders.length > 0) {
-      const insertPayload = missingOrders.map((order) => ({
-        stripe_ord: order.id,
+      const insertPayload = missingOrders.map((ord) => ({
+        stripe_ord: ord.id,
         note: '', // optional
         status: 1, // default status, e.g., 1 = "Pending"
       }))
