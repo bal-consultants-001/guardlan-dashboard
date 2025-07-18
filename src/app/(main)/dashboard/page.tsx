@@ -211,7 +211,7 @@ useEffect(() => {
         {orders.length === 0 ? (
           <p>No orders found.</p>
         ) : (
-          <table className="mt-4 w-full table-auto border-collapse border text-sm">
+          <table className="table-auto w-full border-collapse border text-center text-white rounded-lg bg-blue-600">
             <thead>
               <tr>
                 <th className="border px-4 py-2">Items</th>
@@ -244,7 +244,7 @@ useEffect(() => {
         {devicesWithLogs.length === 0 ? (
           <p>No active devices.</p>
         ) : (
-          <table className="table-auto w-full border-collapse border text-center text-white rounded-lg bg-gradient-to-r from-red-500 via-purple-600 to-blue-600">
+          <table className="table-auto w-full border-collapse border text-center text-white rounded-lg bg-blue-600">
             <thead>
               <tr>
                 <th className="border px-4 py-2">Hostname</th>
@@ -284,7 +284,7 @@ useEffect(() => {
         {tickets.length === 0 ? (
           <p>No support tickets yet.</p>
         ) : (
-          <table className="table-auto w-full border-collapse border text-center text-white rounded-lg bg-red-600">
+          <table className="table-auto w-full border-collapse border text-center text-white rounded-lg bg-blue-600">
             <thead>
               <tr>
                 <th className="border px-4 py-2">Ticket No</th>
