@@ -213,23 +213,23 @@ useEffect(() => {
           <table className="mt-4 w-full table-auto border-collapse border text-sm">
             <thead>
               <tr>
-                <th className="border px-4 py-2">Order ID</th>
+                <th className="border px-4 py-2">Items</th>
                 <th className="border px-4 py-2">Amount</th>
                 <th className="border px-4 py-2">Status</th>
                 <th className="border px-4 py-2">Date</th>
-                <th className="border px-4 py-2">Description</th>
+                <th className="border px-4 py-2">Note</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
                 <tr key={order.id}>
-                  <td className="border px-4 py-2">{order.id}</td>
+                  <td className="border px-4 py-2">{order.items}</td>
                   <td className="border px-4 py-2">
-                    {order.amount} {order.currency}
+                    £{order.amount}
                   </td>
                   <td className="border px-4 py-2">{order.status}</td>
-                  <td className="border px-4 py-2">{order.created}</td>
-                  <td className="border px-4 py-2">{order.description || '—'}</td>
+                  <td className="border px-4 py-2">{order.date}</td>
+                  <td className="border px-4 py-2">{order.note || '—'}</td>
                 </tr>
               ))}
             </tbody>
