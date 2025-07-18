@@ -10,11 +10,13 @@ import TicketNotesModal from '@/components/TicketNotesModal'
 import { DeviceWithLog, DeviceList, DeviceGroup, DeviceClient } from '@/types'
 
 type Order = {
-  items?: string
+  id: string
   amount: number
+  currency: string
   status: string
   date: string
-  note?: string
+  description?: string
+  items?: string
 }
 
 type Ticket = {
