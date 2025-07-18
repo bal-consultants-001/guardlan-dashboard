@@ -18,22 +18,25 @@ export async function GET(req: Request) {
 
   try {
     // 1. Fetch latest Stripe charges
-    const charges = await stripe.charges.list({
-      customer,
-      limit: 10,
-	  expand: ['data.invoice'],
-    })
+	const charges = await stripe.charges.list({
+	  customer,
+	})
 
 	const stripeOrders = await Promise.all(
 	  charges.data.map(async (charge) => {
 		let items = 'Unknown item'
 
-		// Only try to fetch invoice if it exists
-		if (charge.invoice && typeof charge.invoice === 'string') {
+		// TypeScript fix: assert charge as any to allow accessing invoice
+		const invoiceId = (charge as any).invoice as string | undefined
+
+		if (invoiceId) {
 		  try {
-			const invoice = await stripe.invoices.retrieve(charge.invoice as string)
+			const invoice = await stripe.invoices.retrieve(invoiceId)
+
 			if (invoice.lines && invoice.lines.data.length > 0) {
-			  items = invoice.lines.data.map((line) => line.description).join(', ')
+			  items = invoice.lines.data
+				.map((line) => line.description || 'Unnamed item')
+				.join(', ')
 			}
 		  } catch (err) {
 			console.error(`Failed to retrieve invoice for charge ${charge.id}:`, err)
@@ -50,6 +53,7 @@ export async function GET(req: Request) {
 		}
 	  })
 	)
+
 
     const stripeIds = stripeOrders.map((c) => c.id)
 
