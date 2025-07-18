@@ -2,11 +2,23 @@
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 import { useTransition } from 'react'
+import { supabase } from '@/lib/supabase';
 
 export function CheckoutButton() {
   const { cart } = useCart()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const session = await supabase.auth.getSession(); // get access token
+  const accessToken = session.data?.session?.access_token;
+
+	const response = await fetch('/api/checkout', {
+	  method: 'POST',
+	  headers: {
+		'Content-Type': 'application/json',
+		Authorization: `Bearer ${accessToken}`, // ⬅️ pass token manually
+	  },
+	  body: JSON.stringify({ cart }),
+	});
 
   const handleCheckout = async () => {
     startTransition(async () => {
