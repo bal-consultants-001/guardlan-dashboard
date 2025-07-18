@@ -34,9 +34,6 @@ export async function GET(req: Request) {
 
     const stripeIds = stripeOrders.map((c) => c.id)
 
-    // 2. Connect to Supabase
-    const supabase = supabase()
-
     // 3. Fetch existing Supabase orders
     const { data: existingOrders, error: supaError } = await supabase
       .from('ord')
