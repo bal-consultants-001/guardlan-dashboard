@@ -179,8 +179,8 @@ export default function DashboardPage() {
 	  }
     };
 
-    fetchData()
-  }, [router])
+    fetchData();
+  }, [router]);
   
 	const openModal = async (device: DeviceWithLog) => {
 	  const { supabase } = await import('@/lib/supabase');
