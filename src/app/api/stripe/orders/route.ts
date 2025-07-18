@@ -2,7 +2,7 @@
 
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2025-05-28.basil',
@@ -29,13 +29,12 @@ export async function GET(req: Request) {
       currency: charge.currency,
       status: charge.status,
       created: new Date(charge.created * 1000).toLocaleDateString(),
-      description: charge.description,
+      description: charge.description ?? 'Unknown item',
     }))
 
     const stripeIds = stripeOrders.map((c) => c.id)
 
-
-    // 3. Fetch existing Supabase orders
+    // 2. Check for existing records in Supabase
     const { data: existingOrders, error: supaError } = await supabase
       .from('ord')
       .select('stripe_ord')
@@ -45,17 +44,16 @@ export async function GET(req: Request) {
 
     const existingStripeIds = new Set(existingOrders?.map((o) => o.stripe_ord))
 
-    // 4. Filter Stripe ord not yet in Supabase
+    // 3. Insert missing orders into Supabase
     const missingOrders = stripeOrders.filter(
       (order) => !existingStripeIds.has(order.id)
     )
 
-    // 5. Insert missing orders into Supabase
     if (missingOrders.length > 0) {
       const insertPayload = missingOrders.map((order) => ({
         stripe_ord: order.id,
-        note: '', // optional
-        status: 1, // default status, e.g., 1 = "Pending"
+        note: '',
+        status: 1, // default to Pending
       }))
 
       const { error: insertError } = await supabase
@@ -65,7 +63,7 @@ export async function GET(req: Request) {
       if (insertError) throw insertError
     }
 
-    // 6. Fetch enriched orders (from the view)
+    // 4. Fetch enriched order data from view
     const { data: enrichedOrders, error: viewError } = await supabase
       .from('orders_with_status')
       .select('*')
@@ -73,11 +71,11 @@ export async function GET(req: Request) {
 
     if (viewError) throw viewError
 
-    // 7. Merge and return enriched data
+    // 5. Merge Stripe & Supabase data
     const merged = stripeOrders.map((s) => {
       const match = enrichedOrders?.find((e) => e.stripe_ord === s.id)
       return {
-        items: s.description ?? 'Unknown',
+        items: s.description,
         amount: s.amount,
         status: match?.status_label ?? 'Unknown',
         date: s.created,
