@@ -24,24 +24,32 @@ export async function GET(req: Request) {
 	  expand: ['data.invoice'],
     })
 
-	const stripeOrders = charges.data.map((charge) => {
-	  const invoice = charge.invoice as Stripe.Invoice | null;
+	const stripeOrders = await Promise.all(
+	  charges.data.map(async (charge) => {
+		let items = 'Unknown item'
 
-	  const items = invoice?.lines?.data.map(line => line.description).join(', ');
+		// Only try to fetch invoice if it exists
+		if (charge.invoice && typeof charge.invoice === 'string') {
+		  try {
+			const invoice = await stripe.invoices.retrieve(charge.invoice as string)
+			if (invoice.lines && invoice.lines.data.length > 0) {
+			  items = invoice.lines.data.map((line) => line.description).join(', ')
+			}
+		  } catch (err) {
+			console.error(`Failed to retrieve invoice for charge ${charge.id}:`, err)
+		  }
+		}
 
-	  return {
-		id: charge.id,
-		amount: (charge.amount / 100).toFixed(2),
-		currency: charge.currency,
-		status: charge.status,
-		created: new Date(charge.created * 1000).toLocaleDateString(),
-		description: items || charge.description || 'Unknown item',
-	  };
-	});
-
-	charges.data.forEach((charge, i) => {
-      console.log(`\n🔎 Charge ${i + 1}:\n`, JSON.stringify(charge, null, 2))
-	})
+		return {
+		  id: charge.id,
+		  amount: (charge.amount / 100).toFixed(2),
+		  currency: charge.currency,
+		  status: charge.status,
+		  created: new Date(charge.created * 1000).toLocaleDateString(),
+		  description: items,
+		}
+	  })
+	)
 
     const stripeIds = stripeOrders.map((c) => c.id)
 
