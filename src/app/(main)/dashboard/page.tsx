@@ -70,7 +70,7 @@ export default function DashboardPage() {
       setUser(session.user)
 
       const { data: orderData } = await supabase
-        .from('orders')
+        .from('ord')
         .select('*')
         .eq('id', userId)
 
