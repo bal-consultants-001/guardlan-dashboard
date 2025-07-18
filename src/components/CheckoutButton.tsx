@@ -11,15 +11,6 @@ export function CheckoutButton() {
   const session = await supabase.auth.getSession(); // get access token
   const accessToken = session.data?.session?.access_token;
 
-	const response = await fetch('/api/checkout', {
-	  method: 'POST',
-	  headers: {
-		'Content-Type': 'application/json',
-		Authorization: `Bearer ${accessToken}`, // ⬅️ pass token manually
-	  },
-	  body: JSON.stringify({ cart }),
-	});
-
   const handleCheckout = async () => {
     startTransition(async () => {
       try {
@@ -57,6 +48,16 @@ export function CheckoutButton() {
           console.error('Failed to get checkout URL:', data)
           alert('Failed to get checkout URL')
         }
+		
+		const response = await fetch('/api/checkout', {
+		  method: 'POST',
+		  headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${accessToken}`, // ⬅️ pass token manually
+		  },
+		body: JSON.stringify({ cart }),
+		});
+		
       } catch (error) {
         console.error('❌ Checkout request failed:', error)
         alert('Network error during checkout')
