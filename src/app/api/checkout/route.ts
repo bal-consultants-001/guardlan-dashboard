@@ -22,7 +22,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 // Admin Supabase client
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // Service role, only for backend
+  process.env.NEXT_PUBLIC_SUPABASE_KEY!
 )
 
 export async function POST(req: NextRequest) {
