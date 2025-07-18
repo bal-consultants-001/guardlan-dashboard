@@ -33,8 +33,13 @@ export async function GET(req: Request) {
     }))
 
     return NextResponse.json(orders)
-  } catch (err: any) {
-    console.error('Stripe fetch error:', err)
-    return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 })
+  } catch (err: unknown) {
+  console.error('Stripe fetch error:', err)
+
+  if (err instanceof Error) {
+    return NextResponse.json({ error: err.message }, { status: 500 })
   }
+
+  return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 })
+}
 }
