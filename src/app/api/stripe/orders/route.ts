@@ -29,12 +29,12 @@ export async function GET(req: Request) {
       currency: charge.currency,
       status: charge.status,
       created: new Date(charge.created * 1000).toLocaleDateString(),
-      description: charge.description ?? 'Unknown item',
+      description: charge.calculated_statement_descriptor ?? 'Unknown item',
     }))
 
-	charges.data.forEach((charge, i) => {
+	/*charges.data.forEach((charge, i) => {
       console.log(`\n🔎 Charge ${i + 1}:\n`, JSON.stringify(charge, null, 2))
-	})
+	})*/
 
     const stripeIds = stripeOrders.map((c) => c.id)
 
