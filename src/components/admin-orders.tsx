@@ -56,7 +56,7 @@ export default function OrdersTable() {
           <tr key={order.id}>
             <td className="border px-4 py-2">{order.id}</td>
             <td className="border px-4 py-2">{order.user_email}</td>
-            <td className="border px-4 py-2">£{order.amount.toFixed(2)}</td>
+            <td className="border px-4 py-2">£{order.amount}</td>
             <td className="border px-4 py-2">{order.status || 'Unknown'}</td>
             <td className="border px-4 py-2">
               {new Date(order.created_at).toLocaleDateString()}
