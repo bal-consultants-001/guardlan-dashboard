@@ -30,7 +30,7 @@ function OrdersTable() {
   return (
     <table className="table-auto w-full text-sm border-collapse border mt-4">
       <thead>
-        <tr className="bg-gray-100">
+        <tr className="bg-gray-100 text-black">
           <th className="border px-2 py-1">Charge ID</th>
           <th className="border px-2 py-1">Email</th>
           <th className="border px-2 py-1">Amount</th>
