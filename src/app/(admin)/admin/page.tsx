@@ -37,8 +37,10 @@ export default function AdminPage() {
 
   return (
     <main className="p-6">
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-      {/* Display ticket management etc. here */}
+      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+
+      <OrdersTable />
     </main>
   )
+
 }
