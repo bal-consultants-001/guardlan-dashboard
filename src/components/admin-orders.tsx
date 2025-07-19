@@ -1,36 +1,24 @@
-'use client'
-
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
 
-type OrderWithStatus = {
+interface AdminOrder {
   id: string
-  amount: number
+  email: string | null
+  amount: string
   currency: string
-  created_at: string
-  status: string
-  description: string
-  user_email: string
+  created: string
+  items: string
+  supabaseStatus: string
 }
 
-export default function OrdersTable() {
-  const [orders, setOrders] = useState<OrderWithStatus[]>([])
+function OrdersTable() {
+  const [orders, setOrders] = useState<AdminOrder[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchOrders = async () => {
-      setLoading(true)
-
-      const { data, error } = await supabase
-        .from('orders_with_status') // ✅ query the view
-        .select('*')
-
-      if (error) {
-        console.error('Error fetching orders:', error)
-      } else {
-        setOrders(data || [])
-      }
-
+      const res = await fetch('/api/admin/orders')
+      const data = await res.json()
+      setOrders(data.orders)
       setLoading(false)
     }
 
@@ -40,31 +28,33 @@ export default function OrdersTable() {
   if (loading) return <p>Loading orders...</p>
 
   return (
-    <table className="w-full table-auto border-collapse border text-sm mt-4">
+    <table className="table-auto w-full text-sm border-collapse border mt-4">
       <thead>
-        <tr>
-          <th className="border px-4 py-2">Order ID</th>
-          <th className="border px-4 py-2">User</th>
-          <th className="border px-4 py-2">Amount</th>
-          <th className="border px-4 py-2">Status</th>
-          <th className="border px-4 py-2">Date</th>
-          <th className="border px-4 py-2">Description</th>
+        <tr className="bg-gray-100">
+          <th className="border px-2 py-1">Charge ID</th>
+          <th className="border px-2 py-1">Email</th>
+          <th className="border px-2 py-1">Amount</th>
+          <th className="border px-2 py-1">Created</th>
+          <th className="border px-2 py-1">Items</th>
+          <th className="border px-2 py-1">Status</th>
         </tr>
       </thead>
       <tbody>
-        {orders.map((order) => (
+        {orders.map(order => (
           <tr key={order.id}>
-            <td className="border px-4 py-2">{order.id}</td>
-            <td className="border px-4 py-2">{order.user_email}</td>
-            <td className="border px-4 py-2">£{order.amount}</td>
-            <td className="border px-4 py-2">{order.status || 'Unknown'}</td>
-            <td className="border px-4 py-2">
-              {new Date(order.created_at).toLocaleDateString()}
+            <td className="border px-2 py-1">{order.id}</td>
+            <td className="border px-2 py-1">{order.email}</td>
+            <td className="border px-2 py-1">
+              {order.amount} {order.currency.toUpperCase()}
             </td>
-            <td className="border px-4 py-2">{order.description || '—'}</td>
+            <td className="border px-2 py-1">{order.created}</td>
+            <td className="border px-2 py-1">{order.items}</td>
+            <td className="border px-2 py-1">{order.supabaseStatus}</td>
           </tr>
         ))}
       </tbody>
     </table>
   )
 }
+
+export default OrdersTable

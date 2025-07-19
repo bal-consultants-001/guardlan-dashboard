@@ -33,9 +33,9 @@ export async function GET() {
 
         // 3. Look up extra order info in Supabase (match by Stripe charge ID or email)
         const { data: supaOrder } = await supabase
-          .from('ord')
-          .select('status')
-          .eq('stripe_charge_id', charge.id)
+          .from('orders_with_status')
+          .select('*')
+          .eq('stripe_ord', charge.id)
           .single()
 
         return {
@@ -43,10 +43,9 @@ export async function GET() {
           email: charge.billing_details.email,
           amount: (charge.amount / 100).toFixed(2),
           currency: charge.currency,
-          status: charge.status,
           created: new Date(charge.created * 1000).toLocaleString(),
           items,
-          supabaseStatus: supaOrder?.status ?? 'unknown',
+          supabaseStatus: supaOrder?.status_label ?? 'unknown',
         }
       })
     )
