@@ -113,7 +113,7 @@ export default function ShopPage() {
 
 	const handleAddToCartAndCheckout = () => {
 	  const productPriceId = process.env.NEXT_PUBLIC_STRIPE_PRODUCT_PRICE_ID
-	  const subscriptionPriceId = process.env.NEXT_PUBLIC_STRIPE_SUBSCRIPTION_PRICE_ID
+	  const subscriptionPriceId = process.env.STRIPE_SUBSCRIPTION_PRICE_ID
 
 	  if (!productPriceId) {
 		console.error('Missing env: NEXT_PUBLIC_STRIPE_PRODUCT_PRICE_ID')
@@ -131,7 +131,7 @@ export default function ShopPage() {
 
 	  if (subscriptionSelected) {
 		if (!subscriptionPriceId) {
-		  console.error('Missing env: NEXT_PUBLIC_STRIPE_SUBSCRIPTION_PRICE_ID')
+		  console.error('Missing env: STRIPE_SUBSCRIPTION_PRICE_ID')
 		  return
 		}
 
