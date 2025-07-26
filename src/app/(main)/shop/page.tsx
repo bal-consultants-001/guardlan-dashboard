@@ -112,28 +112,42 @@ export default function ShopPage() {
 	const { addToCart } = useCart()
 
 	const handleAddToCartAndCheckout = () => {
+	  const productPriceId = process.env.NEXT_PUBLIC_STRIPE_PRODUCT_PRICE_ID
+	  const subscriptionPriceId = process.env.NEXT_PUBLIC_STRIPE_SUBSCRIPTION_PRICE_ID
+
+	  if (!productPriceId) {
+		console.error('Missing env: NEXT_PUBLIC_STRIPE_PRODUCT_PRICE_ID')
+		return
+	  }
+
 	  addToCart({
 		id: 1,
 		name: 'Home Network AdBlocker',
 		price: '£75',
 		priceAmount: 75,
 		description: 'Block Ads and filter content for every device on your network.',
-		stripePriceId: 'price_1Rj37DKNjLZvW6YxEyFBwtOn',
+		stripePriceId: productPriceId,
 	  })
 
 	  if (subscriptionSelected) {
+		if (!subscriptionPriceId) {
+		  console.error('Missing env: NEXT_PUBLIC_STRIPE_SUBSCRIPTION_PRICE_ID')
+		  return
+		}
+
 		addToCart({
 		  id: 2,
 		  name: 'Monthly Subscription',
 		  price: '£6/month',
 		  priceAmount: 6,
 		  description: 'Support + updates for the AdBlocker.',
-		  stripePriceId: 'price_1Rj37VKNjLZvW6YxVWtfegpw',
+		  stripePriceId: subscriptionPriceId,
 		})
 	  }
 
-	  router.push('?checkout=true') // Or change to '/cart' if you have a cart page
+	  router.push('?checkout=true')
 	}
+
 
 
   return (
