@@ -169,7 +169,7 @@ export default function ShopPage() {
       <section className="p-6 bg-gray-50 text-center">
         <h2 className="text-xl font-semibold mb-2">Is our service available in your area?</h2>
 		<p className="text-lg mb-4">
-		  Before purchase one of our devices, please use the Postcode checker to confirm we are operating in your area.
+		  Before purchasing one of our devices, please use the Postcode checker to confirm we are operating in your area.
 		</p>
         <div className="flex justify-center gap-2 flex-wrap mb-3">
           <input
