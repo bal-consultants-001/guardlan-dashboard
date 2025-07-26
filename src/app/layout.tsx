@@ -23,7 +23,7 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "GuardLAN Store",
+  title: "Guardian Dashboard",
   description: "Network security hardware and support.",
 };
 
