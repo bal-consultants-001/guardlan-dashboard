@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import type { User } from '@supabase/supabase-js'
+import Head from 'next/head'
 
 import DeviceDetailsModal from '@/components/DeviceDetailsModal'
 import TicketNotesModal from '@/components/TicketNotesModal'
@@ -203,6 +204,13 @@ useEffect(() => {
 
   return (
     <>
+	
+	<Head>
+	  <title>Home Network AdBlocker | Block Ads on All Devices</title>
+	  <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+	  <link rel="canonical" href="https://www.bal-it.com/dashboard" />
+	</Head>
+	
       <h1 className="py-10 px-10 text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
 
       {/* Orders Section */}

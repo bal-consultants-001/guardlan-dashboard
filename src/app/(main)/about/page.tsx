@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from 'next/head'
 
 const roadmapData = [
   {
@@ -57,6 +58,12 @@ export default function HomePage() {
 
   return (
     <>
+
+	<Head>
+	  <title>Home Network AdBlocker | Block Ads on All Devices</title>
+	  <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+	  <link rel="canonical" href="https://www.bal-it.com/about" />
+	</Head>
 
       {/* Hero Section */}
       <section className="relative w-full h-[400px] bg-white min-h-[400]">

@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Head from 'next/head'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -50,6 +51,12 @@ export default function Contact() {
 
   return (
     <>
+	
+	<Head>
+	  <title>Home Network AdBlocker | Block Ads on All Devices</title>
+	  <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+	  <link rel="canonical" href="https://www.bal-it.com/contact" />
+	</Head>
 	
       {/* Hero */}
       <section className="relative w-full h-[400px] bg-white min-h-[400]">

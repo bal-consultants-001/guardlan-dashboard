@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Head from 'next/head'
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -39,7 +40,13 @@ export default function RegisterPage() {
   };
 
   return (
+  
     <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+		<Head>
+		  <title>Home Network AdBlocker | Block Ads on All Devices</title>
+		  <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+		  <link rel="canonical" href="https://www.bal-it.com/register" />
+		</Head>
       <section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
 

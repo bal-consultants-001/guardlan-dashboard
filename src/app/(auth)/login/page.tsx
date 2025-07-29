@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import Head from 'next/head'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -67,7 +68,14 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+	
+	<main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+
+	<Head>
+	  <title>Home Network AdBlocker | Block Ads on All Devices</title>
+	  <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+	  <link rel="canonical" href="https://www.bal-it.com/login" />
+	</Head>
 
 	  <section className="bg-white text-black rounded-2xl shadow-lg p-8 w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>

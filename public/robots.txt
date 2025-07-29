@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.bal-it.com
+
+# Sitemaps
+Sitemap: https://www.bal-it.com/sitemap.xml

@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { usePostcode } from '@/context/PostcodeContext'
 import { useCart } from '@/context/CartContext'
+import Head from 'next/head'
 
 const BUSINESS_COORDS = { lat: 51.501009, lon: -3.46716 }
 
@@ -152,6 +153,13 @@ export default function ShopPage() {
 
   return (
     <>
+	  
+	  <Head>
+	    <title>Home Network AdBlocker | Block Ads on All Devices</title>
+	    <meta name="description" content="Protect your entire home network from ads and trackers with our Physical AdBlocker." />
+	    <link rel="canonical" href="https://www.bal-it.com/shop" />
+	  </Head>
+	  
       {/* Intro */}
       <section className="py-8 px-4 text-center bg-white">
         <h1 className="text-4xl font-bold mb-4">Shop Products</h1>

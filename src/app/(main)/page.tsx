@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from 'next/head'
 import { ShieldCheck, LayoutDashboard, Ban } from 'lucide-react';
 
 
@@ -16,6 +17,12 @@ export default function HomePage() {
 
   return (
     <>
+	
+	<Head>
+	  <title>Home Network AdBlocker | Block Ads on All Devices</title>
+	  <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+	  <link rel="canonical" href="https://www.bal-it.com" />
+	</Head>
 
       {/* Hero */}
 		<section className="relative bg-black text-white min-h-[400px] md:h-[400px] py-12 flex items-center justify-center">

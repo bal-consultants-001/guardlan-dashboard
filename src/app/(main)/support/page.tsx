@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase';
 import TicketNotesModal from '@/components/TicketNotesModal'
+import Head from 'next/head'
 
 type Ticket = {
   id: string
@@ -80,6 +81,13 @@ export default function TicketsPage() {
 
   return (
     <>
+	
+	  <Head>
+	    <title>Home Network AdBlocker | Block Ads on All Devices</title>
+	    <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+	    <link rel="canonical" href="https://www.bal-it.com/support" />
+	  </Head>
+	
       <section className="py-10 px-10 w-full">
         <h1 className="text-3xl font-bold mb-6">Welcome, {fullName || user.email}</h1>
       </section>
