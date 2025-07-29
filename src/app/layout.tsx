@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { PostcodeProvider } from "@/context/PostcodeContext";
 import 'leaflet/dist/leaflet.css';
+import { Analytics } from '@vercel/analytics/next';
 
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default function RootLayout({
             {children}
           </PostcodeProvider>
         </CartProvider>
+		<Analytics />
       </body>
     </html>
   );
