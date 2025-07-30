@@ -207,7 +207,7 @@ useEffect(() => {
 	
 	<Head>
 	  <title>Home Network AdBlocker | Block Ads on All Devices</title>
-	  <meta name="description" content="Protect your entire home network from ads and trackers with our plug-and-play AdBlocker." />
+	  <meta name="description" content="Protect your entire home network from Ads, trackers, Adult websites, Social media, Gambling, Drugs & Alcohol and Chatrooms Violence with our easy install AdBlocker." />
 	  <link rel="canonical" href="https://www.bal-it.com/dashboard" />
 	</Head>
 	
