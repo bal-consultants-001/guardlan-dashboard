@@ -184,12 +184,12 @@ export default function HomePage() {
 			
 			{/*Divider*/}
 		  	<div className="flex justify-center">
-			  <span className="w-8/9 mx-auto h-px bg-white block" />
+			  <span className="w-8/9 mx-auto h-px py-4 bg-white block" />
 			</div>
 			
-			<div className="text-xl text-white text-center mb-6">
-				<h2 className="text-3xl font-bold text-white text-center mb-12">You are in control</h2>
-				<p>
+			<div className="text-xl text-white text-center object-center mb-6">
+				<h2 className="text-3xl font-bold text-white text-center mb-12 py-3">You are in control</h2>
+				<p className="text-3xl font-bold text-white text-center mb-12 py-3">
 					A lot of blocking and filtering services are limited to a few devices or just apply the same settings across all your devices.
 					Our solution gives you control over what devices can access through our web dashboard.
 				</p>
@@ -199,7 +199,7 @@ export default function HomePage() {
 				  alt="Choose what to block: Adverts, Adult Sites, Gambling, Drugs & Alcohol, Social Media, Chatrooms"
 				  width={900}
 				  height={800}
-				  className="object-cover object-center w-full h-full"
+				  className="object-cover rounded-xl object-center w-full h-full"
 				  sizes="(max-width: 368px) 100vw, 50vw"
 				/>
 			  </div>
