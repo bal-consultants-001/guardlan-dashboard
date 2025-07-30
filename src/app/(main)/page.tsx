@@ -193,7 +193,7 @@ export default function HomePage() {
 					A lot of blocking and filtering services are limited to a few devices or just apply the same settings across all your devices.
 					Our solution gives you control over what devices can access through our web dashboard.
 				</p>
-				<div className="aspect-[16/13] w-full min-w-8/9 overflow-hidden rounded-xl py-4 shadow-md hover:shadow-lg transition items-center">
+				<div className="aspect-[16/13] w-8/9 overflow-hidden rounded-xl py-4 shadow-md hover:shadow-lg transition items-center">
 			  	<Image
 				  src="/images/Dashboard.png"
 				  alt="Choose what to block: Adverts, Adult Sites, Gambling, Drugs & Alcohol, Social Media, Chatrooms"
