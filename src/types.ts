@@ -38,7 +38,14 @@ export type LogEntry = {
   Q_Total?: string
   Q_Perc?: string
 };
-export type DeviceWithLog = Device & {
+export type DeviceWithLog = {
   taID: string
-  latestLog?: LogEntry | null
+  "Hostname": string
+  "Owner": string
+  "OS": string
+  "Model": string
+  latestLog?: {
+    Q_Total?: string
+    Q_Perc?: string
+  } | null
 };
