@@ -178,12 +178,12 @@ export default function AdminPage() {
             <tbody>
               {devicesWithLogs.map((device) => (
                 <tr key={device.taID}>
-                  <td className="border px-4 py-2">{device.Hostname}</td>
-                  <td className="border px-4 py-2">{device.Owner}</td>
-                  <td className="border px-4 py-2">{device.OS}</td>
-                  <td className="border px-4 py-2">{device.Model}</td>
-                  <td className="border px-4 py-2">{device.latestLog?.Q_Total || 'N/A'}</td>
-                  <td className="border px-4 py-2">{device.latestLog?.Q_Perc || 'N/A'}</td>
+                  <td className="border px-4 py-2">{device["Hostname"]}</td>
+                  <td className="border px-4 py-2">{device["Owner"]}</td>
+                  <td className="border px-4 py-2">{device["OS"]}</td>
+                  <td className="border px-4 py-2">{device["Model"]}</td>
+                  <td className="border px-4 py-2">{device.latestLog?.["Q_Total"] || 'N/A'}</td>
+                  <td className="border px-4 py-2">{device.latestLog?.["Q_Perc"] || 'N/A'}</td>
                   <td className="border px-4 py-2">
                     <button
                       className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
