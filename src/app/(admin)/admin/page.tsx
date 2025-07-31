@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import OrdersTable from '@/components/admin-orders'
+import AdminTicketsTable from '@/components/admin-tickets'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -39,8 +40,8 @@ export default function AdminPage() {
   return (
     <main className="p-6">
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
-
       <OrdersTable />
+	  <AdminTicketsTable />
     </main>
   )
 
