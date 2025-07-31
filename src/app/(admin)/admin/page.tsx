@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import OrdersTable from '@/components/admin-orders'
-import AdminTicketsTable from '@/components/admin-tickets'
+import AdminTicketsTable from '@/components/AdminTicketsTable'
 
 export default function AdminPage() {
   const router = useRouter()
